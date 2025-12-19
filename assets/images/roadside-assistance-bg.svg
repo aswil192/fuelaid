@@ -1,0 +1,158 @@
+<svg viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Sky background -->
+  <rect width="1280" height="640" fill="#B8D4E8"/>
+  
+  <!-- Clouds -->
+  <ellipse cx="150" cy="80" rx="70" ry="40" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="200" cy="90" rx="60" ry="35" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="490" cy="50" rx="80" ry="45" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="550" cy="60" rx="70" ry="40" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="1050" cy="70" rx="80" ry="45" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="1110" cy="85" rx="70" ry="40" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- City skyline -->
+  <defs>
+    <linearGradient id="buildingGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7A8FA0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5A6F80;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Building silhouettes -->
+  <rect x="20" y="280" width="60" height="220" fill="url(#buildingGradient)"/>
+  <polygon points="20,280 50,240 80,280" fill="#5A6F80"/>
+  
+  <rect x="90" y="300" width="70" height="200" fill="url(#buildingGradient)"/>
+  <rect x="170" y="260" width="90" height="240" fill="url(#buildingGradient)"/>
+  <polygon points="170,260 215,210 260,260" fill="#5A6F80"/>
+  
+  <rect x="270" y="250" width="70" height="250" fill="url(#buildingGradient)"/>
+  <rect x="350" y="240" width="80" height="260" fill="url(#buildingGradient)"/>
+  <polygon points="350,240 390,180 430,240" fill="#5A6F80"/>
+  
+  <rect x="440" y="280" width="60" height="220" fill="url(#buildingGradient)"/>
+  <rect x="510" y="260" width="75" height="240" fill="url(#buildingGradient)"/>
+  <polygon points="510,260 547.5,210 585,260" fill="#5A6F80"/>
+  
+  <rect x="595" y="290" width="65" height="210" fill="url(#buildingGradient)"/>
+  <rect x="670" y="270" width="80" height="230" fill="url(#buildingGradient)"/>
+  <rect x="760" y="300" width="70" height="200" fill="url(#buildingGradient)"/>
+  <polygon points="760,300 795,260 830,300" fill="#5A6F80"/>
+  
+  <rect x="840" y="280" width="75" height="220" fill="url(#buildingGradient)"/>
+  <rect x="925" y="250" width="85" height="250" fill="url(#buildingGradient)"/>
+  <polygon points="925,250 967.5,190 1010,250" fill="#5A6F80"/>
+  
+  <rect x="1020" y="290" width="60" height="210" fill="url(#buildingGradient)"/>
+  <rect x="1090" y="270" width="90" height="230" fill="url(#buildingGradient)"/>
+  <rect x="1190" y="300" width="70" height="200" fill="url(#buildingGradient)"/>
+  
+  <!-- Water/river -->
+  <rect x="0" y="480" width="1280" height="60" fill="#8CB4D6"/>
+  
+  <!-- Ground -->
+  <rect x="0" y="540" width="1280" height="100" fill="#A8D66E"/>
+  
+  <!-- Tree on left -->
+  <rect x="30" y="420" width="15" height="80" fill="#6B5344"/>
+  <circle cx="37.5" cy="380" r="45" fill="#7FB069"/>
+  
+  <!-- Woman in red dress -->
+  <circle cx="180" cy="430" r="18" fill="#C9956F"/>
+  <path d="M 180 448 L 170 520 L 175 520 L 175 540 L 185 540 L 185 520 L 190 520 L 200 448 Z" fill="#DC3632"/>
+  <rect x="168" y="450" width="8" height="50" fill="#C9956F"/>
+  <rect x="204" y="450" width="8" height="50" fill="#C9956F"/>
+  
+  <!-- Triangle warning sign -->
+  <polygon points="280,480 310,380 340,480" fill="#DC3632" stroke="#FFD700" stroke-width="3"/>
+  <line x1="290" y1="450" x2="330" y2="450" stroke="#FFD700" stroke-width="2"/>
+  <line x1="285" y1="465" x2="335" y2="465" stroke="#FFD700" stroke-width="2"/>
+  
+  <!-- Towing truck -->
+  <g>
+    <!-- Truck bed -->
+    <rect x="500" y="410" width="280" height="80" fill="#FFFFFF" stroke="#333" stroke-width="2"/>
+    <!-- Truck cabin -->
+    <rect x="780" y="410" width="70" height="70" fill="#F5F5F5" stroke="#333" stroke-width="2"/>
+    <!-- Window -->
+    <rect x="800" y="425" width="40" height="35" fill="#87CEEB"/>
+    <!-- Wheels -->
+    <circle cx="540" cy="520" r="25" fill="#333"/>
+    <circle cx="750" cy="520" r="25" fill="#333"/>
+    <circle cx="820" cy="520" r="25" fill="#333"/>
+    <!-- Wheel details -->
+    <circle cx="540" cy="520" r="15" fill="#666"/>
+    <circle cx="750" cy="520" r="15" fill="#666"/>
+    <circle cx="820" cy="520" r="15" fill="#666"/>
+  </g>
+  
+  <!-- Orange car being towed -->
+  <g>
+    <!-- Car body -->
+    <rect x="350" y="360" width="120" height="60" rx="5" fill="#FF6B35" stroke="#333" stroke-width="2"/>
+    <!-- Car roof -->
+    <ellipse cx="410" cy="340" rx="40" ry="25" fill="#FF6B35" stroke="#333" stroke-width="2"/>
+    <!-- Windows -->
+    <rect x="370" y="355" width="30" height="25" fill="#87CEEB"/>
+    <rect x="410" y="355" width="30" height="25" fill="#87CEEB"/>
+    <!-- Wheels -->
+    <circle cx="375" cy="430" r="18" fill="#333"/>
+    <circle cx="445" cy="430" r="18" fill="#333"/>
+    <!-- Wheel details -->
+    <circle cx="375" cy="430" r="10" fill="#666"/>
+    <circle cx="445" cy="430" r="10" fill="#666"/>
+    <!-- Headlights -->
+    <circle cx="345" cy="378" r="4" fill="#FFD700"/>
+    <circle cx="345" cy="392" r="4" fill="#FFD700"/>
+  </g>
+  
+  <!-- Tow platform with yellow/black stripes -->
+  <g>
+    <rect x="280" y="430" width="240" height="30" fill="#333" stroke="#333" stroke-width="1"/>
+    <!-- Yellow and black stripes -->
+    <rect x="280" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="295" y="430" width="15" height="30" fill="#000"/>
+    <rect x="310" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="325" y="430" width="15" height="30" fill="#000"/>
+    <rect x="340" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="355" y="430" width="15" height="30" fill="#000"/>
+    <rect x="370" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="385" y="430" width="15" height="30" fill="#000"/>
+    <rect x="400" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="415" y="430" width="15" height="30" fill="#000"/>
+    <rect x="430" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="445" y="430" width="15" height="30" fill="#000"/>
+    <rect x="460" y="430" width="15" height="30" fill="#FFD700"/>
+    <rect x="475" y="430" width="15" height="30" fill="#000"/>
+    <rect x="490" y="430" width="30" height="30" fill="#FFD700"/>
+  </g>
+  
+  <!-- Worker in safety vest -->
+  <g>
+    <!-- Head -->
+    <circle cx="580" cy="370" r="15" fill="#C9956F"/>
+    <!-- Body -->
+    <rect x="565" y="390" width="30" height="50" fill="#4A90E2"/>
+    <!-- Safety vest -->
+    <polygon points="565,390 595,390 600,440 560,440" fill="#FFD700"/>
+    <line x1="575" y1="390" x2="575" y2="440" stroke="#333" stroke-width="1"/>
+    <line x1="585" y1="390" x2="585" y2="440" stroke="#333" stroke-width="1"/>
+    <!-- Legs -->
+    <rect x="570" y="445" width="8" height="40" fill="#333"/>
+    <rect x="582" y="445" width="8" height="40" fill="#333"/>
+    <!-- Shoes -->
+    <rect x="568" y="485" width="12" height="8" fill="#333"/>
+    <rect x="580" y="485" width="12" height="8" fill="#333"/>
+  </g>
+  
+  <!-- Fuel pump pole -->
+  <g>
+    <rect x="950" y="380" width="20" height="120" fill="#333"/>
+    <rect x="935" y="360" width="50" height="40" fill="#FFD700" stroke="#333" stroke-width="2"/>
+    <circle cx="960" cy="350" r="8" fill="#666"/>
+  </g>
+  
+  <!-- Title text -->
+  <text x="640" y="130" font-size="60" font-weight="bold" text-anchor="middle" fill="#2C4A6E" font-family="Arial, sans-serif">ROADSIDE ASSISTANCE</text>
+  <text x="640" y="180" font-size="28" text-anchor="middle" fill="#7A94B0" font-family="Arial, sans-serif">CALL OUR EMERGENCY SERVICE</text>
+</svg>

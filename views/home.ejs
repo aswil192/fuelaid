@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+    
+    <!-- <link rel="stylesheet" href="css/flaticon.css"> -->
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Favicon Link -->
+    <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+  </head>
+  <body>
+    
+	  <%- include('partials/header') %>
+	<%- include('partials/alerts') %>
+    <!-- END nav -->
+
+    <!-- <div class="modal fade" id="roleSelectionModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content p-4">
+              <div class="modal-header">
+                  <h5 class="modal-title">Choose Your Role</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+              </div>
+              <div class="modal-body text-center">
+                  <p>Select your role to proceed:</p>
+                  <button class="role-btn btn btn-user btn-block bu" data-role="user">User</button>
+                  <button class="role-btn btn btn-mechanic btn-block bm" data-role="mechanic">Mechanic</button>
+                  <button class="role-btn btn btn-warning btn-block" data-role="admin">Admin</button>
+
+              </div>
+          </div>
+      </div>
+  </div> -->
+    
+    <!--Hero section  -->
+    <div class="hero-wrap" style="background-image: url('/assets/images/i1.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center">
+          <div class="col-lg-6 col-md-6 ftco-animate d-flex align-items-end">
+          	<div class="text">
+	            <h1 class="mb-4"><span>Roadside Aid &</span> <span> Fuel, Anytime!</span></h1>
+	            <p style="font-size: 18px;">Stranded on the road? We’ve got you covered! Whether you need fuel, a jump-start, or roadside assistance, our service is just a tap away—anytime, anywhere. Stay stress-free and keep moving with instant help at your fingertips!</p>
+
+            </div>
+          </div>
+          <div class="col-lg-2 col"></div>
+        </div>
+      </div>
+    </div>
+
+<!-- About Us section -->
+<section class="ftco-section ftco-no-pt ftco-no-pb" id="about">
+  <div class="container">
+    <div class="row no-gutters">
+      <div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center bg-image fade-in" 
+           style="background-image: url(/assets/images/about1.jpg);">
+      </div>
+      
+      <!-- Right Side About Us Content -->
+      <div class="col-md-6 wrap-about py-md-5 ftco-animate fade-in">
+        <div class="heading-section mb-5 pl-md-5">
+          <h2 class="mb-4">About Us</h2>
+
+          <p>At FuelAid, we understand that unexpected breakdowns and fuel shortages can be stressful and inconvenient. That’s why we’re committed to providing fast, reliable, and efficient roadside assistance and fuel delivery services—right when you need them the most.</p>
+          <p>Our mission is to ensure that help is just a tap away, whether you need fuel delivery, a jump-start, a tire change, or emergency towing. With a network of trusted professionals and real-time tracking, we bring convenience, safety, and peace of mind to every driver on the road.</p>
+          <p>Powered by technology and customer-first service, FuelAid is redefining roadside assistance by making it smarter, more accessible, and hassle-free. Wherever you are, whenever you need us—we’ll be there.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our services section -->
+<section class="ftco-section services-section ftco-no-pt ftco-no-pb" id="services">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+        <h2 class="mb-2">Our Services</h2>
+      </div>
+    </div>
+    <div class="row justify-content-between service1">
+      <!-- 24/7 Vehicle Assistance -->
+      <div class="col-md-3 d-flex align-self-stretch custom-animate custom-service-box">
+        <div class="media custom-block services text-center custom-floating-box">
+          <div class="media-body py-md-4">
+            <div class="d-flex mb-3 align-items-center justify-content-center">
+              <div class="custom-icon"><span class="flaticon-customer-support"></span></div>
+            </div>
+            <dotlottie-player
+              src="https://lottie.host/602deb67-bb9d-48f8-b395-be459a5a70ff/wq5v9F1CDt.lottie"
+              background="transparent"
+              speed="1"
+              style="width: 120px; height: 120px; margin-left: 100px;"
+              loop
+              autoplay
+            ></dotlottie-player>
+            <!-- <img src="images/tyre.png" sizes="10" alt="breakdown assistance"> -->
+            <h3 class="custom-heading mb-3">24/7 Vehicle Assistance</h3>
+            <p>Our round-the-clock breakdown assistance and expert repair services ensure you get back on the road quickly and safely, no matter the challenge.</p>
+            <a href="/services" class="custom-read-more">Read More...</a>
+          </div>
+        </div>      
+      </div>
+
+      <!-- Road-Ready Services -->
+      <div class="col-md-3 d-flex align-self-stretch custom-animate custom-service-box">
+        <div class="media custom-block services text-center custom-floating-box">
+          <div class="media-body py-md-4">
+            <div class="d-flex mb-3 align-items-center justify-content-center">
+              <div class="custom-icon"><span class="flaticon-route"></span></div>
+            </div>
+            <dotlottie-player
+              src="https://lottie.host/c391e2ef-e603-4427-8577-28ddee7c87a2/4mV7R5oNx6.lottie"
+              background="transparent"
+              speed="1"
+              style="width: 100px; height: 100px; margin-left: 120px;"
+              loop
+              autoplay
+            ></dotlottie-player>
+
+            <h3 class="custom-heading mb-3">Road-Ready Services</h3>
+            <p>Keep your vehicle in top condition with our comprehensive services, ranging from routine maintenance like periodic check-ups to expert repairs for more complex issues.</p>
+            <a href="/services" class="custom-read-more">Read More...</a>
+          </div>
+        </div>      
+      </div>
+
+      <!-- Efficient Fuel Delivery -->
+      <div class="col-md-3 d-flex align-self-stretch custom-animate custom-service-box">
+        <div class="media custom-block services text-center custom-floating-box">
+          <div class="media-body py-md-4">
+            <div class="d-flex mb-3 align-items-center justify-content-center">
+              <div class="custom-icon"><span class="flaticon-online-booking"></span></div>
+            </div>
+            <dotlottie-player
+                src="https://lottie.host/122fd0e0-45ce-4dcb-b75f-8de526b1eacc/2fu0liPh07.lottie"
+                background="transparent"
+                speed="1"
+                style="width: 100px; height: 100px; margin-left: 120px;"
+                loop
+                autoplay
+              ></dotlottie-player>
+            <h3 class="custom-heading mb-3">Efficient Fuel Delivery</h3>
+            <p>Experience fast, reliable, and efficient fuel delivery—right where you need it, whenever you need it.</p>
+            <a href="/services" class="custom-read-more">Read More...</a>
+          </div>
+        </div>      
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How to access our services section -->
+	<section class="service-section">
+        <div class="service-content">
+            <h2>How to Access Our Services</h2>
+            <div class="service-steps">
+                <!-- Select Mechanic or Request Fuel -->
+                <div class="service-box">
+                    <img src="/assets/images/mech.png" alt="Select Mechanic">
+                    <h3>Select a Mechanic or Request Fuel</h3>
+                    <p>For roadside assistance, choose from highly-rated mechanics. For fuel delivery, just make a request, and help will arrive.</p>
+                </div>
+				
+				<img src="/assets/images/arrow.png" class="arrow-icon show" alt="Arrow">
+
+                <!-- Immediate Assistance -->
+                <div class="service-box">
+                    <img src="/assets/images/phone.png" alt="Immediate Assistance">
+                    <h3>Get Immediate Assistance</h3>
+                    <p>Once you confirm your request, our team will dispatch help swiftly to your location.</p>
+                </div>
+
+				<img src="/assets/images/arrow.png" class="arrow-icon show flipped" alt="Arrow">
+				
+                <!-- On-site Service -->
+                <div class="service-box">
+                    <img src="/assets/images/locc.png" alt="On-site Service">
+                    <h3>On-site Service</h3>
+                    <p>Your assigned mechanic or fuel delivery partner will arrive promptly, minimizing disruption.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+<!-- Best Choice section -->
+
+    <section class="ftco-section features-section">
+		<div class="container-fluid px-4">
+			<div class="row justify-content-center">
+				<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+					<h2 class="mb-2">Why FuelAid is the Best Choice</h2>
+					<p>Your trusted partner for fuel delivery and roadside assistance</p>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Feature 1: 24/7 Availability -->
+				<div class="col-md-3">
+					<div class="feature-box">
+						<div class="icon">
+							<dotlottie-player 
+								src="https://lottie.host/7d13518d-7069-48cd-a572-e9de23cb7a7e/08IyqZtCdg.lottie" 
+								background="transparent" 
+								speed="1" 
+								class="animated-lottie" 
+								loop autoplay>
+							</dotlottie-player>
+						</div>
+						<div class="text text-center p-4">
+							<h3>24/7 Availability</h3>
+							<p>We deliver fuel and assistance anytime, anywhere.</p>
+						</div>
+					</div>
+				</div>
+	
+				<!-- Feature 2: Quick Response -->
+				<div class="col-md-3">
+					<div class="feature-box">
+						<div class="icon">
+							<dotlottie-player
+								src="https://lottie.host/78ae1bc8-eebf-4f52-a1e4-3902af995836/aCsKP5eCWz.lottie"
+								background="transparent"
+								speed="1"
+								class="animated-lottie"
+								loop autoplay>
+							</dotlottie-player>
+						</div>
+						<div class="text text-center p-4">
+							<h3>Quick Response</h3>
+							<p>Get help within minutes with our fast response team.</p>
+						</div>
+					</div>
+				</div>
+	
+				<!-- Feature 3: Secure Payment -->
+				<div class="col-md-3">
+					<div class="feature-box">
+						<div class="icon">
+							<dotlottie-player
+								src="https://lottie.host/74d82773-5502-409c-bc26-21d8ea0a2abe/pe1L35bHVc.lottie"
+								background="transparent"
+								speed="1"
+								class="animated-lottie"
+								loop autoplay>
+							</dotlottie-player>
+						</div>
+						<div class="text text-center p-4">
+							<h3>Secure Payments</h3>
+							<p>Multiple payment options with complete security.</p>
+						</div>
+					</div>
+				</div>
+	
+				<!-- Feature 4: Affordable Pricing -->
+				<div class="col-md-3">
+					<div class="feature-box">
+						<div class="icon">
+							<dotlottie-player
+								src="https://lottie.host/afb4de15-cc3a-4212-8489-2b24d0c6d93a/1zC1NkXfTd.lottie"
+								background="transparent"
+								speed="1"
+								class="animated-lottie"
+								loop autoplay>
+							</dotlottie-player>
+						</div>
+						<div class="text text-center p-4">
+							<h3>Affordable Pricing</h3>
+							<p>Best rates for fuel delivery and roadside assistance.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<!-- Blogs section -->
+<section id="blog" class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-3">
+      <div class="col-md-7 heading-section ftco-animate text-center">
+        <h2 class="mb-4">Recent from blog</h2>
+        <p>Stay updated with our latest posts and insights. Discover what's new and trending on our blog!!</p>
+      </div>
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-4 d-flex ftco-animate">
+        <div class="blog-entry align-self-stretch port-box">
+          <a href="/blogs/blog1" class="block-20" style="background-image: url('/assets/images/blog1.webp'); width:390px; height:230px;">
+          </a>
+          <div class="text p-4 d-block port-content">
+            <div class="meta mb-3">
+              <div><a href="#">Sept 3, 2024</a></div>
+              <!-- <div><a href="#">Admin</a></div> -->
+              <!-- <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div> -->
+            </div>
+            <h3 class="heading mt-3"><a href="#"><b>Tyre Puncture at Night</b></a></h3>
+            <p>A tyre puncture at night can be a stressful and a dangerous situation. Being prepared for such emergency ensures your safety and helps you get ...</p>
+            <p>
+              <a href="/blogs/blog1" style="color:black; font-weight: bold;">Read More...</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex ftco-animate">
+        <div class="blog-entry align-self-stretch port-box">
+          <a href="/blogs/blog2" class="block-20" style="background-image: url('/assets/images/blog2.webp'); width:390px; height:230px;">
+          </a>
+          <div class="text p-4 d-block port-content">
+            <div class="meta mb-3">
+              <div><a href="#">Sept 5, 2024</a></div>
+              <!-- <div><a href="#">Admin</a></div> -->
+              <!-- <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div> -->
+            </div>
+            <h3 class="heading mt-3"><a href="#"><b>Fuel Delivery Service Nearby</b></a></h3>
+            <p>Running out of fuel unexpectedly is one of the most inconvenient situations a driver can face. Whether you’re stuck on a busy highway, in a ...</p>
+          <p>
+            <a href="/blogs/blog2" style="color:black; font-weight: bold;">Read More...</a>
+          </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex ftco-animate">
+        <div class="blog-entry align-self-stretch port-box">
+          <a href="/blogs/blog3" class="block-20" style="background-image: url('/assets/images/blog3.webp'); width:390px; height:230px;">
+          </a>
+          <div class="text p-4 d-block port-content">
+            <div class="meta mb-3">
+              <div><a href="#">Sept 4, 2024</a></div>
+              <!-- <div><a href="#">Admin</a></div> -->
+              <!-- <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div> -->
+            </div>
+            <h3 class="heading mt-3"><a href="#"><b>Car Battery Drain Issues</b></a></h3>
+            <p>11 Common Car Battery Drain Issues and How to Fix Them Have you ever wondered, “Why does my car battery keep draining so fast?” or ...</p>
+          <p>
+            <a href="/blogs/blog3" style="color:black; font-weight: bold;">Read More...</a>
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+&nbsp;
+<section class="job-application-section">
+  <h2 class="job-title">Join FuelAid's Emergency Response Team</h2>
+  
+  <form id="jobApplicationForm" class="job-form-container" enctype="multipart/form-data">
+      <label for="role">To join as fuel delivery boy:</label>
+      <select id="role" name="role" class="job-input">
+          <!-- <option value="">--Select--</option> -->
+          <!-- <option value="mechanic">Mechanic</option> -->
+          <option value="fuelDelivery">Fuel Delivery Boy</option>
+      </select>
+
+      <!-- Mechanic Form -->
+      <!-- <div id="mechanicForm" class="job-hidden-form">
+          <input type="text" name="fullName" placeholder="Full Name" class="job-input">
+          <input type="email" name="email" placeholder="Email" class="job-input">
+          <input type="tel" name="phone" placeholder="Phone Number" class="job-input">
+          <input type="number" name="experience" placeholder="Years of Experience" class="job-input">
+          <select name="skills" class="job-input">
+              <option value="">Select Skill</option>
+              <option value="engineRepair">Engine Repair</option>
+              <option value="electrical">Electrical Work</option>
+              <option value="brakes">Brakes & Suspension</option>
+          </select>
+          <textarea name="workExperience" placeholder="Previous Work Experience" class="job-input"></textarea>
+          <input type="file" name="resume" class="job-input">
+      </div> -->
+
+      <!-- Fuel Delivery Form -->
+      <!-- <div id="fuelDeliveryForm" class="job-hidden-form">
+          <input type="text" name="fullName" placeholder="Full Name" class="job-input">
+          <input type="email" name="email" placeholder="Email" class="job-input">
+          <input type="tel" name="phone" placeholder="Phone Number" class="job-input">
+          <input type="number" name="age" placeholder="Age (Must be 18+)" class="job-input">
+          <input type="text" name="license" placeholder="Driving License Number" class="job-input">
+          <select name="vehicle" class="job-input">
+              <option value="">Select Vehicle Type</option>
+              <option value="bike">Bike</option>
+              <option value="scooter">Scooter</option>
+              <option value="truck">Small Truck</option>
+          </select>
+          <input type="file" name="idProof" class="job-input">
+      </div> -->
+
+      <a href="/auth/fueldel" class="job-submit-btn" style="display: inline-block; text-align: center;">Apply Now!!</a>
+  </form>
+</section>
+&nbsp;
+    
+<!-- faqs section -->
+<section class="ftco-section testimony-section">
+  <!-- <div class="container"> -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-7 text-center heading-section ftco-animate">
+
+        <h2 class="mb-3">Frequently Asked Questions</h2>
+      </div>
+    </div>
+    <div class="faq-container">
+      <!-- <h2 class="faq-title">Frequently Asked Questions</h2> -->
+
+      <div class="faq-item">
+          <button class="faq-question">What does an engine diagnostic service involve? <span>+</span></button>
+          <div class="faq-answer">An engine diagnostic service analyzes your vehicle’s engine using specialized tools to detect potential issues and ensure optimal performance.</div>
+      </div>
+
+      <div class="faq-item">
+          <button class="faq-question">What are the signs that my car needs immediate service? <span>+</span></button>
+          <div class="faq-answer">Warning lights, strange noises, smoke, or difficulty starting your car may indicate an immediate need for service.</div>
+      </div>
+
+      <div class="faq-item">
+          <button class="faq-question">How often should I replace my car's air filter? <span>+</span></button>
+          <div class="faq-answer">It’s recommended to replace your air filter every 12,000 to 15,000 miles, or as per your vehicle manual.</div>
+      </div>
+
+      <div class="faq-item">
+          <button class="faq-question">What is the difference between synthetic and conventional oil, and which should I use? <span>+</span></button>
+          <div class="faq-answer">Synthetic oil offers better engine protection and lasts longer than conventional oil. Consult your car manual for recommendations.</div>
+      </div>
+
+      <div class="faq-item">
+          <button class="faq-question">How can I improve my car's fuel efficiency between services? <span>+</span></button>
+          <div class="faq-answer">Regular maintenance, proper tire pressure, smooth driving, and using high-quality fuel can improve fuel efficiency.</div>
+      </div>
+    </div>
+  <!-- </div> -->
+</section>
+
+    
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  <%- include('partials/footer') %>
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.easing.1.3.js"></script>
+  <script src="/assets/js/jquery.waypoints.min.js"></script>
+  <script src="/assets/js/jquery.stellar.min.js"></script>
+  <script src="/assets/js/owl.carousel.min.js"></script>
+  <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="/assets/js/aos.js"></script>
+  <script src="/assets/js/jquery.animateNumber.min.js"></script>
+  <script src="/assets/js/bootstrap-datepicker.js"></script>
+  <script src="/assets/js/jquery.timepicker.min.js"></script>
+  <script src="/assets/js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="/assets/js/google-map.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+<script type="module" src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"></script>
+ 
+  </body>
+</html>

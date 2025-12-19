@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#3f51b5">
+	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assets/css/sidebar.css">
+    <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+</head>
+
+<body>
+	<%- include('../partials/header') %>
+	<%- include('../partials/alerts') %>
+
+<style>
+	/* Header Styling */
+	header{
+		background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%)!important;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
+	}
+   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+		background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%)!important;
+      background-image: none !important;
+      box-shadow: none !important;
+   }
+   .logo-container img {
+    height: 0.9em;
+    width: auto;
+}
+
+	/* Global Animations */
+	@keyframes slideInDown {
+		from {
+			opacity: 0;
+			transform: translateY(-30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeInScale {
+		from {
+			opacity: 0;
+			transform: scale(0.9);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.8; }
+	}
+
+	@keyframes shimmer {
+		0% { background-position: -1000px 0; }
+		100% { background-position: 1000px 0; }
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-10px); }
+	}
+
+	/* Guidelines Box */
+	.guidelines-box {
+		background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+		border-radius: 15px;
+		padding: 30px;
+		margin: 20px;
+		box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		animation: slideInUp 0.6s ease-out;
+		border-left: 5px solid #3498db;
+		transition: all 0.3s ease;
+	}
+
+	.guidelines-box:hover {
+		box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+		transform: translateY(-5px);
+	}
+
+	.guidelines-box h5 {
+		color: #2c3e50;
+		font-size: 28px;
+		margin-bottom: 20px!important;
+		text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	}
+
+	.guidelines-box ol {
+		padding-left: 20px;
+	}
+
+	.guidelines-box li {
+		margin-bottom: 15px;
+		color: #34495e;
+		line-height: 1.8;
+		transition: all 0.3s ease;
+	}
+
+	.guidelines-box li:hover {
+		color: #3498db;
+		padding-left: 10px;
+	}
+
+	.guidelines-box strong {
+		color: #e74c3c;
+		font-weight: 700;
+	}
+
+	/* Dashboard Header */
+	.dashboard-header {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		padding: 25px 30px;
+		border-radius: 15px;
+		margin: 20px;
+		box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.dashboard-header h5 {
+		color: white;
+		margin: 0;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	.dashboard-header i {
+		font-size: 24px;
+		color: white;
+	}
+
+	/* Container Styling */
+	.container h5 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .container h5::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 4px;
+        background: linear-gradient(90deg, #3498db, #e74c3c);
+        border-radius: 2px;
+    }
+
+    /* Table Styling */
+    .table-responsive {
+        animation: slideInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .table th, .table td {
+        vertical-align: middle !important;
+        padding: 15px 12px;
+        border: none;
+    }
+
+    .table thead {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    }
+
+    .table thead th {
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+
+    .table tbody tr {
+        border-bottom: 1px solid #ecf0f1;
+        transition: all 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f9ff;
+        box-shadow: inset 0 0 10px rgba(52, 152, 219, 0.1);
+    }
+
+    .table tbody td {
+        color: #2c3e50;
+        font-size: 14px;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .table tbody tr:nth-child(even):hover {
+        background-color: #f0f5ff;
+    }
+
+    .table tbody tr td:first-child {
+        font-weight: 700;
+        color: #e74c3c;
+    }
+
+    /* Pricing Section */
+    .pricing-section {
+        margin: 40px 20px;
+    }
+
+    .pricing-note {
+        background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
+        border-left: 4px solid #f39c12;
+        border-radius: 8px;
+        padding: 15px;
+        color: #7f5a00;
+        font-weight: 500;
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+        margin: 40px 20px;
+        animation: slideInUp 1s ease-out 0.4s backwards;
+    }
+
+    .how-it-works img {
+        border-radius: 15px;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        animation: fadeInScale 0.6s ease-out backwards;
+    }
+
+    .how-it-works img:nth-child(1) { animation-delay: 0.1s; }
+    .how-it-works img:nth-child(2) { animation-delay: 0.2s; }
+    .how-it-works img:nth-child(3) { animation-delay: 0.3s; }
+    .how-it-works img:nth-child(4) { animation-delay: 0.4s; }
+
+    .how-it-works img:hover {
+        transform: translateY(-15px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(52, 152, 219, 0.3);
+    }
+
+    .how-it-works .col-md-3 {
+        perspective: 1000px;
+    }
+
+    .how-it-works p {
+        color: #34495e;
+        font-size: 18px;
+        line-height: 1.6;
+        animation: slideInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    /* Info Text */
+    .info-text {
+        color: #555;
+        margin-top: 15px;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* Hover Effects */
+    .table tbody tr td {
+        position: relative;
+    }
+
+    .table tbody tr:hover td {
+        color: #3498db;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .guidelines-box {
+            margin: 15px 10px;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            flex-direction: column;
+            text-align: center;
+            margin: 15px 10px;
+        }
+
+        .container h5 {
+            font-size: 20px;
+        }
+
+        .how-it-works p {
+            font-size: 14px;
+        }
+    }
+
+    /* New Pricing Card Styles */
+    .category-tabs {
+        margin-bottom: 1.5rem;
+    }
+
+    .category-tab {
+        padding: 12px 24px;
+        border: none;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 50px;
+        font-weight: 600;
+        color: #495057;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        border: 2px solid transparent;
+    }
+
+    .category-tab:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    }
+
+    .category-tab.active {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        color: white;
+        border-color: #3498db;
+        box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .pricing-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        border: 1px solid #e9ecef;
+        animation: fadeInScale 0.6s ease-out;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .pricing-card.featured {
+        border: 1px solid #e9ecef;
+        position: relative;
+    }
+
+    .pricing-card.featured::before {
+        content: "Popular";
+        position: absolute;
+        top: 15px;
+        right: -30px;
+        background: #e74c3c;
+        color: white;
+        padding: 5px 30px;
+        transform: rotate(45deg);
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        padding: 20px;
+        color: white;
+        position: relative;
+    }
+
+    .card-header h6 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-header .badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 20px;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .price-display {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .price {
+        font-size: 42px;
+        font-weight: 800;
+        background: linear-gradient(90deg, #3498db, #2ecc71);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: block;
+        line-height: 1;
+    }
+
+    .price-label {
+        font-size: 14px;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .service-desc {
+        color: #495057;
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .features {
+        border-top: 1px solid #e9ecef;
+        padding-top: 20px;
+        margin-top: 20px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .feature-item i {
+        margin-right: 10px;
+        font-size: 16px;
+        width: 24px;
+        text-align: center;
+    }
+
+    .card-footer {
+        background: #f8f9fa;
+        padding: 15px 25px;
+        border-top: 1px solid #e9ecef;
+        color: #6c757d;
+        font-size: 13px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .category-tabs {
+            justify-content: center;
+        }
+        
+        .category-tab {
+            padding: 10px 20px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 36px;
+        }
+        
+        .pricing-card {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<main>
+	<%- include('../partials/customerSidebar') %>
+	
+	<div id="main-wrapper">
+		<!-- Dashboard Header -->
+		<div class="dashboard-header">
+			<i class="fas fa-home"></i>
+			<h5>Dashboard</h5>
+		</div>
+
+		<!-- Guidelines Section -->
+		<div class="guidelines-box">
+			<h5><i class="fas fa-lightbulb" style="color: #f39c12; margin-right: 12px;"></i>Guidelines</h5>
+			<ol style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px;">
+				<li><strong>Request a Service:</strong> Click on "Request Service" in the sidebar to select the type of service you need (Fuel Delivery, Roadside Assistance, etc.), fill in the details, and submit your request.</li>
+				<li><strong>Pending Request:</strong> View your service requests that have not yet been accepted. This helps you keep track of pending actions.</li>
+				<li><strong>Live Tracking:</strong> Once your request is accepted by a service provider, you can track their live location here. After service completion, you'll be able to proceed with payment.</li>
+				<li><strong>Service History:</strong> See the full history of your requests including past completed and ongoing service records.</li>
+			</ol>
+		</div>
+
+		<!-- Pricing Cards Section -->
+		<div class="container my-4 pricing-section">
+		    <h5><i class="fas fa-tag" style="color: #e74c3c; margin-right: 10px;"></i>Service Pricing</h5>
+		    <p class="info-text mb-4">Select any service category to view detailed pricing information</p>
+		    
+		    <!-- Category Tabs -->
+		    <div class="row mb-4">
+		        <div class="col-12">
+		            <div class="category-tabs d-flex flex-wrap gap-2">
+		                <button class="category-tab active" data-category="roadside">🚗 Roadside Assistance</button>
+		                <button class="category-tab" data-category="fuel">⛽ Fuel Services</button>
+		            </div>
+		        </div>
+		    </div>
+		    
+		    <!-- Pricing Cards - Roadside Assistance (Default) -->
+		    <div class="row g-4" id="roadside-cards">
+		        <!-- Card 1 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-car-battery me-2"></i>Battery Jump Start</h6>
+		                    <span class="badge bg-success">Quick Service</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹1000</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Quick response for dead battery situations</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-bolt text-warning"></i>
+		                            <span>Immediate assistance</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-clock text-info"></i>
+		                            <span>Under 30 mins response</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 2 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-tire me-2"></i>Flat Tyre Repair</h6>
+		                    <span class="badge bg-primary">Standard</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹2700</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Minor labor involved for tyre repair</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-tools text-success"></i>
+		                            <span>Tool kit included</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-user-cog text-primary"></i>
+		                            <span>Expert technician</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 3 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-key me-2"></i>Lockout Assistance</h6>
+		                    <span class="badge bg-info">Basic</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹1250</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Minimal tool usage required</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-lock text-danger"></i>
+		                            <span>Non-destructive entry</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-shield-alt text-success"></i>
+		                            <span>No damage guarantee</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 4 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-tools me-2"></i>Minor Repairs</h6>
+		                    <span class="badge bg-warning">On-site</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹800</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">On-site small fixes and adjustments</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-home text-primary"></i>
+		                            <span>At your location</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-wrench text-info"></i>
+		                            <span>Basic parts included</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 5 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card featured">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-truck-pickup me-2"></i>Towing Services</h6>
+		                    <span class="badge bg-danger">Premium</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹4200</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Partnered tow trucks for vehicle transport</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-handshake text-success"></i>
+		                            <span>Partner network</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-map-marker-alt text-danger"></i>
+		                            <span>Any destination</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 6 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-warehouse me-2"></i>Vehicle Custody</h6>
+		                    <span class="badge bg-secondary">Support</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹1700</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Handling and wait time charges</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-clock text-warning"></i>
+		                            <span>Hourly basis</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-shield-alt text-primary"></i>
+		                            <span>Secure storage</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    
+		    <!-- Pricing Cards - Maintenance (Hidden by default) -->
+		    <div class="row g-4" id="maintenance-cards" style="display: none;">
+		        <!-- Maintenance cards would go here with similar structure -->
+		    </div>
+		    
+		    <!-- Pricing Cards - Fuel Services (Hidden by default) -->
+		    <div class="row g-4" id="fuel-cards" style="display: none;">
+		        <!-- Card 1 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-gas-pump me-2"></i>Fuel Delivery</h6>
+		                    <span class="badge bg-success">Standard - 500ml</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹75</span>
+		                        <span class="price-label">Fuel Price Based</span>
+		                    </div>
+		                    <p class="service-desc">Fast and safe petrol delivery to your location</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-truck text-warning"></i>
+		                            <span>Home delivery available</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-shield-alt text-success"></i>
+		                            <span>Safety certified tanker</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 2 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-gas-pump me-2"></i>Fuel Delivery</h6>
+		                    <span class="badge bg-primary">Plus - 1L</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹120</span>
+		                        <span class="price-label">Fuel Price Based</span>
+		                    </div>
+		                    <p class="service-desc">Reliable fuel delivery for all vehicle types</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-car text-primary"></i>
+		                            <span>Suitable for commercial</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-check-circle text-success"></i>
+		                            <span>Quality guaranteed</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 3 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-droplet me-2"></i>Fuel Tank Cleaning</h6>
+		                    <span class="badge bg-info">Maintenance</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹600</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Professional fuel tank cleaning service</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-tools text-warning"></i>
+		                            <span>Expert cleaning equipment</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-hourglass-half text-secondary"></i>
+		                            <span>Time-intensive service</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 4 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-vial me-2"></i>Fuel Quality Testing</h6>
+		                    <span class="badge bg-warning">Testing</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹350</span>
+		                        <span class="price-label">Base Charge</span>
+		                    </div>
+		                    <p class="service-desc">Fuel quality analysis</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-microscope text-info"></i>
+		                            <span>Lab tested results</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-certificate text-success"></i>
+		                            <span>Quality report issued</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 5 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card featured">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-bolt me-2"></i>Premium Quality - 2.5L</h6>
+		                    <span class="badge bg-danger">Premium</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹240</span>
+		                        <span class="price-label">Extra Charge</span>
+		                    </div>
+		                    <p class="service-desc">High-octane premium fuel delivery service</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-star text-warning"></i>
+		                            <span>High octane fuel</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-tachometer-alt text-danger"></i>
+		                            <span>Better engine performance</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        <!-- Card 6 -->
+		        <div class="col-lg-4 col-md-6">
+		            <div class="pricing-card">
+		                <div class="card-header">
+		                    <h6><i class="fas fa-leaf me-2"></i>Eco-Friendly Fuel - 1L</h6>
+		                    <span class="badge bg-success">Eco</span>
+		                </div>
+		                <div class="card-body">
+		                    <div class="price-display">
+		                        <span class="price">₹130</span>
+		                        <span class="price-label">Extra Charge</span>
+		                    </div>
+		                    <p class="service-desc">Environment-friendly fuel blend delivery</p>
+		                    <div class="features">
+		                        <div class="feature-item">
+		                            <i class="fas fa-leaf text-success"></i>
+		                            <span>Low emissions blend</span>
+		                        </div>
+		                        <div class="feature-item">
+		                            <i class="fas fa-globe text-primary"></i>
+		                            <span>Environmentally friendly</span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="card-footer">
+		                    <small>Additional: ₹12/km travel charge</small>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    
+		    <div class="pricing-note mt-4">
+		        <i class="fas fa-exclamation-circle"></i> 
+		        <strong>Important:</strong> All services include ₹12/km travel charges. Prices may vary based on location and fuel type.
+		    </div>
+		</div>
+
+		<!-- How Fuel Services Work Section -->
+		<div class="container how-it-works">
+			<h5><i class="fas fa-cog" style="color: #27ae60; margin-right: 10px;"></i>How Fuel Delivery Works</h5>
+			<p class="info-text">Our trained professionals deliver fuel directly to your location using safety-compliant trucks and sealed containers. Here's a quick look at our process:</p>
+			
+			<div class="row text-center">
+				<div class="col-md-3 col-sm-6 mb-4">
+					<img src="/assets/images/f1.jpg" alt="Fuel Truck 1" class="img-fluid">
+					<p class="mt-3" style="font-weight: 600; color: #3498db;">Fuel Truck Dispatch</p>
+				</div>
+				<div class="col-md-3 col-sm-6 mb-4">
+					<img src="/assets/images/f2.jpg" alt="Fuel Truck 2" class="img-fluid">
+					<p class="mt-3" style="font-weight: 600; color: #3498db;">On-site Refueling</p>
+				</div>
+				<div class="col-md-3 col-sm-6 mb-4">
+					<img src="/assets/images/c1.jpg" alt="Fuel Container 1" class="img-fluid">
+					<p class="mt-3" style="font-weight: 600; color: #3498db;">Sealed Fuel Container</p>
+				</div>
+				<div class="col-md-3 col-sm-6 mb-4">
+					<img src="/assets/images/c2.jpg" alt="Fuel Container 2" class="img-fluid">
+					<p class="mt-3" style="font-weight: 600; color: #3498db;">Delivered to Vehicle</p>
+				</div>
+			</div>
+			<p class="mt-4" style="text-align: center; color: #7f8c8d; font-style: italic;"><strong>✓</strong> These equipments are made up of High-Density Polyethylene(HDPE) for maximum safety</p>
+		</div>
+
+	</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="/assets/js/script.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			const header = document.querySelector("header");
+			if (header) {
+				header.style.backgroundColor = "#554635";
+			}
+		});
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+		    const tabs = document.querySelectorAll('.category-tab');
+		    const cardSections = {
+		        'roadside': document.getElementById('roadside-cards'),
+		        'maintenance': document.getElementById('maintenance-cards'),
+		        'fuel': document.getElementById('fuel-cards')
+		    };
+		    
+		    tabs.forEach(tab => {
+		        tab.addEventListener('click', function() {
+		            // Remove active class from all tabs
+		            tabs.forEach(t => t.classList.remove('active'));
+		            
+		            // Add active class to clicked tab
+		            this.classList.add('active');
+		            
+		            // Hide all card sections
+		            Object.values(cardSections).forEach(section => {
+		                if (section) section.style.display = 'none';
+		            });
+		            
+		            // Show selected card section
+		            const category = this.getAttribute('data-category');
+		            if (cardSections[category]) {
+		                cardSections[category].style.display = 'flex';
+		            }
+		        });
+		    });
+		    
+		    // Add hover animations to cards
+		    const cards = document.querySelectorAll('.pricing-card');
+		    cards.forEach(card => {
+		        card.addEventListener('mouseenter', function() {
+		            this.style.zIndex = '10';
+		        });
+		        
+		        card.addEventListener('mouseleave', function() {
+		            this.style.zIndex = '1';
+		        });
+		    });
+		});
+	</script>
+</body>
+</html>

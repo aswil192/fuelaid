@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Favicon Link -->
+    <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+  </head>
+
+<body>
+	<%- include('partials/header') %>
+    <div class="modal fade" id="roleSelectionModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content p-4">
+              <div class="modal-header">
+                  <h5 class="modal-title">Choose Your Role</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+              </div>
+              <div class="modal-body text-center">
+                  <p>Select your role to proceed:</p>
+                  <button class="role-btn btn btn-user btn-block bu" data-role="user">User</button>
+                  <button class="role-btn btn btn-mechanic btn-block bm" data-role="mechanic">Mechanic</button>
+                  <button class="role-btn btn btn-warning btn-block" data-role="admin">Admin</button>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+      <section class="hero-wrap hero-wrap-2 js-fullheight bg" style="background-image: url('/assets/images/blog1.webp');">
+        <div class="overlay bgg"></div>
+        <div class="container">
+          <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Blog <i class="ion-ios-arrow-forward"></i></span></p> -->
+              <h1 class="mb-3 bread mb-9">Tyre Puncture at Night</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="containerr">
+        <!-- <h1>Handling a Tyre Puncture at Night</h1> -->
+        <p>A tyre puncture at night can be a stressful and dangerous situation. Being prepared ensures your safety and helps you get back on the road quickly. Follow these essential steps to handle a tyre puncture efficiently.</p>
+        
+        <h2 style="font-weight: bold;">Prepare for Tyre Punctures in Advance</h2>
+        <h3 style="font-weight: bold;">Carry Essential Tools</h3>
+        <ul>
+            <li>Spare tyre in good condition</li>
+            <li>Jack and lug wrench</li>
+            <li>Portable tyre inflator</li>
+            <li>Torch/flashlight</li>
+            <li>Reflective warning triangles</li>
+            <li>First-aid kit for minor injuries</li>
+        </ul>
+        
+        <h3 style="font-weight: bold;">Regular Tyre Maintenance</h3>
+        <ul>
+            <li>Check tyre pressure regularly.</li>
+            <li>Inspect tyres for bulges, cracks, or embedded objects.</li>
+            <li>Rotate tyres every 5,000–8,000 km.</li>
+            <li>Replace worn-out tyres before failure.</li>
+        </ul>
+        
+        <h2 style="font-weight: bold;">Handling a Tyre Puncture at Night</h2>
+        <h3 style="font-weight:600; font-size: 25px; margin-top: 10px;">Stay Calm and Park Safely</h3>
+        <ul>
+            <li>Slow down gradually and pull over to a safe, well-lit area.</li>
+            <li>Turn on hazard lights immediately.</li>
+            <li>Use reflective warning triangles for visibility.</li>
+            <li>Remain inside the car and lock the doors while assessing the situation.</li>
+        </ul>
+        
+        <h3 style="font-weight:600; font-size: 25px;">Inspect and Change the Tyre</h3>
+        <ul>
+            <li>Use a flashlight to check the damaged tyre.</li>
+            <li>If you have a spare tyre, use a jack and lug wrench to replace the flat one.</li>
+            <li>If no spare is available, use a tyre inflator or sealant as a temporary solution.</li>
+        </ul>
+        
+        <h3 style="font-weight: bold;">Call for Roadside Assistance</h3>
+        <p class="highlight">If unable to change the tyre or feeling unsafe, contact AutoAid’s 24/7 roadside assistance for immediate help.</p>
+        
+        <h3 style="font-weight:600; font-size: 25px;">Additional Safety Tips While Waiting for Assistance</h3>
+        <ul>
+            <li>Stay inside your car with doors locked in unsafe locations.</li>
+            <li>Do not accept help from strangers; wait for professional assistance.</li>
+            <li>Keep AutoAid’s emergency contact saved for quick access.</li>
+        </ul>
+        
+        <h2 style="font-weight: bold;">Conclusion</h2>
+        <p>A tyre puncture at night can be daunting, but staying calm, prepared, and following the right steps will keep you safe. Carry essential tools, perform regular tyre maintenance, and call AutoAid for professional help when needed.</p>
+        
+        <!-- <div class="footer">Stay prepared, stay safe, and trust AutoAid for all your roadside assistance needs!</div> -->
+    </div>
+ <!-- loader -->
+ <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    
+    
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+        <script src="/assets/js/popper.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/jquery.easing.1.3.js"></script>
+        <script src="/assets/js/jquery.waypoints.min.js"></script>
+        <script src="/assets/js/jquery.stellar.min.js"></script>
+        <script src="/assets/js/owl.carousel.min.js"></script>
+        <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/js/aos.js"></script>
+        <script src="/assets/js/jquery.animateNumber.min.js"></script>
+        <script src="/assets/js/bootstrap-datepicker.js"></script>
+        <script src="/assets/js/jquery.timepicker.min.js"></script>
+        <script src="/assets/js/scrollax.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+        <script src="/assets/js/google-map.js"></script>
+        <script src="/assets/js/main.js"></script>
+</body>
+</html>

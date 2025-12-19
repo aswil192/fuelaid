@@ -1,0 +1,355 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#3f51b5">
+	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assets/css/sidebar.css">
+  <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
+  <style>
+   header{
+		background-color: #403d3d!important;
+	}
+   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+	background-color: #403d3d!important;
+      background-image: none !important;
+      box-shadow: none !important;
+   }
+    .form-section {
+      display: none;
+    }
+  
+  #selectedTags .badge {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #fc983c !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  #selectedTags .fa-times {
+    font-size: 0.75rem;
+  }
+  .logo-container img {
+    height: 0.9em;
+    width: auto;
+}
+
+  </style>
+</head>
+<body>
+
+  <%- include('../partials/header') %>
+  <%- include('../partials/alerts') %>
+  <main>
+  <%- include('../partials/customerSidebar') %>
+
+  <div id="main-wrapper">
+    <div class="bg-white shadow-sm p-3">
+		<br>
+      <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+      <h5 class="m-0 color-theme d-inline-block">Request Service</h5>
+    </div>
+
+    <form action="/customer/request-service" method="POST" enctype="multipart/form-data" class="p-4 rounded shadow bg-light">
+  <!-- <h2 class="mb-3">Request a Service</h2> -->
+
+  <!-- Step 1: Select Category -->
+ 
+<div class="mb-3">
+  <label for="serviceCategory" class="form-label">Service Category</label>
+  <select name="request[serviceCategory]" id="serviceCategory" class="form-select" required>
+    <option value="" disabled selected>Select a category</option>
+    <option value="roadside">Roadside Assistance</option>
+    <option value="roadready">Road Ready Services</option>
+    <option value="fuel">Fuel Services</option>
+  </select>
+</div>
+
+<!-- Unified Sub-service Dropdown -->
+<div class="mb-3" id="subServiceContainer" style="display:none;">
+  <label class="form-label">Select Sub-Services</label>
+  <select id="subServiceSelect" class="form-select" multiple>
+    <!-- Options will be dynamically inserted -->
+  </select>
+</div>
+
+<!-- Fuel Quantity Input -->
+<div class="mb-3" id="fuelQuantitySection" style="display:none;">
+  <label for="quantity" class="form-label">Fuel Quantity (in Liters)</label>
+  <input type="number" class="form-control" name="request[quantity]" min="1" placeholder="e.g. 5">
+</div>
+
+<!-- Selected Services Tags -->
+<div id="selectedTags" class="mb-3 d-flex flex-wrap gap-2"></div>
+
+<!-- Estimated Charges -->
+<div id="estimatedCharges" class="mb-3 p-3 bg-white rounded shadow-sm text-center" style="display:none;">
+  <h5>Estimated Base Charges:</h5>
+  <h3 class="text-success">₹<span id="baseChargeAmount">0</span></h3>
+  <small class="text-muted">* Travel charges extra(₹12/km) (calculated after service completion)</small>
+</div>
+
+<!-- Hidden input for form submission -->
+<input type="hidden" name="request[subServices]" id="subServiceInput">
+
+<!-- Common Fields (unchanged from your original code) -->
+<div class="mb-3">
+  <label for="location" class="form-label">Your Address / Location</label>
+  <textarea name="request[address]" class="form-control" placeholder="Enter address" required></textarea>
+</div>
+
+<div class="mb-3">
+  <label for="phone" class="form-label">Contact Number</label>
+  <input type="text" name="request[phone]" class="form-control" placeholder="Your phone number" required>
+</div>
+
+<div class="mb-3">
+  <label for="vehiclePhotoPath" class="form-label">Upload Vehicle Image (Optional)</label>
+  <input type="file" name="vehiclePhotoPath" class="form-control">
+</div>
+
+<div class="mb-3">
+  <label for="message" class="form-label">Message to Provider (Optional)</label>
+  <textarea name="request[customerToMechanicMsg]" class="form-control" placeholder="Mention any important info..."></textarea>
+</div>
+
+<button type="submit" class="btn btn-primary w-100">Submit Request</button>
+
+<!-- Dynamic JS -->
+<script>
+  const category = document.getElementById("serviceCategory");
+  const subServiceSelect = document.getElementById("subServiceSelect");
+  const subServiceContainer = document.getElementById("subServiceContainer");
+  const selectedTags = document.getElementById("selectedTags");
+  const subServiceInput = document.getElementById("subServiceInput");
+  const fuelQty = document.getElementById("fuelQuantitySection");
+
+  const estimatedChargesDiv = document.getElementById("estimatedCharges");
+  const baseChargeAmount = document.getElementById("baseChargeAmount");
+
+  const serviceOptions = {
+    roadside: [
+      "Battery Jump Start", "Flat Tyre Repair", "Lockout Assistance", 
+      "Minor Repairs", "Towing Services", "Vehicle Custody"
+    ],
+    roadready: [
+      "Periodic Maintenance", "Vehicle Repair", "Accessory Fitment", "Engine Repair"
+    ],
+    fuel: [
+      "Petrol Delivery", "Diesel Delivery", "Fuel Tank Cleaning", "Fuel Quality Testing"
+    ]
+  };
+
+  const serviceBaseCharges = {
+    "Battery Jump Start": 300,
+    "Flat Tyre Repair": 250,
+    "Lockout Assistance": 200,
+    "Minor Repairs": 400,
+    "Towing Services": 700,
+    "Vehicle Custody": 150,
+    "Periodic Maintenance": 600,
+    "Vehicle Repair": 700,
+    "Accessory Fitment": 500,
+    "Engine Repair": 1000,
+    // For fuel services
+    "Petrol Delivery": 250, 
+    "Diesel Delivery": 250, 
+    "Fuel Tank Cleaning": 400, 
+    "Fuel Quality Testing": 300
+  };
+
+  const selectedValues = new Set();
+
+  function updateSelectOptions(categoryValue) {
+    subServiceSelect.innerHTML = '';
+    selectedTags.innerHTML = '';
+    selectedValues.clear();
+    subServiceInput.value = '';
+    updateEstimatedCharge();
+
+    if (!serviceOptions[categoryValue]) return;
+
+    serviceOptions[categoryValue].forEach(opt => {
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt;
+      subServiceSelect.appendChild(option);
+    });
+  }
+
+  function addTag(value) {
+    if (selectedValues.has(value)) return;
+
+    selectedValues.add(value);
+
+    const tag = document.createElement('span');
+    tag.className = 'badge bg-primary text-white px-3 py-2 rounded-pill d-flex align-items-center';
+    tag.innerHTML = `<i class="fas fa-times me-2" style="cursor:pointer;"></i> ${value}`;
+
+    tag.querySelector('i').addEventListener('click', () => {
+      selectedValues.delete(value);
+      tag.remove();
+      updateHiddenInput();
+      updateEstimatedCharge();
+    });
+
+    selectedTags.appendChild(tag);
+    updateHiddenInput();
+    updateEstimatedCharge();
+  }
+
+  function updateHiddenInput() {
+    subServiceInput.value = [...selectedValues].join(',');
+  }
+
+  function updateEstimatedCharge() {
+    let total = 0;
+    selectedValues.forEach(service => {
+      if (serviceBaseCharges[service]) {
+        total += serviceBaseCharges[service];
+      }
+    });
+    if (total > 0) {
+      estimatedChargesDiv.style.display = 'block';
+    } else {
+      estimatedChargesDiv.style.display = 'none';
+    }
+    baseChargeAmount.innerText = total;
+  }
+
+  // Event: Category Change
+  category.addEventListener("change", function () {
+    const selectedCategory = this.value;
+    subServiceContainer.style.display = 'block';
+    updateSelectOptions(selectedCategory);
+    fuelQty.style.display = 'none';
+  });
+
+  // Event: Sub-service Selection
+  subServiceSelect.addEventListener("change", function () {
+    const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+    selected.forEach(addTag);
+
+    if (selected.includes("Petrol Delivery") || selected.includes("Diesel Delivery")) {
+      fuelQty.style.display = 'block';
+    } else {
+      fuelQty.style.display = 'none';
+    }
+  });
+</script>
+
+<!-- <script>
+  const category = document.getElementById("serviceCategory");
+  const subServiceSelect = document.getElementById("subServiceSelect");
+  const subServiceContainer = document.getElementById("subServiceContainer");
+  const selectedTags = document.getElementById("selectedTags");
+  const subServiceInput = document.getElementById("subServiceInput");
+
+  const fuelQty = document.getElementById("fuelQuantitySection");
+
+  const serviceOptions = {
+    roadside: [
+      "Battery Jump Start", "Flat Tyre Repair", "Lockout Assistance", 
+      "Minor Repairs", "Towing Services", "Vehicle Custody"
+    ],
+    roadready: [
+      "Periodic Maintenance", "Vehicle Repair", "Accessory Fitment", "Engine Repair"
+    ],
+    fuel: [
+      "Petrol", "Diesel", "Fuel Tank Cleaning", "Fuel Quality Testing"
+    ]
+  };
+
+  const selectedValues = new Set();
+
+  function updateSelectOptions(categoryValue) {
+    subServiceSelect.innerHTML = '';
+    selectedTags.innerHTML = '';
+    selectedValues.clear();
+    subServiceInput.value = '';
+
+    if (!serviceOptions[categoryValue]) return;
+
+    serviceOptions[categoryValue].forEach(opt => {
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt;
+      subServiceSelect.appendChild(option);
+    });
+  }
+
+  function addTag(value) {
+    if (selectedValues.has(value)) return;
+
+    selectedValues.add(value);
+
+    const tag = document.createElement('span');
+    tag.className = 'badge bg-primary text-white px-3 py-2 rounded-pill d-flex align-items-center';
+    tag.innerHTML = `<i class="fas fa-times me-2" style="cursor:pointer;"></i> ${value}`;
+
+    tag.querySelector('i').addEventListener('click', () => {
+      selectedValues.delete(value);
+      tag.remove();
+      updateHiddenInput();
+    });
+
+    selectedTags.appendChild(tag);
+    updateHiddenInput();
+  }
+
+  function updateHiddenInput() {
+    subServiceInput.value = [...selectedValues].join(',');
+  }
+
+  // Event: Category Change
+  category.addEventListener("change", function () {
+    const selectedCategory = this.value;
+    subServiceContainer.style.display = 'block';
+    updateSelectOptions(selectedCategory);
+    fuelQty.style.display = 'none';
+  });
+
+  // Event: Sub-service Selection
+  subServiceSelect.addEventListener("change", function () {
+    const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+    selected.forEach(addTag);
+
+    if (selected.includes("Petrol") || selected.includes("Diesel")) {
+      fuelQty.style.display = 'block';
+    } else {
+      fuelQty.style.display = 'none';
+    }
+  });
+</script> -->
+
+
+</body>
+</html>

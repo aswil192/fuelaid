@@ -1,0 +1,219 @@
+I have the FuelAid project running. Now I need to implement/verify all features as described in the project synopsis. Please work through the following systematically:
+
+## PHASE 1: Database Schema Setup
+
+1. Create/verify MongoDB collections and schemas for:
+   - Users (customers) with driving license verification fields
+   - Mechanics with professional credentials and GPS location fields
+   - FuelDeliveryBoys with experience and background verification
+   - ServiceRequests with status tracking (pending, assigned, in-progress, completed, cancelled)
+   - Feedback with ratings (1-5 stars) and reviews
+   - Receipts with PDF storage paths
+
+2. Ensure all schemas have proper validation and indexes for geolocation queries
+
+## PHASE 2: Authentication & User Management
+
+3. Implement Customer Module:
+   - Registration form with driving license upload/verification
+   - Login/logout with Passport.js and session management
+   - User dashboard with service request history
+   - Profile management
+
+4. Implement Mechanic Module:
+   - Registration with professional credentials upload
+   - Location-tracked login (capture GPS coordinates on login)
+   - Mechanic verification workflow (admin approval required)
+   - Mechanic dashboard
+
+5. Implement Fuel Delivery Module:
+   - Hiring application form with experience details
+   - Background verification fields
+   - Admin approval workflow
+   - Fuel delivery personnel dashboard
+
+6. Implement Admin Module:
+   - Admin login with elevated privileges
+   - User management interface
+   - Approval workflows for mechanics and fuel delivery boys
+
+## PHASE 3: Service Request System
+
+7. Create service request forms for customers:
+   - Roadside Assistance request
+   - Vehicle Maintenance request
+   - Fuel Delivery request
+   - Location input (manual address OR GPS auto-detect)
+   - Service description text area
+   - Contact information fields
+
+8. Implement proximity-based matching:
+   - Use Geolib to calculate distances
+   - Filter mechanics within 100 km radius of customer
+   - Display available mechanics sorted by distance
+
+9. Create mechanic request acceptance:
+   - Show nearby requests on mechanic dashboard
+   - Accept/decline buttons
+   - Auto-assign request to accepting mechanic
+   - Update request status to "assigned"
+
+## PHASE 4: Real-Time Tracking with Socket.io
+
+10. Implement Socket.io events:
+    - "serviceStatusUpdate" - broadcast status changes
+    - "locationUpdate" - stream mechanic location
+    - "newServiceRequest" - notify mechanics
+    - "requestAccepted" - notify customer
+
+11. Create live tracking interface:
+    - Integrate Leaflet.js map on customer dashboard
+    - Show mechanic's live location marker
+    - Show customer's location marker
+    - Draw route line between them
+    - Display ETA using Haversine distance calculations
+
+12. Implement mechanic location streaming:
+    - Capture mechanic GPS every 30 seconds
+    - Emit location updates via Socket.io
+    - Update marker position in real-time on customer's map
+
+## PHASE 5: Service Status Management
+
+13. Create status update system:
+    - Mechanic can update status: "en route", "arrived", "working", "completed"
+    - Each status change triggers Socket.io notification
+    - Display status timeline on customer dashboard
+    - Show current status with color coding
+
+14. Implement post-service workflow:
+    - Mechanic submits service notes and observations
+    - Mark service as completed
+    - Trigger receipt generation
+
+## PHASE 6: PDF Receipt Generation
+
+15. Implement PDFKit receipt creation:
+    - Auto-generate PDF on service completion
+    - Include: Service details, customer info, mechanic info, date/time, service notes, amount
+    - Save PDF to /uploads/receipts/ folder
+    - Store file path in database
+
+16. Create receipt viewing:
+    - Display receipt list on customer dashboard
+    - Download/view PDF button
+    - Email receipt to customer (optional email integration)
+
+## PHASE 7: Feedback & Rating System
+
+17. Implement feedback submission:
+    - Show feedback form after service completion
+    - Star rating (1-5 stars) with radio buttons or star icons
+    - Text review area
+    - Submit and store in Feedback collection
+
+18. Display feedback on dashboards:
+    - Show customer feedback on mechanic profile
+    - Admin can view all feedback
+    - Calculate average rating for each mechanic
+
+## PHASE 8: Admin Control Panel
+
+19. Create admin dashboard with:
+    - Pending approvals (mechanics, fuel delivery boys)
+    - All service requests with filters (status, date)
+    - Real-time service monitoring
+    - User management (view/edit/delete)
+
+20. Implement manual assignment:
+    - Admin can manually assign requests to specific mechanics/fuel delivery boys
+    - Override automatic matching if needed
+
+21. Create analytics views:
+    - Total services completed
+    - Average response time
+    - Customer satisfaction ratings
+    - Active mechanics/fuel delivery personnel
+
+## PHASE 9: Fuel Delivery Specific Features
+
+22. Implement fuel delivery workflow:
+    - Admin assigns fuel delivery request to fuel boy
+    - Fuel boy views assigned deliveries
+    - Track customer location on map
+    - Confirm fuel quantity delivered (input field)
+    - Mark delivery completed
+    - Generate fuel delivery receipt
+
+## PHASE 10: Dashboard Auto-Refresh
+
+23. Implement auto-refresh for mechanic dashboard:
+    - Set interval to refresh every 20 minutes
+    - Fetch new nearby service requests
+    - Update request list without full page reload
+
+## PHASE 11: OpenCage API Integration
+
+24. Integrate OpenCage Geocoding:
+    - Forward geocoding: Convert address to lat/lng
+    - Reverse geocoding: Convert lat/lng to address
+    - Validate and standardize addresses
+    - Use in service request location input
+
+## PHASE 12: UI/UX Enhancements
+
+25. Ensure responsive design:
+    - Bootstrap grid system for all pages
+    - Mobile-friendly layouts
+    - Test on different screen sizes
+
+26. Add loading indicators:
+    - Show spinner when fetching location
+    - Loading state during service request submission
+    - Map loading indicator
+
+27. Implement notifications:
+    - Flash messages for success/error
+    - Real-time notifications for status updates
+    - Browser notifications (optional)
+
+## PHASE 13: Testing & Debugging
+
+28. Test all user flows:
+    - Customer registration → service request → tracking → completion → feedback
+    - Mechanic registration → approval → accept request → update status → complete
+    - Admin approval → manual assignment → monitoring
+
+29. Verify all Socket.io connections:
+    - Test real-time updates on multiple browser tabs
+    - Ensure location streaming works
+    - Check for memory leaks
+
+30. Test geolocation features:
+    - Verify 100 km radius filtering
+    - Test distance calculations
+    - Ensure ETA accuracy
+
+## PHASE 14: Security & Validation
+
+31. Implement input validation:
+    - Server-side validation for all forms
+    - Sanitize user inputs
+    - File upload validation (license, credentials)
+
+32. Ensure route protection:
+    - Protect customer routes (require customer login)
+    - Protect mechanic routes (require mechanic login)
+    - Protect admin routes (require admin privileges)
+
+## Configuration Checklist:
+
+- [ ] .env file with MONGO_URI and OPENCAGE_API_KEY
+- [ ] MongoDB connection successful
+- [ ] All npm packages installed
+- [ ] Socket.io configured and running
+- [ ] File upload directories created (/uploads, /public/uploads)
+- [ ] Session secret configured
+- [ ] Passport.js strategies configured
+
+Please implement these features step by step. After each phase, test the functionality and let me know if there are any errors or issues. Start with Phase 1 and proceed systematically.

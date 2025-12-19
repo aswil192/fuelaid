@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Favicon Link -->
+    <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+  </head>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+  }
+  
+  .hero-wrap {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: url('/assets/images/service_bg.jpeg') center/cover no-repeat;
+  }
+  
+  .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+  }
+  
+  .section {
+      padding: 50px 20px;
+  }
+  
+  h2 {
+      color: #002f56;
+      font-size: 32px;
+      margin-bottom: 30px;
+  }
+  
+  .grid-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centers the boxes */
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+  }
+  
+  .grid-service-box {
+      background: #fc983c;
+      border: 2px solid #fc983c;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 1px 10px 20px rgba(252, 152, 60, 0.3);
+      transition: transform 0.3s ease-in-out;
+      flex: 1 1 280px; /* Increased width */
+      max-width: 320px; /* Increased max width */
+      min-height: 280px; /* Increased height to fit text */
+      word-wrap: break-word; /* Ensures text does not overflow */
+      overflow: hidden;
+  }
+  
+  .grid-service-box:hover {
+      transform: translateY(-5px);
+  }
+  
+  .grid-service-box img {
+      width: 60px;
+      height: auto;
+      margin-bottom: 15px;
+  }
+  
+  .grid-service-box h3 {
+      font-size: 22px;
+      font-weight: bold;
+      color: #000;
+  }
+  
+  .grid-service-box p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 10px;
+      white-space: normal;
+  }
+  
+  /* Ensures 5 boxes in a row on larger screens */
+  @media (min-width: 1200px) {
+      .grid-container {
+          justify-content: space-between;
+      }
+  }
+  
+  /* Responsive for medium screens */
+  @media (max-width: 1199px) {
+      .grid-container {
+          justify-content: center;
+      }
+  }
+  
+  /* For smaller screens, make sure boxes stack properly */
+  @media (max-width: 768px) {
+      .grid-service-box {
+          flex: 1 1 100%; /* Full width */
+          max-width: 100%;
+          min-height: 300px; /* Adjusted for better text fit */
+      }
+  }
+  
+  .ftco-footer {
+      background-color: black !important;
+      color: white;
+  }
+  
+  .ftco-footer a {
+      color: #f8f9fa;
+  }
+  
+  .ftco-footer a:hover {
+      color: #ff6600;
+  }
+</style>  
+  <body>
+    
+	  <%- include('partials/header') %>
+    <!-- END nav -->
+    <section class="hero-wrap hero-wrap-2 js-fullheight">
+        <div class="overlay"></div> 
+        <div class="container">
+          <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+              <p class="breadcrumbs">
+                <span class="mr-2"><a href="#">Home <i class="ion-ios-arrow-forward"></i></a></span>
+                <span>Our Services <i class="ion-ios-arrow-forward"></i></span>
+              </p>
+              <h1 class="mb-3 bread">Our Services</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="ftco-section services-section ftco-no-pt ftco-no-pb">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+              <h2 class="mb-2">24/7 Vehicle assistance</h2>
+            </div>
+          </div>
+          <div class="row justify-content-between">
+        <div class="grid-container">
+            <div class="grid-service-box">
+                <img src="/assets/images/battery-icon.png" alt="Battery Jump Start">
+                <h3>Battery Jump Start</h3>
+                <p>Vehicle not starting due to a weak or dead battery? Our technicians will reach you at any location and jump-start your vehicle</p>
+            </div>
+            <div class="grid-service-box">
+                <img src="/assets/images/tyre-icon.png" alt="Flat Tyre Repair">
+                <h3>Flat Tyre Repair</h3>
+                <p>We have all been there! Not to worry as we have you covered. We will assist you repair or replace your tyre with a spare to keep your wheels rolling</p>
+            </div>
+            <div class="grid-service-box">
+              <img src="/assets/images/lockout-icon.png" alt="Lockout Assistance">
+              <h3>Lockout Assistance</h3>
+              <p>We have all been there! Not to worry as we have you covered. We will assist you repair or replace your tyre with a spare to keep your wheels rolling</p>
+          </div>
+          <div class="grid-service-box">
+            <img src="/assets/images/minor-icon.png" alt="Minor Repairs">
+            <h3>Minor Repairs</h3>
+            <p>Sometimes your vehicle just won't start for some reason. Our technicians will arrive at your location and perform minor repairs to get you back on your way</p>
+        </div>
+            <div class="grid-service-box">
+                <img src="/assets/images/tow-icon.png" alt="Towing Services">
+                <h3>Towing Services</h3>
+                <p>If your vehicle needs to be transported to a workshop, we will do the needful through our wide range of towing services relevant to your vehicle type</p>
+            </div>
+            <div class="grid-service-box">
+                <img src="/assets/images/vehicle-icon.png" alt="Vehicle Custody">
+                <h3>Vehicle Custody</h3>
+                <p>If you need to go on, but your vehicle can't, we will keep it safe for you and deliver it at your location when it is convenient for you</p>
+            </div>
+        </div>
+      </div>
+    </div>
+    </section>
+  
+    <section class="ftco-section services-section ftco-no-pt ftco-no-pb">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+            <h2 class="mb-2">Road-Ready Services</h2>
+          </div>
+        </div>
+        <div class="row justify-content-between">
+        <div class="grid-container">
+            <div class="grid-service-box">
+                <img src="/assets/images/maintenance-icon.png" alt="Periodic Maintenance">
+                <h3>Periodic Maintenance</h3>
+                <p>Vehicles need upkeep! Our dedicated customer care executives will seamlessly manage your vehicle servicing schedule specific to your vehicle age and brand</p>
+            </div>
+            <div class="grid-service-box">
+                <img src="/assets/images/repair-icon.png" alt="Vehicle Repair">
+                <h3>Vehicle Repair</h3>
+                <p>For complex repairs, our technicians and partner garages will be assigned to your case based on the task to be performed</p>
+            </div>
+            <div class="grid-service-box">
+                <img src="/assets/images/accessory-icon.png" alt="Accessory Fitment">
+                <h3>Accessory Fitment</h3>
+                <p>Our team of experts is adept at upgrading your vehicle by fitting and installing all-types of vehicle accessories</p>
+            </div>
+            <div class="grid-service-box">
+                <img src="/assets/images/engine-icon.png" alt="Engine Repair">
+                <h3>Engine Repair</h3>
+                <p>Say goodbye to breakdowns and performance issues! Our skilled professionals provide top-notch diagnostics, repairs, and maintenance—ensuring your engine runs like new.</p>
+            </div>
+        </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="ftco-section services-section ftco-no-pt ftco-no-pb">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+            <h2 class="mb-2">Efficient Fuel Delivery</h2>
+          </div>
+        </div>
+        <div class="row justify-content-between">
+      <div class="grid-container">
+          <div class="grid-service-box">
+              <img src="/assets/images/petrol-icon.png" alt="Petrol Delivery">
+              <h3>Petrol Delivery</h3>
+              <p>On-demand Petrol Delivery brings fuel straight to your location, ensuring a hassle-free refill anytime, anywhere!</p>
+          </div>
+          <div class="grid-service-box">
+              <img src="/assets/images/diesel-icon.png" alt="Diesel Delivery">
+              <h3>Diesel Delivery</h3>
+              <p>Need diesel on the go? FuelAid’s Diesel Delivery guarantees a quick, safe, and reliable refill—right when and where you need it!</p>
+          </div>
+          <div class="grid-service-box">
+              <img src="/assets/images/clean-icon.png" alt="Fuel Tank Cleaning">
+              <h3>Fuel Tank Cleaning</h3>
+              <p>Keep your vehicle running smoothly with FuelAid’s Fuel Tank Cleaning, removing dirt, sludge, and contaminants for optimal engine performance! </p>
+          </div>
+          <div class="grid-service-box">
+              <img src="/assets/images/quality-icon.png" alt="Fuel Quality Testing">
+              <h3>Fuel Quality Testing</h3>
+              <p> Ensure your fuel meets the highest standards—preventing damage and maximizing engine efficiency! </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.easing.1.3.js"></script>
+  <script src="/assets/js/jquery.waypoints.min.js"></script>
+  <script src="/assets/js/jquery.stellar.min.js"></script>
+  <script src="/assets/js/owl.carousel.min.js"></script>
+  <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="/assets/js/aos.js"></script>
+  <script src="/assets/js/jquery.animateNumber.min.js"></script>
+  <script src="/assets/js/bootstrap-datepicker.js"></script>
+  <script src="/assets/js/jquery.timepicker.min.js"></script>
+  <script src="/assets/js/scrollax.min.js"></script>
+  <script src="/assets/js/google-map.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+<script type="module" src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"></script>
+ 
+  </body>
+</html>

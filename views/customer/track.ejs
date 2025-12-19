@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#3f51b5">
+	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/assets/css/aos.css">
+
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assets/css/sidebar.css">
+  <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+	<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> -->
+	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
+	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+</head>
+
+<body>
+	<%- include('../partials/header') %>
+	<%- include('../partials/alerts') %>
+
+<style>
+   header{
+		background-color: #403d3d!important;
+	}
+   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+	background-color: #403d3d!important;
+      background-image: none !important;
+      box-shadow: none !important;
+   }
+   .text-orange{
+	 color: #fc983c !important;
+   }
+   .logo-container img {
+    height: 0.9em;
+    width: auto;
+}
+.card {
+    border-radius: 15px;
+    background: #fff3e6;
+}
+
+#map {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.badge {
+    font-size: 1rem;
+}
+.alert-success h5 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.alert-success a.btn {
+  min-width: 120px;
+}
+
+
+   </style>
+   
+<main>
+	<%- include('../partials/customerSidebar') %>
+  
+	<div id="main-wrapper" class="container mt-4">
+		<div class="bg-white shadow-sm p-3">
+		<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+	  <h3 class="mb-4 d-inline-block">Live Service Tracking</h2>
+	  </div>
+  
+	  <% if (requests.length === 0) { %>
+      <div class="alert alert-info">No service requests yet.</div>
+    <% } else { %>
+      <% requests.forEach((request, index) => { %>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title"><%= request.serviceCategory.toUpperCase() %> - Request #<%= index + 1 %></h5>
+            <p><strong>Subservices:</strong> <%= request.subServices.join(', ') %></p>
+            <p><strong>Requested On:</strong> <%= request.createdAt.toLocaleString() %></p>
+  
+            <% if (request.mechanic) { %>
+              <p><strong>Mechanic:</strong> 
+                <img src="<%= request.mechanic.profilePic %>" alt="Mechanic Photo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+                <%= request.mechanic.firstName %> <%= request.mechanic.lastName %> | <%= request.mechanic.phone %>
+              </p>
+              <p><strong>Vehicle Number:</strong> <%= request.mechanic.licensePlate %></p>
+            
+            <% } else if (request.fueldeliveryboy) { %>
+              <p><strong>Fuel Delivery Boy:</strong> 
+                <img src="<%= request.fueldeliveryboy.profilePic %>" alt="Fuel Boy Photo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
+                <%= request.fueldeliveryboy.firstName %> <%= request.fueldeliveryboy.lastName %> | <%= request.fueldeliveryboy.phone %>
+              </p>
+              <p><strong>Vehicle Number:</strong> <%= request.fueldeliveryboy.licensePlate %></p>
+            <% } %>
+  
+            <% if (request.status !== 'completed') { %>
+              <p><strong>Status:</strong> <span id="status-<%= index %>">Calculating...</span></p>
+              <p><strong>ETA:</strong> <span id="eta-<%= index %>">Calculating...</span></p>
+              <div id="map-<%= index %>" style="height: 300px; border-radius: 10px;" class="mb-2"></div>
+            <% } else { %>
+              <div class="alert alert-success text-center p-4" style="border-radius: 10px;">
+                <h5>Service Completed</h5>
+                
+
+                <% if (!request.isPaid) { %>
+                  <p>Please pay ₹<%= request.baseAmount || 100 %> and provide your feedback.</p>
+                  <form action="/customer/pay/<%= request._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-primary me-2">Pay Now</button>
+                  </form>
+                <% } %>
+  
+                <% if (!request.feedback) { %>
+                  <button class="btn btn-outline-secondary" onclick="openFeedbackModal('<%= request._id %>')">Leave Feedback</button>
+                <% } else { %>
+                  <p class="mt-2 text-success">Thank you for your feedback!</p>
+                <% } %>
+              </div>
+            <% } %>
+  
+            <% if (!request.mechanic && !request.fueldeliveryboy) { %>
+              <div class="alert alert-warning">No provider has accepted this request yet.</div>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+	</div>
+  </main>
+  
+  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form id="feedbackForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Leave Feedback</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label">Rate the service (1-5):</label>
+          <select class="form-select mb-3" name="rating" required>
+            <option value="" selected disabled>Select rating</option>
+            <option value="1">⭐ 1 - Very Poor</option>
+            <option value="2">⭐⭐ 2 - Poor</option>
+            <option value="3">⭐⭐⭐ 3 - Average</option>
+            <option value="4">⭐⭐⭐⭐ 4 - Good</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
+          </select>
+  
+          <label class="form-label">Your Feedback (optional):</label>
+          <textarea class="form-control" name="feedback" rows="3" placeholder="Share your thoughts..."></textarea>
+  
+          <input type="hidden" name="requestId" id="requestId">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <div id="tracking-data" data-requests='<%- JSON.stringify(requests) %>'></div>
+
+  <script>
+
+const socket = io(); // Connect to Socket.io
+
+const requestData = document.getElementById('tracking-data').dataset.requests;
+const requests = JSON.parse(requestData);
+
+const mechanicMarkers = {}; // mechanicId => array of { map, marker, request, requestIndex }
+const fuelMarkers = {}; // fuelId => array of { map, marker, request, requestIndex }
+
+requests.forEach((req, idx) => {
+  if (!req.status || req.status === 'completed') return; // Don't track completed requests
+
+  const map = L.map(`map-${idx}`).setView([req.latitude, req.longitude], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Customer marker
+  L.marker([req.latitude, req.longitude], {
+    icon: L.icon({
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/1946/1946433.png',
+      iconSize: [30, 30],
+    })
+  }).addTo(map).bindPopup("Your Location").openPopup();
+
+  // Mechanic Tracking (only if mechanic exists)
+  if (req.mechanic) {
+    const mechanicLatLng = [req.mechanic.latitude, req.mechanic.longitude];
+    const mechanicMarker = L.marker(mechanicLatLng, {
+      icon: L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854878.png',
+        iconSize: [30, 30],
+      })
+    }).addTo(map);
+    mechanicMarker.bindPopup("Mechanic's Location").openPopup();
+
+    // Store mechanic marker data
+    if (!mechanicMarkers[req.mechanic._id]) {
+      mechanicMarkers[req.mechanic._id] = [];
+    }
+
+    mechanicMarkers[req.mechanic._id].push({
+      map,
+      marker: mechanicMarker,
+      request: req,
+      requestIndex: idx
+    });
+  }
+
+  // Fuel Delivery Boy Tracking (only if fuel delivery boy exists)
+  if (req.fueldeliveryboy) {
+    const fuelLatLng = [req.fueldeliveryboy.latitude, req.fueldeliveryboy.longitude];
+    const fuelMarker = L.marker(fuelLatLng, {
+      icon: L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854878.png',
+        iconSize: [30, 30],
+      })
+    }).addTo(map);
+    fuelMarker.bindPopup("Fuel Delivery Boy's Location").openPopup();
+
+    // Store fuel marker data
+    if (!fuelMarkers[req.fueldeliveryboy._id]) {
+      fuelMarkers[req.fueldeliveryboy._id] = [];
+    }
+
+    fuelMarkers[req.fueldeliveryboy._id].push({
+      map,
+      marker: fuelMarker,
+      request: req,
+      requestIndex: idx
+    });
+  }
+});
+
+// Function to estimate haversine distance
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the Earth in km
+  const toRad = angle => angle * (Math.PI / 180);
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) ** 2;
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; // in km
+}
+
+// Function to estimate ETA in minutes
+function estimateArrivalTime(distanceInKm) {
+  const avgSpeed = 40; // km/h
+  const timeInHours = distanceInKm / avgSpeed;
+  const totalMinutes = Math.round(timeInHours * 60);
+
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours > 0) {
+    return `${hours} hr${hours > 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
+  } else {
+    return `${minutes} min${minutes !== 1 ? 's' : ''}`;
+  }
+}
+
+// Socket listener to update mechanic location
+socket.on('updateMechanicLocation', ({ mechanicId, lat, lng, status, fee }) => {
+  const mechanicInstances = mechanicMarkers[mechanicId];
+  if (mechanicInstances) {
+    mechanicInstances.forEach(({ map, marker, request, requestIndex }) => {
+      const customerLatLng = [request.latitude, request.longitude];
+      const distance = haversineDistance(lat, lng, customerLatLng[0], customerLatLng[1]);
+
+      let statusText = "";
+      if (status === "completed") {
+        statusText = "Completed";
+
+        // Replace map with payment/feedback message
+        const mapContainer = document.getElementById(`map-${requestIndex}`);
+        if (mapContainer) {
+          mapContainer.outerHTML = `
+            <div class="alert alert-success text-center p-4" style="border-radius: 10px;">
+              <h5>Service Completed</h5>
+              <p>Please pay ₹${fee || request.baseAmount} and provide your feedback.</p>
+              <a href="/payment/${request._id}" class="btn btn-primary me-2">Pay Now</a>
+              <a href="/feedback/${request._id}" class="btn btn-outline-secondary">Leave Feedback</a>
+            </div>
+          `;
+        }
+
+        document.getElementById(`status-${requestIndex}`).textContent = statusText;
+        document.getElementById(`eta-${requestIndex}`).textContent = "—";
+        return; // Exit early since no map updates are needed
+      }
+
+      const eta = estimateArrivalTime(distance);
+      document.getElementById(`eta-${requestIndex}`).textContent = eta;
+
+      if (distance < 0.1) {
+        statusText = "Mechanic at your location.";
+      } else if (distance < 1) {
+        statusText = "Mechanic is almost there.";
+      } else {
+        statusText = "Mechanic is on the way.";
+      }
+
+      document.getElementById(`status-${requestIndex}`).textContent = statusText;
+
+      marker.setLatLng([lat, lng]).bindPopup("Mechanic (Live)").openPopup();
+      map.panTo([lat, lng]);
+
+      // Update or create line
+      if (marker._line) {
+        marker._line.setLatLngs([customerLatLng, [lat, lng]]);
+      } else {
+        marker._line = L.polyline([customerLatLng, [lat, lng]], {
+          color: 'blue',
+          dashArray: '10,10',
+        }).addTo(map);
+      }
+    });
+  }
+});
+
+// Socket listener to update fuel delivery boy location
+socket.on('updateFuelLocation', ({ fuelId, lat, lng, status, fee }) => {
+  const fuelInstances = fuelMarkers[fuelId];
+  if (fuelInstances) {
+    fuelInstances.forEach(({ map, marker, request, requestIndex }) => {
+      const customerLatLng = [request.latitude, request.longitude];
+      const distance = haversineDistance(lat, lng, customerLatLng[0], customerLatLng[1]);
+
+      let statusText = "";
+      if (status === "completed") {
+        statusText = "Completed";
+
+        // Replace map with payment/feedback message
+        const mapContainer = document.getElementById(`map-${requestIndex}`);
+        if (mapContainer) {
+          mapContainer.outerHTML = `
+            <div class="alert alert-success text-center p-4" style="border-radius: 10px;">
+              <h5>Service Completed</h5>
+              <p>Please pay ₹${fee || request.baseAmount} and provide your feedback.</p>
+              <a href="/payment/${request._id}" class="btn btn-primary me-2">Pay Now</a>
+              <a href="/feedback/${request._id}" class="btn btn-outline-secondary">Leave Feedback</a>
+            </div>
+          `;
+        }
+
+        document.getElementById(`status-${requestIndex}`).textContent = statusText;
+        document.getElementById(`eta-${requestIndex}`).textContent = "—";
+        return; // Exit early since no map updates are needed
+      }
+
+      const eta = estimateArrivalTime(distance);
+      document.getElementById(`eta-${requestIndex}`).textContent = eta;
+
+      if (distance < 0.1) {
+        statusText = "Fuel Delivery Boy at your location.";
+      } else if (distance < 1) {
+        statusText = "Fuel Delivery Boy is almost there.";
+      } else {
+        statusText = "Fuel Delivery Boy is on the way.";
+      }
+
+      document.getElementById(`status-${requestIndex}`).textContent = statusText;
+
+      marker.setLatLng([lat, lng]).bindPopup("Fuel Delivery Boy (Live)").openPopup();
+      map.panTo([lat, lng]);
+
+      // Update or create line
+      if (marker._line) {
+        marker._line.setLatLngs([customerLatLng, [lat, lng]]);
+      } else {
+        marker._line = L.polyline([customerLatLng, [lat, lng]], {
+          color: 'blue',
+          dashArray: '10,10',
+        }).addTo(map);
+      }
+    });
+  }
+});
+
+  </script>
+  
+  
+  <script>
+    function openFeedbackModal(requestId) {
+      document.getElementById('requestId').value = requestId;
+      const feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+      feedbackModal.show();
+    }
+  
+    document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const requestId = formData.get('requestId');
+      const feedback = formData.get('feedback');
+      const rating = formData.get('rating');
+  
+      if (!rating) {
+        alert('Please provide a rating.');
+        return;
+      }
+  
+      const res = await fetch(`/feedback/${requestId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback, rating })
+      });
+  
+      if (res.ok) {
+        alert('Thanks for your feedback!');
+        location.reload();
+      } else {
+        alert('Something went wrong!');
+      }
+    });
+  </script>
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="/assets/js/script.js"></script>
+	<!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> -->
+</body>
+</html>
