@@ -8,6 +8,7 @@
 	<meta name="theme-color" content="#3f51b5">
 	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<script id="googleMapsScript" async defer></script>
 
     <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/animate.css">
@@ -33,35 +34,356 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/assets/css/sidebar.css">
   <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
   <style>
-   header{
-		background-color: #403d3d!important;
-	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-	background-color: #403d3d!important;
+    :root {
+      --primary-color: #5b5fc7;
+      --secondary-color: #3a86ff;
+      --accent-color: #ff006e;
+      --success-color: #06d6a0;
+      --warning-color: #fca311;
+      --light-bg: #f5f7fa;
+      --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --card-radius: 12px;
+    }
+
+    body {
+      font-family: 'Overpass', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
+    }
+
+    header {
+      background-color: #403d3d !important;
+    }
+    
+    header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+      background-color: #403d3d !important;
       background-image: none !important;
       box-shadow: none !important;
-   }
-    .form-section {
-      display: none;
     }
-  
-  #selectedTags .badge {
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    background-color: #fc983c !important;
-    font-weight: 500;
-    font-size: 0.875rem;
-  }
-  #selectedTags .fa-times {
-    font-size: 0.75rem;
-  }
-  .logo-container img {
-    height: 0.9em;
-    width: auto;
-}
 
+    .modern-card {
+      background: white;
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      border: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modern-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(91, 95, 199, 0.15);
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, #5b5fc7 0%, #3a86ff 100%);
+      color: white;
+      border-radius: var(--card-radius) var(--card-radius) 0 0;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.05;
+    }
+
+    .form-header h2 {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .form-header p {
+      position: relative;
+      z-index: 1;
+      opacity: 0.95;
+      animation: fadeInDown 0.8s ease-out 0.1s both;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section {
+      padding: 2.5rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-label i {
+      color: var(--primary-color);
+      font-size: 1.1rem;
+    }
+
+    .form-control, .form-select {
+      padding: 0.9rem 1.2rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+      color: #333;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 4px rgba(91, 95, 199, 0.1);
+      background: white;
+      outline: none;
+    }
+
+    .form-control::placeholder {
+      color: #999;
+    }
+
+    .mb-4 {
+      animation: fadeInUp 0.6s ease-out both;
+    }
+
+    .mb-4:nth-child(1) { animation-delay: 0.1s; }
+    .mb-4:nth-child(2) { animation-delay: 0.2s; }
+    .mb-4:nth-child(3) { animation-delay: 0.3s; }
+    .mb-4:nth-child(4) { animation-delay: 0.4s; }
+    .mb-4:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .service-option {
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: white;
+    }
+
+    .service-option:hover {
+      border-color: var(--primary-color);
+      background: rgba(91, 95, 199, 0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(91, 95, 199, 0.15);
+    }
+
+    .service-option.selected {
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, rgba(91, 95, 199, 0.1), rgba(58, 134, 255, 0.1));
+      box-shadow: 0 4px 12px rgba(91, 95, 199, 0.2);
+      font-weight: 600;
+    }
+
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      background: linear-gradient(135deg, #5b5fc7, #3a86ff);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      margin: 0.3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 4px 8px rgba(91, 95, 199, 0.25);
+      transition: all 0.3s ease;
+      animation: scaleIn 0.4s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .service-tag:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 14px rgba(91, 95, 199, 0.35);
+    }
+
+    .service-tag i {
+      margin-left: 0.5rem;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+
+    .service-tag i:hover {
+      opacity: 1;
+      transform: rotate(90deg);
+    }
+
+    .price-card {
+      background: linear-gradient(135deg, #06d6a0, #06a370);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      margin: 1.5rem 0;
+      box-shadow: 0 6px 20px rgba(6, 214, 160, 0.25);
+      animation: slideUp 0.6s ease-out;
+    }
+
+    .price-amount {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #5b5fc7, #3a86ff);
+      color: white;
+      border: none;
+      padding: 1.1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      width: 100%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(91, 95, 199, 0.3);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(91, 95, 199, 0.4);
+      color: white;
+    }
+
+    .btn-submit:active {
+      transform: translateY(-1px);
+    }
+
+    .file-upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 2.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--primary-color);
+      background: rgba(91, 95, 199, 0.05);
+    }
+
+    .file-upload-area i {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .file-upload-area p {
+      color: #333;
+      font-weight: 500;
+      margin: 0.5rem 0;
+    }
+
+    .file-upload-area small {
+      color: #999;
+    }
+
+    .row {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .col-md-6 {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .col-md-6:nth-child(1) { animation-delay: 0.2s; }
+    .col-md-6:nth-child(2) { animation-delay: 0.3s; }
+
+    @media (max-width: 768px) {
+      .form-section {
+        padding: 1.5rem;
+      }
+      
+      .form-header {
+        padding: 1.5rem;
+      }
+
+      .price-amount {
+        font-size: 2rem;
+      }
+    }
+
+    #selectedTags .badge {
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      background-color: var(--primary-color) !important;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    
+    #selectedTags .fa-times {
+      font-size: 0.75rem;
+    }
+    
+    .logo-container img {
+      height: 0.9em;
+      width: auto;
+    }
   </style>
 </head>
 <body>
@@ -71,285 +393,470 @@
   <main>
   <%- include('../partials/customerSidebar') %>
 
-  <div id="main-wrapper">
-    <div class="bg-white shadow-sm p-3">
-		<br>
-      <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-      <h5 class="m-0 color-theme d-inline-block">Request Service</h5>
-    </div>
+  <div id="main-wrapper" style="position:relative;">
+    <div class="modern-card">
+      <div class="form-header">
+        <h2 class="mb-0"><i class="fas fa-tools me-2"></i>Request Service</h2>
+        <p class="mb-0 opacity-75">Get professional assistance for your vehicle</p>
+      </div>
 
-    <form action="/customer/request-service" method="POST" enctype="multipart/form-data" class="p-4 rounded shadow bg-light">
+      <form action="/customer/request-service" method="POST" enctype="multipart/form-data" class="form-section">
   <!-- <h2 class="mb-3">Request a Service</h2> -->
 
-  <!-- Step 1: Select Category -->
- 
-<div class="mb-3">
-  <label for="serviceCategory" class="form-label">Service Category</label>
-  <select name="request[serviceCategory]" id="serviceCategory" class="form-select" required>
-    <option value="" disabled selected>Select a category</option>
-    <option value="roadside">Roadside Assistance</option>
-    <option value="roadready">Road Ready Services</option>
-    <option value="fuel">Fuel Services</option>
-  </select>
-</div>
+        <!-- Step 1: Select Category -->
+        <div class="mb-4">
+          <label class="form-label">Choose Service Category</label>
+          <div class="row" id="categoryGrid">
+            <div class="col-md-4 mb-2">
+              <div class="service-option" data-category="roadside">
+                <i class="fas fa-road me-2"></i>
+                <span>Roadside Assistance</span>
+              </div>
+            </div>
+            <div class="col-md-4 mb-2">
+              <div class="service-option" data-category="roadready">
+                <i class="fas fa-car me-2"></i>
+                <span>Road Ready Services</span>
+              </div>
+            </div>
+            <div class="col-md-4 mb-2">
+              <div class="service-option" data-category="fuel">
+                <i class="fas fa-gas-pump me-2"></i>
+                <span>Fuel Services</span>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="request[serviceCategory]" id="serviceCategory" required>
+        </div>
 
-<!-- Unified Sub-service Dropdown -->
-<div class="mb-3" id="subServiceContainer" style="display:none;">
-  <label class="form-label">Select Sub-Services</label>
-  <select id="subServiceSelect" class="form-select" multiple>
-    <!-- Options will be dynamically inserted -->
-  </select>
-</div>
+        <!-- Step 2: Sub-services -->
+        <div class="mb-4" id="subServiceContainer" style="display:none;">
+          <label class="form-label">Select Required Services</label>
+          <div class="row" id="subServiceGrid"></div>
+        </div>
 
-<!-- Fuel Quantity Input -->
-<div class="mb-3" id="fuelQuantitySection" style="display:none;">
-  <label for="quantity" class="form-label">Fuel Quantity (in Liters)</label>
-  <input type="number" class="form-control" name="request[quantity]" min="1" placeholder="e.g. 5">
-</div>
+        <!-- Selected Services Tags -->
+        <div id="selectedTags" class="mb-4 d-flex flex-wrap gap-2"></div>
 
-<!-- Selected Services Tags -->
-<div id="selectedTags" class="mb-3 d-flex flex-wrap gap-2"></div>
+        <!-- Estimated Charges -->
+        <div id="estimatedCharges" class="price-card" style="display:none;">
+          <h6 class="mb-2">Estimated Base Charges</h6>
+          <div class="price-amount">₹<span id="baseChargeAmount">0</span></div>
+          <small class="opacity-90">* Travel charges (₹12/km) calculated after service completion</small>
+        </div>
 
-<!-- Estimated Charges -->
-<div id="estimatedCharges" class="mb-3 p-3 bg-white rounded shadow-sm text-center" style="display:none;">
-  <h5>Estimated Base Charges:</h5>
-  <h3 class="text-success">₹<span id="baseChargeAmount">0</span></h3>
-  <small class="text-muted">* Travel charges extra(₹12/km) (calculated after service completion)</small>
-</div>
+        <!-- Fuel Quantity Input -->
+        <div class="mb-4" id="fuelQuantitySection" style="display:none;">
+          <label for="quantity" class="form-label"><i class="fas fa-oil-can me-2"></i>Fuel Quantity (Liters)</label>
+          <input type="number" class="form-control" name="request[quantity]" min="1" max="50" placeholder="Enter quantity in liters">
+        </div>
 
-<!-- Hidden input for form submission -->
-<input type="hidden" name="request[subServices]" id="subServiceInput">
+        <!-- Hidden input for form submission -->
+        <input type="hidden" name="request[subServices]" id="subServiceInput">
 
-<!-- Common Fields (unchanged from your original code) -->
-<div class="mb-3">
-  <label for="location" class="form-label">Your Address / Location</label>
-  <textarea name="request[address]" class="form-control" placeholder="Enter address" required></textarea>
-</div>
+        <!-- Step 3: Additional Details -->
+        <div class="mb-4" style="position: relative; z-index: 100;">
+          <label for="location" class="form-label"><i class="fas fa-map-marker-alt me-2"></i>Your Location</label>
+          <input type="text" name="request[address]" id="addressInput" class="form-control" placeholder="Start typing your location..." required style="position: relative; z-index: 101;">
+          <small class="text-muted mt-2">Autocomplete suggestions will appear below</small>
+          <div id="autocompleteDropdown" class="autocomplete-dropdown" style="display:none; position:absolute; background:white; border:2px solid #5b5fc7; border-radius:8px; width:100%; max-height:400px; overflow-y:auto; z-index:1000; margin-top:-8px; box-shadow:0 8px 24px rgba(91, 95, 199, 0.25); top:100%;"></div>
+          <div id="distanceDisplay" style="margin-top:1rem; padding:1rem; border-radius:8px; display:none; background:#e8f5e9; border-left:4px solid #06d6a0;">
+            <p class="mb-0"><strong>Distance to Service Center:</strong> <span id="distanceValue">0</span> km</p>
+            <p class="mb-0"><strong>Travel Charges:</strong> ₹<span id="travelCharges">0</span></p>
+          </div>
+        </div>
 
-<div class="mb-3">
-  <label for="phone" class="form-label">Contact Number</label>
-  <input type="text" name="request[phone]" class="form-control" placeholder="Your phone number" required>
-</div>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <label for="phone" class="form-label"><i class="fas fa-phone me-2"></i>Contact Number</label>
+            <input type="tel" name="request[phone]" class="form-control" placeholder="+91 00000 00000" required>
+          </div>
+          
+          <div class="col-md-6 mb-4">
+            <label class="form-label"><i class="fas fa-camera me-2"></i>Vehicle Image (Optional)</label>
+            <div class="file-upload-area" onclick="document.getElementById('vehiclePhoto').click()">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p class="mb-2">Click to upload vehicle photo</p>
+              <small class="text-muted">JPG, PNG up to 5MB</small>
+              <input type="file" name="vehiclePhotoPath" id="vehiclePhoto" class="d-none" accept="image/*">
+            </div>
+          </div>
+        </div>
 
-<div class="mb-3">
-  <label for="vehiclePhotoPath" class="form-label">Upload Vehicle Image (Optional)</label>
-  <input type="file" name="vehiclePhotoPath" class="form-control">
-</div>
+        <div class="mb-4">
+          <label for="message" class="form-label"><i class="fas fa-comment-alt me-2"></i>Additional Instructions</label>
+          <textarea name="request[customerToMechanicMsg]" class="form-control" placeholder="Any special instructions for the service provider..." rows="3"></textarea>
+        </div>
 
-<div class="mb-3">
-  <label for="message" class="form-label">Message to Provider (Optional)</label>
-  <textarea name="request[customerToMechanicMsg]" class="form-control" placeholder="Mention any important info..."></textarea>
-</div>
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-paper-plane me-2"></i>Submit Service Request
+        </button>
+      </form>
+    </div>
+  </div>
+</main>
 
-<button type="submit" class="btn btn-primary w-100">Submit Request</button>
-
-<!-- Dynamic JS -->
 <script>
-  const category = document.getElementById("serviceCategory");
-  const subServiceSelect = document.getElementById("subServiceSelect");
-  const subServiceContainer = document.getElementById("subServiceContainer");
-  const selectedTags = document.getElementById("selectedTags");
-  const subServiceInput = document.getElementById("subServiceInput");
-  const fuelQty = document.getElementById("fuelQuantitySection");
+  // Load Google Maps API dynamically
+  async function loadGoogleMapsAPI() {
+    try {
+      const response = await fetch('/api/google-maps-key');
+      const data = await response.json();
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${data.key}&libraries=places`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      script.onload = () => {
+        initializeGoogleMapsServices();
+      };
+    } catch (error) {
+      console.error('Failed to load Google Maps API:', error);
+    }
+  }
 
-  const estimatedChargesDiv = document.getElementById("estimatedCharges");
-  const baseChargeAmount = document.getElementById("baseChargeAmount");
+  // Load API immediately when page starts
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadGoogleMapsAPI);
+  } else {
+    loadGoogleMapsAPI();
+  }
 
+  // Google Maps Autocomplete
+  const KMMC_LOCATION = { lat: 10.0168, lng: 76.2832 }; // KMM College coordinates
+  let autocompleteService;
+  let placesService;
+  let selectedPlaceLocation = null;
+  const TRAVEL_CHARGE_PER_KM = 12;
+
+  function initializeGoogleMapsServices() {
+    try {
+      autocompleteService = new google.maps.places.AutocompleteService();
+      placesService = new google.maps.places.PlacesService(document.createElement('div'));
+      console.log('Google Maps services initialized successfully');
+    } catch (error) {
+      console.error('Error initializing Google Maps services:', error);
+    }
+  }
+
+  function haversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the Earth in km
+    const toRad = (angle) => (angle * Math.PI) / 180;
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // in km
+  }
+
+  const addressInput = document.getElementById('addressInput');
+  const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+  const distanceDisplay = document.getElementById('distanceDisplay');
+  let autocompleteTimeout;
+
+  // Fallback: Use custom autocomplete with OpenCage API if Google Places is not available
+  if (addressInput) {
+    addressInput.addEventListener('input', function (e) {
+      const inputValue = e.target.value.trim();
+
+      clearTimeout(autocompleteTimeout);
+      autocompleteDropdown.innerHTML = '';
+
+      if (inputValue.length < 3) {
+        autocompleteDropdown.style.display = 'none';
+        return;
+      }
+
+      autocompleteTimeout = setTimeout(() => {
+        // Use OpenCage API for autocomplete
+        fetch(`/api/autocomplete-locations?q=${encodeURIComponent(inputValue)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.results && data.results.length > 0) {
+              autocompleteDropdown.innerHTML = '';
+              data.results.forEach((result, index) => {
+                const div = document.createElement('div');
+                div.style.cssText = `
+                  padding: 1rem;
+                  cursor: pointer;
+                  border-bottom: 1px solid #e2e8f0;
+                  transition: all 0.2s ease;
+                  background-color: white;
+                  font-size: 14px;
+                  position: relative;
+                  z-index: 1001;
+                `;
+                if (index === 0) {
+                  div.style.borderRadius = '8px 8px 0 0';
+                }
+                div.innerHTML = `
+                  <div style="font-weight: 600; color: #1a1a2e; margin-bottom: 4px;">${result.name}</div>
+                  <div style="font-size: 13px; color: #666;">${result.formatted}</div>
+                `;
+                div.addEventListener('mouseenter', () => {
+                  div.style.backgroundColor = '#f0f4ff';
+                  div.style.paddingLeft = '1.5rem';
+                });
+                div.addEventListener('mouseleave', () => {
+                  div.style.backgroundColor = 'white';
+                  div.style.paddingLeft = '1rem';
+                });
+                div.addEventListener('click', () => {
+                  selectLocation(result);
+                });
+                autocompleteDropdown.appendChild(div);
+              });
+              autocompleteDropdown.style.display = 'block';
+            } else {
+              autocompleteDropdown.style.display = 'none';
+            }
+          })
+          .catch(error => {
+            console.error('Autocomplete error:', error);
+            autocompleteDropdown.style.display = 'none';
+          });
+      }, 300);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target !== addressInput && e.target !== autocompleteDropdown) {
+        autocompleteDropdown.style.display = 'none';
+      }
+    });
+  }
+
+  function selectLocation(result) {
+    addressInput.value = result.formatted;
+    autocompleteDropdown.style.display = 'none';
+
+    selectedPlaceLocation = {
+      lat: result.lat,
+      lng: result.lng,
+    };
+    calculateDistanceAndCharges();
+  }
+
+  function calculateDistanceAndCharges() {
+    if (!selectedPlaceLocation) return;
+
+    const distance = haversineDistance(
+      selectedPlaceLocation.lat,
+      selectedPlaceLocation.lng,
+      KMMC_LOCATION.lat,
+      KMMC_LOCATION.lng
+    );
+
+    const travelCharges = Math.round(distance * TRAVEL_CHARGE_PER_KM);
+
+    document.getElementById('distanceValue').textContent = distance.toFixed(2);
+    document.getElementById('travelCharges').textContent = travelCharges;
+    distanceDisplay.style.display = 'block';
+
+    // Update estimated charges with travel charges
+    updateEstimatedChargesWithTravel(travelCharges);
+  }
+
+  function updateEstimatedChargesWithTravel(travelCharges) {
+    const chargesDiv = document.getElementById('estimatedCharges');
+    const amountSpan = document.getElementById('baseChargeAmount');
+
+    let baseTotal = 0;
+    selectedServices.forEach((serviceName) => {
+      const service = Object.values(serviceOptions[selectedCategory] || {})
+        .find((s) => s?.name === serviceName);
+      if (service) baseTotal += service.price;
+    });
+
+    const totalCharges = baseTotal + travelCharges;
+
+    if (totalCharges > 0) {
+      chargesDiv.style.display = 'block';
+      amountSpan.textContent = totalCharges;
+    } else {
+      chargesDiv.style.display = 'none';
+    }
+  }
+
+  // Initialize Google Maps services when page loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeGoogleMapsServices);
+  } else {
+    initializeGoogleMapsServices();
+  }
+
+  // Service data with icons and prices
   const serviceOptions = {
     roadside: [
-      "Battery Jump Start", "Flat Tyre Repair", "Lockout Assistance", 
-      "Minor Repairs", "Towing Services", "Vehicle Custody"
+      { name: "Battery Jump Start", icon: "fa-battery-full", price: 1000 },
+      { name: "Flat Tyre Repair", icon: "fa-tire", price: 2700 },
+      { name: "Lockout Assistance", icon: "fa-key", price: 1250 },
+      { name: "Minor Repairs", icon: "fa-tools", price: 800 },
+      { name: "Towing Services", icon: "fa-truck", price: 4200 },
+      { name: "Vehicle Custody", icon: "fa-shield-alt", price: 1700 }
     ],
     roadready: [
-      "Periodic Maintenance", "Vehicle Repair", "Accessory Fitment", "Engine Repair"
+      { name: "Periodic Maintenance", icon: "fa-cogs", price: 600 },
+      { name: "Vehicle Repair", icon: "fa-wrench", price: 700 },
+      { name: "Accessory Fitment", icon: "fa-plus-circle", price: 500 },
+      { name: "Engine Repair", icon: "fa-hammer", price: 1000 }
     ],
     fuel: [
-      "Petrol Delivery", "Diesel Delivery", "Fuel Tank Cleaning", "Fuel Quality Testing"
+      { name: "Petrol Delivery", icon: "fa-gas-pump", price: 75 },
+      { name: "Diesel Delivery", icon: "fa-oil-can", price: 75 },
+      { name: "Fuel Tank Cleaning", icon: "fa-filter", price: 600 },
+      { name: "Fuel Quality Testing", icon: "fa-flask", price: 350 }
     ]
   };
 
-  const serviceBaseCharges = {
-    "Battery Jump Start": 300,
-    "Flat Tyre Repair": 250,
-    "Lockout Assistance": 200,
-    "Minor Repairs": 400,
-    "Towing Services": 700,
-    "Vehicle Custody": 150,
-    "Periodic Maintenance": 600,
-    "Vehicle Repair": 700,
-    "Accessory Fitment": 500,
-    "Engine Repair": 1000,
-    // For fuel services
-    "Petrol Delivery": 250, 
-    "Diesel Delivery": 250, 
-    "Fuel Tank Cleaning": 400, 
-    "Fuel Quality Testing": 300
-  };
+  let selectedCategory = '';
+  const selectedServices = new Set();
 
-  const selectedValues = new Set();
-
-  function updateSelectOptions(categoryValue) {
-    subServiceSelect.innerHTML = '';
-    selectedTags.innerHTML = '';
-    selectedValues.clear();
-    subServiceInput.value = '';
-    updateEstimatedCharge();
-
-    if (!serviceOptions[categoryValue]) return;
-
-    serviceOptions[categoryValue].forEach(opt => {
-      const option = document.createElement('option');
-      option.value = opt;
-      option.textContent = opt;
-      subServiceSelect.appendChild(option);
+  // Initialize category selection
+  document.querySelectorAll('.service-option[data-category]').forEach(option => {
+    option.addEventListener('click', function() {
+      document.querySelectorAll('.service-option[data-category]').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      this.classList.add('selected');
+      selectedCategory = this.dataset.category;
+      document.getElementById('serviceCategory').value = selectedCategory;
+      showSubServices(selectedCategory);
     });
-  }
-
-  function addTag(value) {
-    if (selectedValues.has(value)) return;
-
-    selectedValues.add(value);
-
-    const tag = document.createElement('span');
-    tag.className = 'badge bg-primary text-white px-3 py-2 rounded-pill d-flex align-items-center';
-    tag.innerHTML = `<i class="fas fa-times me-2" style="cursor:pointer;"></i> ${value}`;
-
-    tag.querySelector('i').addEventListener('click', () => {
-      selectedValues.delete(value);
-      tag.remove();
-      updateHiddenInput();
-      updateEstimatedCharge();
-    });
-
-    selectedTags.appendChild(tag);
-    updateHiddenInput();
-    updateEstimatedCharge();
-  }
-
-  function updateHiddenInput() {
-    subServiceInput.value = [...selectedValues].join(',');
-  }
-
-  function updateEstimatedCharge() {
-    let total = 0;
-    selectedValues.forEach(service => {
-      if (serviceBaseCharges[service]) {
-        total += serviceBaseCharges[service];
-      }
-    });
-    if (total > 0) {
-      estimatedChargesDiv.style.display = 'block';
-    } else {
-      estimatedChargesDiv.style.display = 'none';
-    }
-    baseChargeAmount.innerText = total;
-  }
-
-  // Event: Category Change
-  category.addEventListener("change", function () {
-    const selectedCategory = this.value;
-    subServiceContainer.style.display = 'block';
-    updateSelectOptions(selectedCategory);
-    fuelQty.style.display = 'none';
   });
 
-  // Event: Sub-service Selection
-  subServiceSelect.addEventListener("change", function () {
-    const selected = Array.from(this.selectedOptions).map(opt => opt.value);
-    selected.forEach(addTag);
+  function showSubServices(category) {
+    const container = document.getElementById('subServiceContainer');
+    const grid = document.getElementById('subServiceGrid');
+    
+    if (!serviceOptions[category]) {
+      container.style.display = 'none';
+      return;
+    }
+    
+    grid.innerHTML = '';
+    selectedServices.clear();
+    updateSelectedTags();
+    updateEstimatedCharges();
+    
+    serviceOptions[category].forEach(service => {
+      const col = document.createElement('div');
+      col.className = 'col-md-6 mb-2';
+      
+      col.innerHTML = `
+        <div class="service-option sub-service" data-service="${service.name}">
+          <i class="fas ${service.icon} me-2"></i>
+          <span class="flex-grow-1">${service.name}</span>
+          <span class="badge bg-success">₹${service.price}</span>
+        </div>
+      `;
+      
+      grid.appendChild(col);
+    });
+    
+    document.querySelectorAll('.sub-service').forEach(option => {
+      option.addEventListener('click', function() {
+        const serviceName = this.dataset.service;
+        
+        if (selectedServices.has(serviceName)) {
+          selectedServices.delete(serviceName);
+          this.classList.remove('selected');
+        } else {
+          selectedServices.add(serviceName);
+          this.classList.add('selected');
+        }
+        
+        updateSelectedTags();
+        updateEstimatedCharges();
+        
+        const fuelSection = document.getElementById('fuelQuantitySection');
+        if (serviceName.includes('Delivery')) {
+          fuelSection.style.display = 'block';
+        } else {
+          let hasFuelDelivery = false;
+          selectedServices.forEach(s => {
+            if (s.includes('Delivery')) hasFuelDelivery = true;
+          });
+          fuelSection.style.display = hasFuelDelivery ? 'block' : 'none';
+        }
+      });
+    });
+    
+    container.style.display = 'block';
+  }
 
-    if (selected.includes("Petrol Delivery") || selected.includes("Diesel Delivery")) {
-      fuelQty.style.display = 'block';
+  function updateSelectedTags() {
+    const container = document.getElementById('selectedTags');
+    const hiddenInput = document.getElementById('subServiceInput');
+    
+    container.innerHTML = '';
+    
+    selectedServices.forEach(serviceName => {
+      const service = Object.values(serviceOptions[selectedCategory] || {})
+        .find(s => s?.name === serviceName);
+      
+      const tag = document.createElement('div');
+      tag.className = 'service-tag';
+      tag.innerHTML = `
+        <i class="fas ${service.icon} me-2"></i>
+        ${serviceName}
+        <i class="fas fa-times ms-2" onclick="removeService('${serviceName}')"></i>
+      `;
+      container.appendChild(tag);
+    });
+    
+    hiddenInput.value = Array.from(selectedServices).join(',');
+  }
+
+  function removeService(serviceName) {
+    selectedServices.delete(serviceName);
+    document.querySelectorAll(`.sub-service[data-service="${serviceName}"]`)
+      .forEach(el => el.classList.remove('selected'));
+    updateSelectedTags();
+    updateEstimatedCharges();
+  }
+
+  function updateEstimatedCharges() {
+    const chargesDiv = document.getElementById('estimatedCharges');
+    const amountSpan = document.getElementById('baseChargeAmount');
+    
+    let baseTotal = 0;
+    selectedServices.forEach(serviceName => {
+      const service = Object.values(serviceOptions[selectedCategory] || {})
+        .find(s => s?.name === serviceName);
+      if (service) baseTotal += service.price;
+    });
+    
+    // Get travel charges from display if available
+    const travelChargesSpan = document.getElementById('travelCharges');
+    const travelCharges = travelChargesSpan ? parseInt(travelChargesSpan.textContent) || 0 : 0;
+    const totalCharges = baseTotal + travelCharges;
+    
+    if (totalCharges > 0) {
+      chargesDiv.style.display = 'block';
+      amountSpan.textContent = totalCharges;
     } else {
-      fuelQty.style.display = 'none';
+      chargesDiv.style.display = 'none';
+    }
+  }
+
+  // File upload preview
+  document.getElementById('vehiclePhoto')?.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const uploadArea = document.querySelector('.file-upload-area');
+      uploadArea.innerHTML = `
+        <i class="fas fa-check-circle text-success"></i>
+        <p class="mb-2">${file.name}</p>
+        <small class="text-muted">Ready to upload</small>
+      `;
     }
   });
 </script>
-
-<!-- <script>
-  const category = document.getElementById("serviceCategory");
-  const subServiceSelect = document.getElementById("subServiceSelect");
-  const subServiceContainer = document.getElementById("subServiceContainer");
-  const selectedTags = document.getElementById("selectedTags");
-  const subServiceInput = document.getElementById("subServiceInput");
-
-  const fuelQty = document.getElementById("fuelQuantitySection");
-
-  const serviceOptions = {
-    roadside: [
-      "Battery Jump Start", "Flat Tyre Repair", "Lockout Assistance", 
-      "Minor Repairs", "Towing Services", "Vehicle Custody"
-    ],
-    roadready: [
-      "Periodic Maintenance", "Vehicle Repair", "Accessory Fitment", "Engine Repair"
-    ],
-    fuel: [
-      "Petrol", "Diesel", "Fuel Tank Cleaning", "Fuel Quality Testing"
-    ]
-  };
-
-  const selectedValues = new Set();
-
-  function updateSelectOptions(categoryValue) {
-    subServiceSelect.innerHTML = '';
-    selectedTags.innerHTML = '';
-    selectedValues.clear();
-    subServiceInput.value = '';
-
-    if (!serviceOptions[categoryValue]) return;
-
-    serviceOptions[categoryValue].forEach(opt => {
-      const option = document.createElement('option');
-      option.value = opt;
-      option.textContent = opt;
-      subServiceSelect.appendChild(option);
-    });
-  }
-
-  function addTag(value) {
-    if (selectedValues.has(value)) return;
-
-    selectedValues.add(value);
-
-    const tag = document.createElement('span');
-    tag.className = 'badge bg-primary text-white px-3 py-2 rounded-pill d-flex align-items-center';
-    tag.innerHTML = `<i class="fas fa-times me-2" style="cursor:pointer;"></i> ${value}`;
-
-    tag.querySelector('i').addEventListener('click', () => {
-      selectedValues.delete(value);
-      tag.remove();
-      updateHiddenInput();
-    });
-
-    selectedTags.appendChild(tag);
-    updateHiddenInput();
-  }
-
-  function updateHiddenInput() {
-    subServiceInput.value = [...selectedValues].join(',');
-  }
-
-  // Event: Category Change
-  category.addEventListener("change", function () {
-    const selectedCategory = this.value;
-    subServiceContainer.style.display = 'block';
-    updateSelectOptions(selectedCategory);
-    fuelQty.style.display = 'none';
-  });
-
-  // Event: Sub-service Selection
-  subServiceSelect.addEventListener("change", function () {
-    const selected = Array.from(this.selectedOptions).map(opt => opt.value);
-    selected.forEach(addTag);
-
-    if (selected.includes("Petrol") || selected.includes("Diesel")) {
-      fuelQty.style.display = 'block';
-    } else {
-      fuelQty.style.display = 'none';
-    }
-  });
-</script> -->
-
 
 </body>
 </html>

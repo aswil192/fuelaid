@@ -8293,7 +8293,8 @@ h1, h2, h3, h4, h5,
       background: #fff; }
     .slider-text .icon-wrap .heading-title span {
       font-family: "Poppins", Arial, sans-serif;
-      color: #fff; }
+      color: #ffffff !important;
+      opacity: 1 !important; }
   .slider-text p {
     line-height: 1.5;
     color: white; }
@@ -10039,6 +10040,12 @@ textarea.form-control {
 .service-btn:hover {
   background: #ff8533;
   color: white;
+}
+
+/* Hide service buttons while keeping them in the DOM */
+#onDemandBtn,
+#subscriptionBtn {
+  display: none;
 }
 
 /* Ensures animation icon doesn't stretch or shrink */

@@ -54,6 +54,40 @@ router.get("/customer/request-service", middleware.ensurecustomerLoggedIn, middl
     res.render("customer/request-service", { title: "Donate" });
 });
 
+router.get("/api/google-maps-key", (req, res) => {
+    res.json({ key: process.env.GOOGLE_MAPS_API_KEY });
+});
+
+router.get("/api/autocomplete-locations", async (req, res) => {
+    try {
+        const query = req.query.q;
+        if (!query || query.length < 3) {
+            return res.json({ results: [] });
+        }
+
+        const data = await opencage.geocode({ 
+            q: query, 
+            key: process.env.OPENCAGE_API_KEY,
+            countrycode: 'in' // Restrict to India
+        });
+
+        if (data && data.results && data.results.length > 0) {
+            const results = data.results.map(result => ({
+                name: result.components.city || result.components.town || result.components.county || 'Location',
+                formatted: result.formatted,
+                lat: result.geometry.lat,
+                lng: result.geometry.lng
+            }));
+            res.json({ results });
+        } else {
+            res.json({ results: [] });
+        }
+    } catch (error) {
+        console.error('Autocomplete error:', error.message);
+        res.json({ results: [] });
+    }
+});
+
 router.post("/customer/request-service", upload.single("vehiclePhotoPath"), async (req, res) => {
 	try {
 		const {
@@ -179,41 +213,6 @@ router.put("/customer/profile", middleware.ensurecustomerLoggedIn, async (req,re
 
 
 
-  router.get("/customer/track", middleware.ensurecustomerLoggedIn, async (req, res) => {
-	try {
-	  const customerId = req.user._id;
-		
-	  // Fetch all requests made by customer
-	  const requests = await ServiceRequest.find({ customer: customerId, status: { $ne: "requested" }})
-		.populate("mechanic") // includes mechanic details
-		.populate("fueldeliveryboy")
-		.sort({ createdAt: -1 });
-
-		// console.log("Fetched Requests:", requests);
-		
-		requests.forEach((request) => {
-			if (request.mechanic) {
-				request.providerType = "mechanic";
-				request.providerId = request.mechanic._id;
-				request.providerName = `${request.mechanic.firstName} ${request.mechanic.lastName}`;
-			} else if (request.fueldeliveryboy) {
-				request.providerType = "fuel";
-				request.providerId = request.fueldeliveryboy._id;
-				request.providerName = `${request.fueldeliveryboy.firstName} ${request.fueldeliveryboy.lastName}`;
-			}
-		});		
-
-		// console.log("Requests with provider info:", requests); // 🔍 Confirm provider info is added
-
-	  res.render("customer/track", {
-		currentUser: req.user,
-		requests,
-	  });
-	} catch (err) {
-	  console.error("Error fetching tracking info:", err);
-	  res.status(500).send("Server error");
-	}
-  });
   
   router.get("/mechanic-location/:id", async (req, res) => {
 	try {

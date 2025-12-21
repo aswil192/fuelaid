@@ -76,15 +76,8 @@ const middleware = {
 			req.flash("warning", "Please log in first.");
 			return res.redirect("/auth/login");
 		}
-		if (req.user.verification_status === "Verified") {
-			return next();
-		} else if (req.user.verification_status === "Rejected") {
-			req.flash("error", "Your account was rejected by the admin. Contact support for assistance.");
-			return res.redirect("/customer/dashboard");
-		} else {
-			req.flash("warning", "Your account is pending verification.");
-			return res.redirect("/customer/dashboard");
-		}
+		// Customers can access all features without verification
+		return next();
 	},
 	ensuremechanicVerified: (req, res, next) => {
 		if (!req.user) {

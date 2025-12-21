@@ -63,10 +63,62 @@
           	<div class="text">
 	            <h1 class="mb-4"><span>Roadside Aid &</span> <span> Fuel, Anytime!</span></h1>
 	            <p style="font-size: 18px;">Stranded on the road? We’ve got you covered! Whether you need fuel, a jump-start, or roadside assistance, our service is just a tap away—anytime, anywhere. Stay stress-free and keep moving with instant help at your fingertips!</p>
-
+	            
+	            	<div class="icon d-flex align-items-center justify-content-center">
+	            	
+	            	</div>
+	            	
+		            	<span>Quick & Easy Steps to Get Roadside Assistance</span>
+	            	</div>
+	            </a>
             </div>
           </div>
           <div class="col-lg-2 col"></div>
+          <div class="col-lg-4 col-md-6 mt-0 mt-md-5 d-flex">
+			
+				
+				
+				<!-- Service Selection -->
+				<div class="form-group">
+					
+					<div class="service-container">
+            <!-- On-Demand Assistance Button -->
+            <button type="button" class="btn service-btn active" id="onDemandBtn">
+                
+                
+            </button>
+        
+            <!-- Subscription Plan Button -->
+            <button type="button" class="btn service-btn" id="subscriptionBtn">
+                
+            </button>
+        </div>
+        
+				</div>
+		
+				<!-- Hidden Sections: Toggle Based on Selection -->
+				<div id="onDemandSection">
+					<div class="form-group">
+						
+					</div>
+					<div class="form-group">
+						
+					</div>
+					<div class="form-group">
+						
+					</div>
+				</div>
+		
+				<div id="subscriptionSection" style="display: none;">
+					<div class="form-group">
+						
+					</div>
+					<div class="form-group">
+						
+					</div>
+				</div>
+			</form>
+		</div>
         </div>
       </div>
     </div>
@@ -366,56 +418,18 @@
 </section>
   
 &nbsp;
-<section class="job-application-section">
-  <h2 class="job-title">Join FuelAid's Emergency Response Team</h2>
+<section class="job-application-section" style="display: none;">
+  
   
   <form id="jobApplicationForm" class="job-form-container" enctype="multipart/form-data">
-      <label for="role">To join as fuel delivery boy:</label>
-      <select id="role" name="role" class="job-input">
-          <!-- <option value="">--Select--</option> -->
-          <!-- <option value="mechanic">Mechanic</option> -->
-          <option value="fuelDelivery">Fuel Delivery Boy</option>
+      <select id="role" name="role" class="job-input">    
       </select>
-
-      <!-- Mechanic Form -->
-      <!-- <div id="mechanicForm" class="job-hidden-form">
-          <input type="text" name="fullName" placeholder="Full Name" class="job-input">
-          <input type="email" name="email" placeholder="Email" class="job-input">
-          <input type="tel" name="phone" placeholder="Phone Number" class="job-input">
-          <input type="number" name="experience" placeholder="Years of Experience" class="job-input">
-          <select name="skills" class="job-input">
-              <option value="">Select Skill</option>
-              <option value="engineRepair">Engine Repair</option>
-              <option value="electrical">Electrical Work</option>
-              <option value="brakes">Brakes & Suspension</option>
-          </select>
-          <textarea name="workExperience" placeholder="Previous Work Experience" class="job-input"></textarea>
-          <input type="file" name="resume" class="job-input">
-      </div> -->
-
-      <!-- Fuel Delivery Form -->
-      <!-- <div id="fuelDeliveryForm" class="job-hidden-form">
-          <input type="text" name="fullName" placeholder="Full Name" class="job-input">
-          <input type="email" name="email" placeholder="Email" class="job-input">
-          <input type="tel" name="phone" placeholder="Phone Number" class="job-input">
-          <input type="number" name="age" placeholder="Age (Must be 18+)" class="job-input">
-          <input type="text" name="license" placeholder="Driving License Number" class="job-input">
-          <select name="vehicle" class="job-input">
-              <option value="">Select Vehicle Type</option>
-              <option value="bike">Bike</option>
-              <option value="scooter">Scooter</option>
-              <option value="truck">Small Truck</option>
-          </select>
-          <input type="file" name="idProof" class="job-input">
-      </div> -->
-
-      <a href="/auth/fueldel" class="job-submit-btn" style="display: inline-block; text-align: center;">Apply Now!!</a>
   </form>
 </section>
 &nbsp;
     
 <!-- faqs section -->
-<section class="ftco-section testimony-section">
+<section class="ftco-section testimony-section" id="faq">
   <!-- <div class="container"> -->
     <div class="row justify-content-center mb-5">
       <div class="col-md-7 text-center heading-section ftco-animate">
@@ -428,27 +442,27 @@
 
       <div class="faq-item">
           <button class="faq-question">What does an engine diagnostic service involve? <span>+</span></button>
-          <div class="faq-answer">An engine diagnostic service analyzes your vehicle’s engine using specialized tools to detect potential issues and ensure optimal performance.</div>
+          <div class="faq-answer">An engine diagnostic service analyzes your vehicle's engine using specialized tools and computer systems to detect potential issues and ensure optimal performance. Our technicians will scan the engine's onboard computer for error codes, check various sensors and components, and provide you with a detailed report of any problems found. This preventive service helps identify issues early, saving you money on costly repairs down the line. We can address problems ranging from minor adjustments to major engine repairs based on the diagnostic results.</div>
       </div>
-
+      
       <div class="faq-item">
           <button class="faq-question">What are the signs that my car needs immediate service? <span>+</span></button>
-          <div class="faq-answer">Warning lights, strange noises, smoke, or difficulty starting your car may indicate an immediate need for service.</div>
+          <div class="faq-answer">Warning lights on your dashboard, strange noises from the engine, smoke coming from under the hood, or difficulty starting your car may indicate an immediate need for professional service. Other critical signs include unusual vibrations, brake failure, loss of power steering, or leaking fluids beneath your vehicle. If you notice any of these symptoms, we recommend stopping driving and contacting our emergency roadside assistance immediately to prevent further damage. Ignoring these warning signs can lead to more expensive repairs and potential safety hazards.</div>
       </div>
-
+      
       <div class="faq-item">
           <button class="faq-question">How often should I replace my car's air filter? <span>+</span></button>
-          <div class="faq-answer">It’s recommended to replace your air filter every 12,000 to 15,000 miles, or as per your vehicle manual.</div>
+          <div class="faq-answer">It's recommended to replace your air filter every 12,000 to 15,000 miles, or according to your specific vehicle manufacturer's manual recommendations. A clean air filter ensures your engine breathes properly and maintains optimal fuel efficiency and performance. Over time, dirt and debris accumulate in the filter, restricting airflow and forcing your engine to work harder. Regular replacement of your air filter is a simple maintenance task that can significantly improve your vehicle's overall performance and longevity.</div>
       </div>
-
+      
       <div class="faq-item">
           <button class="faq-question">What is the difference between synthetic and conventional oil, and which should I use? <span>+</span></button>
-          <div class="faq-answer">Synthetic oil offers better engine protection and lasts longer than conventional oil. Consult your car manual for recommendations.</div>
+          <div class="faq-answer">Synthetic oil is a laboratory-created lubricant that offers superior engine protection, longer service intervals, and better performance in extreme temperatures compared to conventional mineral oil. Synthetic oil lasts much longer between oil changes, typically 7,500 to 10,000 miles or more, whereas conventional oil usually needs replacement every 3,000 to 5,000 miles. While synthetic oil is more expensive upfront, it can save you money in the long run due to fewer oil changes and better engine protection. The best choice depends on your vehicle's specifications, driving habits, and manufacturer recommendations found in your car manual.</div>
       </div>
-
+      
       <div class="faq-item">
           <button class="faq-question">How can I improve my car's fuel efficiency between services? <span>+</span></button>
-          <div class="faq-answer">Regular maintenance, proper tire pressure, smooth driving, and using high-quality fuel can improve fuel efficiency.</div>
+          <div class="faq-answer">Regular maintenance, proper tire pressure, smooth and gradual driving patterns, and using high-quality fuel are key factors that can significantly improve your car's fuel efficiency. Keeping your tires properly inflated (as per manufacturer specifications) reduces rolling resistance and can improve fuel economy by up to 3 percent. Avoid aggressive acceleration, unnecessary idling, and excessive speeding, as these driving habits consume more fuel. Additionally, remove excess weight from your vehicle, ensure your engine is properly tuned, and keep up with scheduled maintenance to maximize fuel efficiency.</div>
       </div>
     </div>
   <!-- </div> -->

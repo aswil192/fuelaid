@@ -42,21 +42,151 @@
 	<%- include('../partials/alerts') %>
 
 <style>
-   header{
-		background-color: #403d3d!important;
-	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-	background-color: #403d3d!important;
-      background-image: none !important;
-      box-shadow: none !important;
-   }
-   .text-orange{
-	 color: #fc983c !important;
-   }
-   .logo-container img {
+  :root {
+    --primary-color: #5b5fc7;
+    --secondary-color: #3a86ff;
+    --success-color: #06d6a0;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --card-radius: 12px;
+  }
+
+  body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
+  }
+
+  header{
+    background-color: #403d3d!important;
+  }
+  
+  header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+    background-color: #403d3d!important;
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+
+  .bg-white.shadow-sm.p-3 {
+    background: white !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+    border-radius: var(--card-radius);
+    margin: 1rem;
+    animation: slideDown 0.6s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #main-wrapper .m-4 {
+    padding: 0 1rem;
+  }
+
+  .row {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .col-md-6.mb-4 {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  .col-md-6.mb-4:nth-child(1) { animation-delay: 0.1s; }
+  .col-md-6.mb-4:nth-child(2) { animation-delay: 0.2s; }
+  .col-md-6.mb-4:nth-child(3) { animation-delay: 0.3s; }
+  .col-md-6.mb-4:nth-child(4) { animation-delay: 0.4s; }
+  .col-md-6.mb-4:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card {
+    border: none !important;
+    background: white !important;
+    border-radius: var(--card-radius) !important;
+    box-shadow: var(--card-shadow) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 25px rgba(91, 95, 199, 0.15) !important;
+  }
+
+  .card h5 {
+    color: var(--primary-color) !important;
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .card p {
+    color: #333;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .card p strong {
+    color: #1a1a2e !important;
+    font-weight: 700 !important;
+  }
+
+  .alert.alert-info {
+    background: linear-gradient(135deg, rgba(91, 95, 199, 0.1), rgba(58, 134, 255, 0.1)) !important;
+    border: 2px solid var(--primary-color) !important;
+    border-radius: var(--card-radius) !important;
+    color: var(--primary-color) !important;
+    font-weight: 500 !important;
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .btn.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.8rem 1.5rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.25) !important;
+    width: 100% !important;
+  }
+
+  .btn.btn-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(91, 95, 199, 0.35) !important;
+    color: white !important;
+  }
+
+  .btn.btn-primary:active {
+    transform: translateY(0) !important;
+  }
+
+  .color-theme {
+    color: var(--primary-color) !important;
+    font-weight: 700 !important;
+  }
+
+  .text-orange {
+    color: #fca311 !important;
+    font-weight: 700 !important;
+  }
+
+  .logo-container img {
     height: 0.9em;
     width: auto;
-}
+  }
 </style>
 <main>
 	<%- include('../partials/customerSidebar') %>
