@@ -3,6 +3,7 @@ const router = express.Router();
 const middleware = require("../middleware/index.js");
 const User = require("../models/user.js");
 const ServiceRequest = require("../models/serviceRequest");
+const Payment = require("../models/payment.js");
 // const multer = require('multer');
 // const mongoose = require('mongoose');
 const { ExifImage } = require('exif');  // For extracting EXIF data to check geotag
@@ -192,11 +193,17 @@ router.get("/customer/profile", middleware.ensurecustomerLoggedIn, (req,res) => 
 	res.render("customer/profile", { title: "My Profile" });
 });
 
-router.put("/customer/profile", middleware.ensurecustomerLoggedIn, async (req,res) => {
+router.put("/customer/profile", middleware.ensurecustomerLoggedIn, upload.single('profilePic'), async (req,res) => {
 	try
 	{
 		const id = req.user._id;
 		const updateObj = req.body.customer;	// updateObj: {firstName, lastName, gender, address, phone}
+		
+		// If a profile picture was uploaded, add it to the update object
+		if (req.file) {
+			updateObj.profilePic = '/uploads/' + req.file.filename;
+		}
+		
 		await User.findByIdAndUpdate(id, updateObj);
 		
 		req.flash("success", "Profile updated successfully");
@@ -264,15 +271,106 @@ router.put("/customer/profile", middleware.ensurecustomerLoggedIn, async (req,re
 	}
   });
   
+  // Show payment page
+  router.get('/customer/payment/:id', middleware.ensurecustomerLoggedIn, async (req, res) => {
+	try {
+	  const service = await ServiceRequest.findById(req.params.id)
+		.populate('mechanic')
+		.populate('fueldeliveryboy');
+	  
+	  if (!service) {
+		req.flash('error', 'Service request not found.');
+		return res.redirect('/customer/track');
+	  }
+
+	  if (service.isPaid) {
+		req.flash('info', 'This service has already been paid for.');
+		return res.redirect('/customer/viewHistory');
+	  }
+
+	  // Determine provider
+	  const provider = service.mechanic || service.fueldeliveryboy;
+
+	  res.render('customer/payment', {
+		title: 'Make Payment',
+		service,
+		provider
+	  });
+	} catch (error) {
+	  console.error('Payment page error:', error);
+	  req.flash('error', 'Error loading payment page.');
+	  res.redirect('/customer/track');
+	}
+  });
+
+  // Process payment
+  router.post('/customer/process-payment/:id', middleware.ensurecustomerLoggedIn, async (req, res) => {
+	try {
+	  const { paymentMethod, transactionId } = req.body;
+	  const requestId = req.params.id;
+	  
+	  const service = await ServiceRequest.findById(requestId)
+		.populate('mechanic')
+		.populate('fueldeliveryboy');
+	  
+	  if (!service) {
+		req.flash('error', 'Service request not found.');
+		return res.redirect('/customer/track');
+	  }
+
+	  if (service.isPaid) {
+		req.flash('info', 'This service has already been paid for.');
+		return res.redirect('/customer/viewHistory');
+	  }
+
+	  // Determine provider and provider type
+	  const provider = service.mechanic || service.fueldeliveryboy;
+	  const providerType = service.mechanic ? 'mechanic' : 'fueldeliveryboy';
+	  const amount = service.fee || service.baseAmount || 100;
+
+	  // Create payment record
+	  const payment = new Payment({
+		serviceRequest: service._id,
+		customer: req.user._id,
+		provider: provider._id,
+		providerType,
+		amount,
+		paymentMethod,
+		transactionId: transactionId || null,
+		status: 'completed',
+		paidAt: new Date()
+	  });
+
+	  await payment.save();
+
+	  // Update service request
+	  await ServiceRequest.findByIdAndUpdate(requestId, { isPaid: true });
+
+	  // Update provider's earnings (80% commission rate)
+	  const providerEarnings = amount * (provider.commissionRate || 80) / 100;
+	  await User.findByIdAndUpdate(provider._id, {
+		$inc: {
+		  totalEarnings: providerEarnings,
+		  pendingEarnings: providerEarnings
+		}
+	  });
+
+	  req.flash('success', 'Payment successful! Thank you for using FuelAid.');
+	  res.redirect('/customer/viewHistory');
+	} catch (error) {
+	  console.error('Payment processing error:', error);
+	  req.flash('error', 'Payment failed. Please try again.');
+	  res.redirect('back');
+	}
+  });
+
+  // Old simple pay route (kept for backward compatibility)
   router.post('/customer/pay/:id', middleware.ensurecustomerLoggedIn, async (req, res) => {
 	try {
 	  const requestId = req.params.id;
 	  
-	  // Update isPaid to true
-	  await ServiceRequest.findByIdAndUpdate(requestId, { isPaid: true });
-	  
-	  // Redirect or show success
-	  res.redirect('/customer/track'); // or any page you want
+	  // Redirect to payment page instead
+	  res.redirect(`/customer/payment/${requestId}`);
 	} catch (error) {
 	  console.error('Payment update error:', error);
 	  res.status(500).send('Server error');

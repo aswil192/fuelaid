@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
+	<meta name="theme-color" content="#8e44ad">
 	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
 
@@ -32,57 +32,374 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/assets/css/sidebar.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+	<title> <%= typeof title != 'undefined' ? title : "FuelAid Admin" %> </title>
 </head>
 
 <body>
 	<%- include('../partials/header') %>
 	<%- include('../partials/alerts') %>
+
 <style>
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-      background-color: #554635 !important;
-      background-image: none !important;
-      box-shadow: none !important;
-   }
-   </style>
+	/* Header Styling */
+	header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
+	}
+	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		background-image: none !important;
+		box-shadow: none !important;
+	}
+	.logo-container img {
+		height: 0.9em;
+		width: auto;
+	}
+
+	/* Global Animations */
+	@keyframes slideInDown {
+		from { opacity: 0; transform: translateY(-30px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@keyframes fadeInScale {
+		from { opacity: 0; transform: scale(0.9); }
+		to { opacity: 1; transform: scale(1); }
+	}
+
+	/* Main Wrapper */
+	#main-wrapper {
+		overflow-y: scroll;
+		background: linear-gradient(135deg, #f5f7fa 0%, #e8e8e8 100%);
+		min-height: 100vh;
+	}
+
+	#main-wrapper::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Page Header */
+	.page-header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		padding: 25px 30px;
+		border-radius: 15px;
+		margin: 20px;
+		box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.page-header h5 {
+		color: white;
+		margin: 0;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	.page-header i {
+		font-size: 24px;
+		color: white;
+	}
+
+	/* Stats Banner */
+	.stats-banner {
+		background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+		border-radius: 15px;
+		padding: 20px 25px;
+		margin: 0 20px 25px;
+		box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.stats-banner .stat-icon {
+		width: 60px;
+		height: 60px;
+		background: rgba(255,255,255,0.2);
+		border-radius: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.stats-banner .stat-icon i {
+		font-size: 28px;
+		color: white;
+	}
+
+	.stats-banner .stat-content h3 {
+		margin: 0;
+		font-size: 32px;
+		font-weight: 700;
+		color: white;
+	}
+
+	.stats-banner .stat-content p {
+		margin: 0;
+		color: rgba(255,255,255,0.8);
+		font-size: 14px;
+	}
+
+	/* Cards Container */
+	.cards-container {
+		padding: 0 20px 30px;
+	}
+
+	.cards-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+		gap: 20px;
+	}
+
+	/* Mechanic Card */
+	.mechanic-card {
+		background: white;
+		border-radius: 15px;
+		padding: 25px;
+		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		border: 1px solid #e9ecef;
+		animation: fadeInScale 0.6s ease-out;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.mechanic-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+	}
+
+	.mechanic-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 5px;
+		background: linear-gradient(90deg, #e67e22, #d35400);
+	}
+
+	.mechanic-header {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		margin-bottom: 20px;
+	}
+
+	.mechanic-avatar {
+		width: 55px;
+		height: 55px;
+		border-radius: 12px;
+		background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.mechanic-avatar i {
+		font-size: 24px;
+		color: white;
+	}
+
+	.mechanic-name h6 {
+		margin: 0;
+		font-size: 18px;
+		font-weight: 700;
+		color: #2c3e50;
+	}
+
+	.mechanic-badge {
+		display: inline-block;
+		padding: 4px 12px;
+		border-radius: 20px;
+		font-size: 11px;
+		font-weight: 600;
+		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+		color: white;
+		margin-top: 5px;
+	}
+
+	.mechanic-details {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.detail-row {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.detail-row i {
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		background: rgba(142, 68, 173, 0.1);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #8e44ad;
+		font-size: 13px;
+	}
+
+	.detail-row .detail-text {
+		flex: 1;
+	}
+
+	.detail-row .detail-label {
+		font-size: 11px;
+		color: #7f8c8d;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.detail-row .detail-value {
+		font-size: 14px;
+		color: #2c3e50;
+		font-weight: 600;
+	}
+
+	.view-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+		color: white;
+		padding: 12px 30px;
+		border-radius: 10px;
+		text-decoration: none;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		width: 100%;
+		justify-content: center;
+	}
+
+	.view-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(230, 126, 34, 0.3);
+		color: white;
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 60px 20px;
+		background: white;
+		border-radius: 15px;
+		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+	}
+
+	.empty-state i {
+		font-size: 60px;
+		color: #bdc3c7;
+		margin-bottom: 20px;
+	}
+
+	.empty-state h5 {
+		color: #7f8c8d;
+		font-weight: 600;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.page-header {
+			margin: 10px;
+			padding: 20px;
+		}
+		.stats-banner {
+			margin: 0 10px 15px;
+		}
+		.cards-container {
+			padding: 0 10px 20px;
+		}
+		.cards-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
+
 <main>
 	<%- include('../partials/adminSidebar') %>
 	
 	<div id="main-wrapper">
-		
-		<div class="bg-white shadow-sm p-3">
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Dashboard</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-tools"></i>
+			<h5>Mechanics</h5>
 		</div>
-		
-		<div class="col col-sm-10 col-12 m-auto my-4" style="max-height: 75%; overflow: auto;">
-			<table class="table table-info table-striped table-hover m-0 bg-white">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">mechanic name</th>
-						<th scope="col">Email</th>
-						<th scope="col">Phone</th>
-						<th scope="col">Joined time</th>
-					</tr>
-				</thead>
-				<tbody>
+
+		<!-- Stats Banner -->
+		<div class="stats-banner">
+			<div class="stat-icon">
+				<i class="fas fa-wrench"></i>
+			</div>
+			<div class="stat-content">
+				<h3><%= mechanics.length %></h3>
+				<p>Total Registered Mechanics</p>
+			</div>
+		</div>
+
+		<div class="cards-container">
+			<% if(mechanics.length === 0) { %>
+				<div class="empty-state">
+					<i class="fas fa-tools"></i>
+					<h5>No mechanics registered yet</h5>
+					<p class="text-muted">Mechanics will appear here once they register and get verified.</p>
+				</div>
+			<% } else { %>
+				<div class="cards-grid">
 					<% for(let i=0; i<mechanics.length; i++) { %>
-						<tr>
-							<th scope="row"> <%= i+1 %> </th>
-							<td> <%= mechanics[i].firstName + " " + mechanics[i].lastName %> </td>
-							<td> <%= mechanics[i].email %> </td>
-							<td> <%= mechanics[i].phone %> </td>
-							<td> <%= mechanics[i].joinedTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %> </td>
+						<div class="mechanic-card" style="animation-delay: <%= i * 0.1 %>s;">
+							<div class="mechanic-header">
+								<div class="mechanic-avatar">
+									<i class="fas fa-user-cog"></i>
+								</div>
+								<div class="mechanic-name">
+									<h6><%= mechanics[i].firstName + " " + mechanics[i].lastName %></h6>
+									<span class="mechanic-badge"><i class="fas fa-check-circle me-1"></i>Verified</span>
+								</div>
+							</div>
+
+							<div class="mechanic-details">
+								<div class="detail-row">
+									<i class="fas fa-envelope"></i>
+									<div class="detail-text">
+										<div class="detail-label">Email</div>
+										<div class="detail-value"><%= mechanics[i].email %></div>
+									</div>
+								</div>
+								<div class="detail-row">
+									<i class="fas fa-phone"></i>
+									<div class="detail-text">
+										<div class="detail-label">Phone</div>
+										<div class="detail-value"><%= mechanics[i].phone || 'N/A' %></div>
+									</div>
+								</div>
+								<div class="detail-row">
+									<i class="fas fa-calendar-alt"></i>
+									<div class="detail-text">
+										<div class="detail-label">Joined</div>
+										<div class="detail-value"><%= mechanics[i].joinedTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %></div>
+									</div>
+								</div>
+					
+								<a href="/admin/mechanic/view/<%= mechanics[i]._id %>" class="view-btn" style="margin-top: 15px;">
+									<i class="fas fa-eye"></i> View Details
+								</a>
+							</div>
+						</div>
 					<% } %>
-				</tbody>
-			</table>
+				</div>
+			<% } %>
 		</div>
-		
 	</div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
+
 </body>
 </html>

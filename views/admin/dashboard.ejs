@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
+	<meta name="theme-color" content="#8e44ad">
 	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
 
@@ -32,8 +32,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/assets/css/sidebar.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+	<title> <%= typeof title != 'undefined' ? title : "FuelAid Admin" %> </title>
 </head>
 
 <body>
@@ -41,97 +40,673 @@
 	<%- include('../partials/alerts') %>
 
 <style>
-    header{
-		background-color: #403d3d!important;
+	/* Header Styling */
+	header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
 	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-	background-color: #403d3d!important;
-      background-image: none !important;
-      box-shadow: none !important;
-   }
-   #main-wrapper{
-	overflow-y: scroll;  
-}
-
-#main-wrapper::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
-.butn{
-  background-color: #e69500 !important;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      width:100%;
-}
-.butn:hover {
-      background: #f1c999;
-    }
+	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		background-image: none !important;
+		box-shadow: none !important;
+	}
 	.logo-container img {
-    height: 0.9em;
-    width: auto;
-}
-   .rounded{
-	background-color: #7d6148 !important;
-   }
-   .primary{
-		background-color: #473016 !important;
-   }
-   .danger{
-		background-color: #57371a7a !important;
-   }
-   </style>
+		height: 0.9em;
+		width: auto;
+	}
+
+	/* Global Animations */
+	@keyframes slideInDown {
+		from {
+			opacity: 0;
+			transform: translateY(-30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeInScale {
+		from {
+			opacity: 0;
+			transform: scale(0.9);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes pulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.05); }
+	}
+
+	@keyframes countUp {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	/* Main Wrapper */
+	#main-wrapper {
+		overflow-y: scroll;
+		background: linear-gradient(135deg, #f5f7fa 0%, #e8e8e8 100%);
+		min-height: 100vh;
+	}
+
+	#main-wrapper::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Dashboard Header */
+	.dashboard-header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		padding: 25px 30px;
+		border-radius: 15px;
+		margin: 20px;
+		box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.dashboard-header h5 {
+		color: white;
+		margin: 0;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	.dashboard-header i {
+		font-size: 24px;
+		color: white;
+	}
+
+	/* Welcome Banner */
+	.welcome-banner {
+		background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+		border-radius: 20px;
+		padding: 30px 35px;
+		margin: 0 20px 25px;
+		box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+		animation: slideInDown 0.6s ease-out;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.welcome-banner::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		right: -20%;
+		width: 300px;
+		height: 300px;
+		background: rgba(255,255,255,0.1);
+		border-radius: 50%;
+	}
+
+	.welcome-banner h3 {
+		color: white;
+		font-weight: 700;
+		margin-bottom: 8px;
+	}
+
+	.welcome-banner p {
+		color: rgba(255,255,255,0.9);
+		margin: 0;
+		font-size: 16px;
+	}
+
+	.welcome-banner .time-display {
+		color: white;
+		text-align: right;
+	}
+
+	.welcome-banner .time-display .time {
+		font-size: 32px;
+		font-weight: 700;
+	}
+
+	.welcome-banner .time-display .date {
+		font-size: 14px;
+		opacity: 0.9;
+	}
+
+	/* Stats Section */
+	.stats-section {
+		padding: 0 20px;
+		margin-bottom: 30px;
+	}
+
+	.section-title {
+		color: #2c3e50;
+		font-weight: 700;
+		margin-bottom: 20px;
+		position: relative;
+		padding-bottom: 12px;
+	}
+
+	.section-title::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 50px;
+		height: 4px;
+		background: linear-gradient(90deg, #8e44ad, #9b59b6);
+		border-radius: 2px;
+	}
+
+	.stat-card {
+		background: white;
+		border-radius: 15px;
+		padding: 25px;
+		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		border: 1px solid #e9ecef;
+		height: 100%;
+		animation: fadeInScale 0.6s ease-out;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.stat-card:nth-child(1) { animation-delay: 0.1s; }
+	.stat-card:nth-child(2) { animation-delay: 0.2s; }
+	.stat-card:nth-child(3) { animation-delay: 0.3s; }
+	.stat-card:nth-child(4) { animation-delay: 0.4s; }
+	.stat-card:nth-child(5) { animation-delay: 0.5s; }
+	.stat-card:nth-child(6) { animation-delay: 0.6s; }
+
+	.stat-card:hover {
+		transform: translateY(-10px);
+		box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+	}
+
+	.stat-card .icon-wrapper {
+		width: 60px;
+		height: 60px;
+		border-radius: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 15px;
+	}
+
+	.stat-card .icon-wrapper i {
+		font-size: 28px;
+		color: white;
+	}
+
+	.stat-card .stat-value {
+		font-size: 36px;
+		font-weight: 800;
+		color: #2c3e50;
+		line-height: 1;
+		margin-bottom: 5px;
+		animation: countUp 0.8s ease-out;
+	}
+
+	.stat-card .stat-label {
+		color: #7f8c8d;
+		font-size: 14px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		font-weight: 600;
+	}
+
+	.stat-card .stat-badge {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		padding: 5px 12px;
+		border-radius: 20px;
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	.stat-card .stat-badge.admin {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		color: white;
+	}
+
+	.stat-card .stat-badge.users {
+		background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+		color: white;
+	}
+
+	.stat-card .stat-badge.pending {
+		background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+		color: white;
+	}
+
+	.stat-card .stat-badge.success {
+		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+		color: white;
+	}
+
+	/* Quick Actions */
+	.quick-actions {
+		padding: 0 20px;
+		margin-bottom: 30px;
+	}
+
+	.action-btn {
+		background: white;
+		border: 2px solid #e9ecef;
+		border-radius: 15px;
+		padding: 20px 25px;
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		transition: all 0.3s ease;
+		text-decoration: none;
+		color: #2c3e50;
+		height: 100%;
+		animation: slideInUp 0.6s ease-out;
+	}
+
+	.action-btn:hover {
+		border-color: #8e44ad;
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		color: white;
+		transform: translateY(-5px);
+		box-shadow: 0 10px 25px rgba(142, 68, 173, 0.25);
+	}
+
+	.action-btn:hover .action-icon {
+		background: rgba(255,255,255,0.2);
+	}
+
+	.action-btn:hover .action-icon i {
+		color: white;
+	}
+
+	.action-icon {
+		width: 50px;
+		height: 50px;
+		border-radius: 12px;
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+	}
+
+	.action-icon i {
+		font-size: 20px;
+		color: white;
+	}
+
+	.action-text h6 {
+		margin: 0;
+		font-weight: 700;
+		font-size: 16px;
+	}
+
+	.action-text p {
+		margin: 0;
+		font-size: 13px;
+		opacity: 0.7;
+	}
+
+	/* Admin Info Cards */
+	.info-cards-section {
+		padding: 0 20px;
+		margin-bottom: 30px;
+	}
+
+	.info-card {
+		background: white;
+		border-radius: 15px;
+		padding: 25px;
+		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+		animation: slideInUp 0.6s ease-out;
+		height: 100%;
+	}
+
+	.info-card h5 {
+		color: #2c3e50;
+		font-weight: 700;
+		margin-bottom: 20px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.info-card h5 i {
+		color: #8e44ad;
+	}
+
+	.info-card ul {
+		padding-left: 20px;
+		margin: 0;
+	}
+
+	.info-card li {
+		color: #555;
+		margin-bottom: 12px;
+		line-height: 1.6;
+	}
+
+	.info-card li strong {
+		color: #8e44ad;
+	}
+
+	/* Platform Stats */
+	.platform-stats {
+		background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+		border-radius: 15px;
+		padding: 25px;
+		color: white;
+		animation: slideInUp 0.6s ease-out;
+	}
+
+	.platform-stats h5 {
+		color: white;
+		font-weight: 700;
+		margin-bottom: 20px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.platform-stats .stat-row {
+		display: flex;
+		justify-content: space-between;
+		padding: 12px 0;
+		border-bottom: 1px solid rgba(255,255,255,0.1);
+	}
+
+	.platform-stats .stat-row:last-child {
+		border-bottom: none;
+	}
+
+	.platform-stats .stat-row .label {
+		color: rgba(255,255,255,0.7);
+	}
+
+	.platform-stats .stat-row .value {
+		font-weight: 700;
+		color: #2ecc71;
+	}
+
+	/* Quote Section */
+	.quote-section {
+		padding: 0 20px;
+		margin-bottom: 30px;
+	}
+
+	.quote-card {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		border-radius: 15px;
+		padding: 30px;
+		box-shadow: 0 10px 30px rgba(142, 68, 173, 0.3);
+		animation: slideInUp 0.6s ease-out;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.quote-card::before {
+		content: '"';
+		position: absolute;
+		top: 10px;
+		left: 20px;
+		font-size: 100px;
+		color: rgba(255,255,255,0.1);
+		font-family: Georgia, serif;
+		line-height: 1;
+	}
+
+	.quote-card blockquote {
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	.quote-card blockquote p {
+		color: white;
+		font-size: 18px;
+		font-style: italic;
+		line-height: 1.7;
+		margin-bottom: 15px;
+	}
+
+	.quote-card blockquote footer {
+		color: rgba(255,255,255,0.7);
+		font-size: 14px;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.welcome-banner {
+			margin: 0 10px 15px;
+			padding: 20px;
+		}
+
+		.dashboard-header {
+			flex-direction: column;
+			text-align: center;
+			margin: 15px 10px;
+		}
+
+		.stat-card .stat-value {
+			font-size: 28px;
+		}
+
+		.stats-section, .quick-actions, .info-cards-section, .quote-section {
+			padding: 0 10px;
+		}
+	}
+</style>
+
 <main>
 	<%- include('../partials/adminSidebar') %>
 	
 	<div id="main-wrapper">
-		<br>
-		<div class="bg-white shadow-sm p-3">
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Dashboard</h5>
+		<!-- Dashboard Header -->
+		<div class="dashboard-header">
+			<i class="fas fa-shield-alt"></i>
+			<h5>Admin Dashboard</h5>
 		</div>
-		
-		<div class="d-flex gap-3 flex-wrap m-4 text-white">
-			
-			<div class="primary rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numAdmins %></div>
-				<div class="fs-5">admins</div>
-			</div>
-			
-			<div class="rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numcustomers %></div>
-				<div class="fs-5">Customers</div>
-			</div>
 
-			<div class="rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= nummechanics %></div>
-				<div class="fs-5">Mechanics</div>
+		<!-- Welcome Banner with Time -->
+		<div class="welcome-banner">
+			<div class="row align-items-center">
+				<div class="col-md-8">
+					<h3><i class="fas fa-crown me-2"></i>Welcome, Admin!</h3>
+					<p>You have full control over the FuelAid platform. Monitor users, manage requests, and keep the system running smoothly.</p>
+				</div>
+				<div class="col-md-4">
+					<div class="time-display">
+						<div class="time" id="clock">--:--</div>
+						<div class="date" id="currentDate">Loading...</div>
+					</div>
+				</div>
 			</div>
-			
-			<div class="rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numfueldeliveryboy %></div>
-				<div class="fs-5">Fuel Delivery Boys</div>
-			</div>
-			
-			<!-- <div class="bg-warning rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numAcceptedDonations %></div>
-				<div class="fs-5">donations to be assigned to mechanic</div>
-			</div> -->
-			
-			<div class="danger rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numPendingDonations %></div>
-				<div class="fs-5">Pending Deliveries</div>
-			</div>
-			
-			<div class="rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numCollectedDonations %></div>
-				<div class="fs-5">Complete Deliveries</div>
-			</div>
-			
 		</div>
-		
+
+		<!-- Stats Section -->
+		<div class="stats-section">
+			<h5 class="section-title"><i class="fas fa-chart-bar me-2" style="color: #8e44ad;"></i>Platform Overview</h5>
+			<div class="row g-4">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="stat-card">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+							<i class="fas fa-users"></i>
+						</div>
+						<div class="stat-value"><%= numcustomers %></div>
+						<div class="stat-label">Customers</div>
+						<span class="stat-badge users"><i class="fas fa-user me-1"></i>Total</span>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="stat-card">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);">
+							<i class="fas fa-tools"></i>
+						</div>
+						<div class="stat-value"><%= nummechanics %></div>
+						<div class="stat-label">Mechanics</div>
+						<span class="stat-badge users"><i class="fas fa-wrench me-1"></i>Total</span>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="stat-card">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+							<i class="fas fa-gas-pump"></i>
+						</div>
+						<div class="stat-value"><%= numfueldeliveryboy %></div>
+						<div class="stat-label">Fuel Delivery Boys</div>
+						<span class="stat-badge success"><i class="fas fa-truck me-1"></i>Total</span>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="stat-card">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);">
+							<i class="fas fa-hourglass-half"></i>
+						</div>
+						<div class="stat-value"><%= numPendingDonations %></div>
+						<div class="stat-label">Pending Requests</div>
+						<span class="stat-badge pending"><i class="fas fa-clock me-1"></i>Waiting</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quick Actions -->
+		<div class="quick-actions">
+			<h5 class="section-title"><i class="fas fa-bolt me-2" style="color: #f39c12;"></i>Quick Actions</h5>
+			<div class="row g-3">
+				<div class="col-lg-3 col-md-6">
+					<a href="/admin/verify-users" class="action-btn">
+						<div class="action-icon">
+							<i class="fas fa-user-check"></i>
+						</div>
+						<div class="action-text">
+							<h6>Verify Users</h6>
+							<p>Approve new registrations</p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<a href="/admin/donations/pending" class="action-btn">
+						<div class="action-icon">
+							<i class="fas fa-clipboard-list"></i>
+						</div>
+						<div class="action-text">
+							<h6>Pending Requests</h6>
+							<p>View & assign deliveries</p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<a href="/admin/fuelrequests" class="action-btn">
+						<div class="action-icon">
+							<i class="fas fa-gas-pump"></i>
+						</div>
+						<div class="action-text">
+							<h6>Fuel Requests</h6>
+							<p>Manage fuel deliveries</p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<a href="/admin/profile" class="action-btn">
+						<div class="action-icon">
+							<i class="fas fa-user-cog"></i>
+						</div>
+						<div class="action-text">
+							<h6>My Profile</h6>
+							<p>Update admin settings</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Info Cards Row -->
+		<div class="info-cards-section">
+			<div class="row g-4">
+				<div class="col-lg-6">
+					<div class="info-card">
+						<h5><i class="fas fa-tasks"></i> Admin Responsibilities</h5>
+						<ul>
+							<li><strong>User Verification:</strong> Review and approve mechanic and fuel delivery boy registrations before they can access the system.</li>
+							<li><strong>Request Management:</strong> Monitor and assign service requests to appropriate service providers based on location and availability.</li>
+							<li><strong>Quality Control:</strong> Ensure all service providers maintain high standards and handle customer complaints appropriately.</li>
+							<li><strong>Platform Oversight:</strong> Keep track of all activities and ensure smooth operation of the FuelAid platform.</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="platform-stats">
+						<h5><i class="fas fa-server"></i> System Status</h5>
+						<div class="stat-row">
+							<span class="label">Platform Status</span>
+							<span class="value"><i class="fas fa-circle me-1" style="font-size: 10px;"></i> Online</span>
+						</div>
+						<div class="stat-row">
+							<span class="label">Total Verified Users</span>
+							<span class="value"><%= numcustomers + nummechanics + numfueldeliveryboy %></span>
+						</div>
+						<div class="stat-row">
+							<span class="label">Active Service Providers</span>
+							<span class="value"><%= nummechanics + numfueldeliveryboy %></span>
+						</div>
+						<div class="stat-row">
+							<span class="label">Completion Rate</span>
+							<span class="value"><%= numCollectedDonations > 0 ? Math.round((numCollectedDonations / (numCollectedDonations + numPendingDonations)) * 100) : 0 %>%</span>
+						</div>
+						<div class="stat-row">
+							<span class="label">Pending Actions</span>
+							<span class="value" style="color: #f39c12;"><%= numPendingDonations %> requests</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Motivational Quote -->
+		<div class="quote-section">
+			<div class="quote-card">
+				<blockquote>
+					<p>"With great power comes great responsibility. As an admin, you are the backbone of FuelAid, ensuring that every customer gets the help they need, when they need it."</p>
+					<footer>— FuelAid Platform</footer>
+				</blockquote>
+			</div>
+		</div>
+
 	</div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
+
+<script>
+	// Clock and Date Update
+	function updateClock() {
+		const now = new Date();
+		const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+		const date = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+		document.getElementById('clock').textContent = time;
+		document.getElementById('currentDate').textContent = date;
+	}
+
+	updateClock();
+	setInterval(updateClock, 1000);
+</script>
+
 </body>
 </html>

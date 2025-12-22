@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/assets/css/sidebar.css">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
 	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
 </head>
@@ -41,167 +40,545 @@
 	<%- include('../partials/alerts') %>
 
 <style>
-    header{
-		background-color: #403d3d!important;
+	/* Header Styling */
+	header {
+		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
 	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-	background-color: #403d3d!important;
-      background-image: none !important;
-      box-shadow: none !important;
-   }
-   #main-wrapper{
-	overflow-y: scroll;  
-}
-
-#main-wrapper::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
-.butn{
-  background-color: #e69500 !important;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      width:100%;
-}
-.butn:hover {
-      background: #f1c999;
-    }
+	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
+		background-image: none !important;
+		box-shadow: none !important;
+	}
 	.logo-container img {
-    height: 0.9em;
-    width: auto;
-}
-.info{
-	color: #fc983c;
-}
-img.rounded-circle {
-    object-fit: cover;
-    border: 2px solid #e69500;
-}
+		height: 0.9em;
+		width: auto;
+	}
 
-   </style>
+	#main-wrapper {
+		overflow-y: scroll;
+		background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+		min-height: 100vh;
+	}
+
+	#main-wrapper::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Animations */
+	@keyframes slideInDown {
+		from {
+			opacity: 0;
+			transform: translateY(-30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeInScale {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	/* Page Header */
+	.page-header {
+		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+		padding: 25px 30px;
+		border-radius: 15px;
+		margin: 20px;
+		box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.page-header h5 {
+		color: white;
+		margin: 0;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	.page-header i {
+		font-size: 24px;
+		color: white;
+	}
+
+	/* Profile Container */
+	.profile-container {
+		padding: 0 20px 30px;
+		animation: slideInUp 0.6s ease-out;
+	}
+
+	/* Profile Header Card */
+	.profile-header-card {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		border-radius: 20px;
+		padding: 40px;
+		margin-bottom: 25px;
+		box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+		position: relative;
+		overflow: hidden;
+		text-align: center;
+	}
+
+	.profile-header-card::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		right: -30%;
+		width: 400px;
+		height: 400px;
+		background: rgba(255,255,255,0.1);
+		border-radius: 50%;
+	}
+
+	.profile-header-card::after {
+		content: '';
+		position: absolute;
+		bottom: -30%;
+		left: -20%;
+		width: 300px;
+		height: 300px;
+		background: rgba(255,255,255,0.05);
+		border-radius: 50%;
+	}
+
+	.profile-avatar-wrapper {
+		position: relative;
+		z-index: 1;
+		display: inline-block;
+	}
+
+	.profile-avatar {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 5px solid rgba(255,255,255,0.3);
+		box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+		transition: all 0.3s ease;
+	}
+
+	.profile-avatar:hover {
+		transform: scale(1.05);
+		border-color: rgba(255,255,255,0.5);
+	}
+
+	.profile-avatar-edit {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		width: 40px;
+		height: 40px;
+		background: white;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+		transition: all 0.3s ease;
+	}
+
+	.profile-avatar-edit:hover {
+		transform: scale(1.1);
+		background: #f8f9fa;
+	}
+
+	.profile-avatar-edit i {
+		color: #667eea;
+		font-size: 16px;
+	}
+
+	.profile-name {
+		color: white;
+		font-size: 28px;
+		font-weight: 700;
+		margin-top: 20px;
+		margin-bottom: 5px;
+		position: relative;
+		z-index: 1;
+	}
+
+	.profile-role {
+		color: rgba(255,255,255,0.8);
+		font-size: 16px;
+		position: relative;
+		z-index: 1;
+	}
+
+	.profile-role i {
+		margin-right: 5px;
+	}
+
+	/* Form Card */
+	.form-card {
+		background: white;
+		border-radius: 20px;
+		padding: 35px;
+		margin-bottom: 25px;
+		box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+		border: 1px solid #e9ecef;
+		animation: fadeInScale 0.6s ease-out;
+		transition: all 0.3s ease;
+	}
+
+	.form-card:hover {
+		box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+	}
+
+	.section-header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 25px;
+		padding-bottom: 15px;
+		border-bottom: 2px solid #e9ecef;
+	}
+
+	.section-header .icon-wrapper {
+		width: 45px;
+		height: 45px;
+		border-radius: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.section-header .icon-wrapper i {
+		font-size: 20px;
+		color: white;
+	}
+
+	.section-header h5 {
+		margin: 0;
+		font-size: 20px;
+		font-weight: 700;
+		color: #2c3e50;
+	}
+
+	/* Form Controls */
+	.form-label {
+		font-weight: 600;
+		color: #2c3e50;
+		margin-bottom: 8px;
+		font-size: 14px;
+	}
+
+	.form-label i {
+		margin-right: 8px;
+		color: #1e3c72;
+	}
+
+	.form-control {
+		border: 2px solid #e9ecef;
+		border-radius: 12px;
+		padding: 12px 15px;
+		font-size: 15px;
+		transition: all 0.3s ease;
+	}
+
+	.form-control:focus {
+		border-color: #1e3c72;
+		box-shadow: 0 0 0 4px rgba(30, 60, 114, 0.1);
+	}
+
+	.form-control:disabled {
+		background: #f8f9fa;
+		color: #6c757d;
+	}
+
+	/* Gender Radio Buttons */
+	.gender-options {
+		display: flex;
+		gap: 20px;
+		margin-top: 10px;
+	}
+
+	.gender-option {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 25px;
+		border: 2px solid #e9ecef;
+		border-radius: 12px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.gender-option:hover {
+		border-color: #1e3c72;
+		background: #f8f9ff;
+	}
+
+	.gender-option.selected {
+		border-color: #1e3c72;
+		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+		color: white;
+	}
+
+	.gender-option input {
+		display: none;
+	}
+
+	.gender-option i {
+		font-size: 18px;
+	}
+
+	/* Submit Button */
+	.submit-btn {
+		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+		color: white;
+		border: none;
+		border-radius: 12px;
+		padding: 15px 40px;
+		font-size: 16px;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 8px 20px rgba(30, 60, 114, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		width: 100%;
+		max-width: 300px;
+		margin: 30px auto 0;
+	}
+
+	.submit-btn:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 12px 30px rgba(30, 60, 114, 0.4);
+	}
+
+	.submit-btn:active {
+		transform: translateY(0);
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.page-header {
+			margin: 15px 10px;
+			padding: 20px;
+		}
+
+		.profile-container {
+			padding: 0 10px 20px;
+		}
+
+		.profile-header-card {
+			padding: 30px 20px;
+		}
+
+		.profile-avatar {
+			width: 120px;
+			height: 120px;
+		}
+
+		.form-card {
+			padding: 25px 20px;
+		}
+
+		.gender-options {
+			flex-direction: column;
+			gap: 10px;
+		}
+	}
+</style>
+
 <main>
 	<%- include('../partials/mechanicSidebar') %>
 	
 	<div id="main-wrapper">
-		
-		<div class="bg-white shadow-sm p-3">
-			<br>
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Profile</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-user-cog"></i>
+			<h5>My Profile</h5>
 		</div>
-		
-		<form action="/mechanic/profile?_method=PUT" method="POST" enctype="multipart/form-data" class="w-75 border ms-3 my-3 p-4 bg-white rounded-2 shadow" style="min-width: 400px;">
-			<h5 class="mb-3 info fw-bold">Basic Information</h5>
 
-			<div class="row">
-				<div class="mb-4 text-center">
-					<!-- Profile Picture with Styling -->
-					<img id="profilePreview"
-						 src="<%= currentUser.profilePic %>"
-						 alt="Profile Picture"
-						 class="rounded-circle mb-3 shadow border border-2"
-						 style="object-fit: cover; width: 120px; height: 120px;">
-			
-					<!-- Upload Input -->
-					<div class="mt-2">
-						<label for="profilePic" class="form-label fw-bold">Upload Profile Picture</label>
-						<input class="form-control" 
-							   type="file" 
-							   name="profilePic" 
-							   id="profilePic" 
-							   accept="image/*">
+		<form action="/mechanic/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+			<div class="profile-container">
+				<!-- Profile Header Card -->
+				<div class="profile-header-card">
+					<div class="profile-avatar-wrapper">
+						<img id="profilePreview"
+							 src="<%= currentUser.profilePic || '/assets/images/default-avatar.png' %>"
+							 alt="Profile Picture"
+							 class="profile-avatar">
+						<label for="profilePic" class="profile-avatar-edit">
+							<i class="fas fa-camera"></i>
+						</label>
+						<input type="file" name="profilePic" id="profilePic" accept="image/*" style="display: none;">
+					</div>
+					<h3 class="profile-name"><%= currentUser.firstName %> <%= currentUser.lastName %></h3>
+					<p class="profile-role"><i class="fas fa-tools"></i>Professional Mechanic</p>
+				</div>
+
+				<!-- Basic Information Card -->
+				<div class="form-card">
+					<div class="section-header">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+							<i class="fas fa-user"></i>
+						</div>
+						<h5>Basic Information</h5>
+					</div>
+
+					<div class="row g-4">
+						<div class="col-md-6">
+							<label for="first-name" class="form-label"><i class="fas fa-id-card"></i>First Name</label>
+							<input type="text" name="mechanic[firstName]" class="form-control" id="first-name" placeholder="Enter first name" value="<%= currentUser.firstName %>" required>
+						</div>
+						<div class="col-md-6">
+							<label for="last-name" class="form-label"><i class="fas fa-id-card"></i>Last Name</label>
+							<input type="text" name="mechanic[lastName]" class="form-control" id="last-name" placeholder="Enter last name" value="<%= currentUser.lastName %>" required>
+						</div>
+						<div class="col-12">
+							<label for="email" class="form-label"><i class="fas fa-envelope"></i>Email Address</label>
+							<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
+						</div>
+						<div class="col-12">
+							<label class="form-label"><i class="fas fa-venus-mars"></i>Gender</label>
+							<div class="gender-options">
+								<label class="gender-option <%= currentUser.gender === 'male' ? 'selected' : '' %>">
+									<input type="radio" name="mechanic[gender]" value="male" <%= currentUser.gender === 'male' ? 'checked' : '' %>>
+									<i class="fas fa-mars"></i>
+									<span>Male</span>
+								</label>
+								<label class="gender-option <%= currentUser.gender === 'female' ? 'selected' : '' %>">
+									<input type="radio" name="mechanic[gender]" value="female" <%= currentUser.gender === 'female' ? 'checked' : '' %>>
+									<i class="fas fa-venus"></i>
+									<span>Female</span>
+								</label>
+							</div>
+						</div>
+						<div class="col-12">
+							<label for="address" class="form-label"><i class="fas fa-map-marker-alt"></i>Address</label>
+							<input type="text" name="mechanic[address]" class="form-control" id="address" placeholder="Enter your full address" value="<%= currentUser.address %>">
+						</div>
+						<div class="col-12">
+							<label for="phone" class="form-label"><i class="fas fa-phone"></i>Phone Number</label>
+							<input type="tel" name="mechanic[phone]" class="form-control" id="phone" placeholder="Enter phone number" value="<%= currentUser.phone %>">
+						</div>
 					</div>
 				</div>
-				
-				<div class="col-sm-6 mb-4">
-					<label for="first-name" class="form-label fw-bold">First Name</label>
-					<input type="text" name="mechanic[firstName]" class="form-control" id="first-name" placeholder="Enter first name.." value="<%= currentUser.firstName %>" required>
+
+				<!-- Professional Details Card -->
+				<div class="form-card">
+					<div class="section-header">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+							<i class="fas fa-briefcase"></i>
+						</div>
+						<h5>Professional Details</h5>
+					</div>
+
+					<div class="row g-4">
+						<div class="col-md-6">
+							<label for="experience" class="form-label"><i class="fas fa-award"></i>Years of Experience</label>
+							<input type="number" name="mechanic[experience]" class="form-control" id="experience" placeholder="e.g. 5" value="<%= currentUser.experience || '' %>">
+						</div>
+						<div class="col-md-6">
+							<label for="availability" class="form-label"><i class="fas fa-clock"></i>Available Time Slots</label>
+							<input type="text" name="mechanic[availability]" class="form-control" id="availability" placeholder="e.g. 9am - 6pm" value="<%= currentUser.availability || '' %>">
+						</div>
+					</div>
 				</div>
 
-				
-				<div class="col-sm-6 mb-4">
-					<label for="last-name" class="form-label fw-bold">Last Name</label>
-					<input type="text" name="mechanic[lastName]" class="form-control" id="last-name" placeholder="Enter last name.." value="<%= currentUser.lastName %>" required>
+				<!-- Vehicle Information Card -->
+				<div class="form-card">
+					<div class="section-header">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+							<i class="fas fa-car"></i>
+						</div>
+						<h5>Vehicle Information</h5>
+					</div>
+
+					<div class="row g-4">
+						<div class="col-md-6">
+							<label for="license-plate" class="form-label"><i class="fas fa-id-badge"></i>Vehicle Number</label>
+							<input type="text" name="mechanic[licensePlate]" class="form-control" id="license-plate" placeholder="e.g. UP16 AB 1234" value="<%= currentUser.licensePlate || '' %>">
+						</div>
+						<div class="col-md-6">
+							<label for="vehicleModel" class="form-label"><i class="fas fa-motorcycle"></i>Vehicle Model</label>
+							<input type="text" name="mechanic[vehicleModel]" class="form-control" id="vehicleModel" placeholder="e.g. Honda Activa, Hyundai i10" value="<%= currentUser.vehicleModel || '' %>">
+						</div>
+					</div>
 				</div>
-			</div>
-			
-			
-			<div class="mb-4">
-				<label for="email" class="form-label fw-bold">Email</label>
-				<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
-			</div>
-			
-			<div class="mb-4">
-				<span class="d-inline-block me-2 fw-bold">Gender:</span>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="mechanic[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%> checked <%}%> >
-					<label class="form-check-label fw-bold" for="male">Male</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="mechanic[gender]" id="female" value="female" <% if(currentUser.gender=='female'){%> checked <%}%> >
-					<label class="form-check-label fw-bold" for="female">Female</label>
-				</div>
-			</div>
-			
-			<div class="mb-4">
-				<label for="address" class="form-label fw-bold">Address</label>
-				<input type="text" name="mechanic[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>">
-			</div>
-			
-			<div class="mb-4">
-				<label for="phone" class="form-label fw-bold">Phone</label>
-				<input type="number" name="mechanic[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>">
-			</div>
-			
-			<h5 class="mb-3 info fw-bold">Professional Details</h5>
-		
-			<div class="mb-3">
-				<label for="experience" class="form-label fw-bold">Years of Experience</label>
-				<input type="number" name="mechanic[experience]" class="form-control" id="experience" value="<%= currentUser.experience || '' %>">
-			</div>
-		
-		
-			<div class="mb-3">
-				<label for="availability" class="form-label fw-bold">Available Time Slots</label>
-				<input type="text" name="mechanic[availability]" class="form-control" id="availability" placeholder="e.g. 9am - 6pm" value="<%= currentUser.availability || '' %>">
-			</div>
 
-			<h5 class="mb-3 info fw-bold">Vehicle Information</h5>
-
-<div class="mb-3">
-    <label for="vehicleType" class="form-label fw-bold">Vehicle Number</label>
-    <input type="text" name="mechanic[licensePlate]" class="form-control" id="license-plate"  placeholder="e.g. UP16 AB 1234" value="<%= currentUser.licensePlate || '' %>">
-</div>
-
-<div class="mb-3">
-    <label for="vehicleModel" class="form-label fw-bold">Vehicle Model</label>
-    <input type="text" name="mechanic[vehicleModel]" class="form-control" id="vehicleModel" placeholder="e.g. Honda Activa, Hyundai i10" value="<%= currentUser.vehicleModel || '' %>">
-</div>
-
-			<button type="submit" class="butn btn w-75 d-block m-auto mt-4">Update</button>
+				<!-- Submit Button -->
+				<button type="submit" class="submit-btn">
+					<i class="fas fa-save"></i>
+					Update Profile
+				</button>
+			</div>
 		</form>
-		
-		
-		
 	</div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
-	<script>
-		const fileInput = document.getElementById('profilePic');
-		const previewImg = document.getElementById('profilePreview');
-	
-		fileInput.addEventListener('change', function () {
-			const file = this.files[0];
-			if (file && file.type.startsWith('image/')) {
-				const reader = new FileReader();
-				reader.onload = function (e) {
-					previewImg.src = e.target.result;
-				};
-				reader.readAsDataURL(file);
-			}
+<script src="/assets/js/script.js"></script>
+<script>
+	// Profile Picture Preview and Sync
+	const fileInput = document.getElementById('profilePic');
+	const previewImg = document.getElementById('profilePreview');
+
+	fileInput.addEventListener('change', function () {
+		const file = this.files[0];
+		if (file && file.type.startsWith('image/')) {
+			const reader = new FileReader();
+			reader.onload = function (e) {
+				const imageData = e.target.result;
+				previewImg.src = imageData;
+				// Store in localStorage temporarily for header update
+				localStorage.setItem('profilePhotoPreview', imageData);
+			};
+			reader.readAsDataURL(file);
+		}
+	});
+
+	// Gender Selection
+	const genderOptions = document.querySelectorAll('.gender-option');
+	genderOptions.forEach(option => {
+		option.addEventListener('click', function() {
+			genderOptions.forEach(opt => opt.classList.remove('selected'));
+			this.classList.add('selected');
 		});
-	</script>
+	});
+
+	// Form submission handler to sync header
+	document.querySelector('form').addEventListener('submit', function() {
+		// Clear the localStorage preview when actually submitting
+		localStorage.removeItem('profilePhotoPreview');
+	});
+
+	// Check for any stored preview on page load
+	window.addEventListener('load', function() {
+		const storedPreview = localStorage.getItem('profilePhotoPreview');
+		if (storedPreview) {
+			previewImg.src = storedPreview;
+		}
+	});
+</script>
 </body>
 </html>
 

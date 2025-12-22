@@ -68,6 +68,8 @@ const middleware = {
 				return res.redirect("/customer/dashboard");
 			if(req.user.role == "mechanic")
 				return res.redirect("/mechanic/dashboard");
+			if(req.user.role == "fueldeliveryboy")
+				return res.redirect("/fueldeliveryboy/dashboard");
 		}
 		next();
 	},

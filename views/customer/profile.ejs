@@ -70,18 +70,35 @@
     display: none;
   }
 
-  .bg-white.shadow-sm.p-3 {
-    background: white !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    border-radius: var(--card-radius);
-    margin: 1rem;
-    animation: slideDown 0.6s ease-out;
+  /* Page Header */
+  .page-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 25px 30px;
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 8px 25px rgba(91, 95, 199, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: slideInDown 0.6s ease-out;
   }
 
-  @keyframes slideDown {
+  .page-header h5 {
+    color: white;
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .page-header i {
+    font-size: 24px;
+    color: white;
+  }
+
+  @keyframes slideInDown {
     from {
       opacity: 0;
-      transform: translateY(-20px);
+      transform: translateY(-30px);
     }
     to {
       opacity: 1;
@@ -89,15 +106,7 @@
     }
   }
 
-  form.w-75 {
-    border: none !important;
-    box-shadow: var(--card-shadow) !important;
-    background: white !important;
-    border-radius: var(--card-radius) !important;
-    animation: slideUp 0.6s ease-out 0.2s both;
-  }
-
-  @keyframes slideUp {
+  @keyframes slideInUp {
     from {
       opacity: 0;
       transform: translateY(30px);
@@ -108,198 +117,447 @@
     }
   }
 
-  form.w-75 .row {
-    animation: fadeInUp 0.6s ease-out 0.3s both;
-  }
-
-  form.w-75 .mb-4 {
-    animation: fadeInUp 0.6s ease-out both;
-  }
-
-  form.w-75 .mb-4:nth-child(1) { animation-delay: 0.4s; }
-  form.w-75 .mb-4:nth-child(2) { animation-delay: 0.5s; }
-  form.w-75 .mb-4:nth-child(3) { animation-delay: 0.6s; }
-  form.w-75 .mb-4:nth-child(4) { animation-delay: 0.7s; }
-  form.w-75 .mb-4:nth-child(5) { animation-delay: 0.8s; }
-  form.w-75 .mb-4:nth-child(6) { animation-delay: 0.9s; }
-  form.w-75 .mb-4:nth-child(7) { animation-delay: 1.0s; }
-  form.w-75 .mb-4:nth-child(8) { animation-delay: 1.1s; }
-
-  @keyframes fadeInUp {
+  @keyframes fadeInScale {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: scale(0.95);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: scale(1);
     }
   }
 
+  /* Profile Container */
+  .profile-container {
+    padding: 0 20px 30px;
+  }
+
+  /* Profile Header Card */
+  .profile-header-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 25px;
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    animation: slideInUp 0.6s ease-out;
+  }
+
+  .profile-header-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+
+  .profile-avatar-wrapper {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+  }
+
+  .profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba(255,255,255,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .profile-avatar:hover {
+    transform: scale(1.05);
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  .profile-avatar-edit {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .profile-avatar-edit:hover {
+    transform: scale(1.1);
+    background: #f8f9fa;
+  }
+
+  .profile-avatar-edit i {
+    color: #667eea;
+    font-size: 16px;
+  }
+
+  .profile-name {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .profile-role {
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .profile-role i {
+    margin-right: 5px;
+  }
+
+  /* Form Card */
+  .form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+    animation: fadeInScale 0.6s ease-out;
+    transition: all 0.3s ease;
+  }
+
+  .form-card:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  .section-header .icon-wrapper {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-header .icon-wrapper i {
+    font-size: 20px;
+    color: white;
+  }
+
+  .section-header h5 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+
+  /* Form Controls */
   .form-label {
-    font-weight: 700 !important;
-    color: #1a1a2e !important;
-    font-size: 0.9rem !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .form-label i {
+    margin-right: 8px;
+    color: var(--primary-color);
   }
 
   .form-control {
-    padding: 0.9rem 1.2rem !important;
-    border: 2px solid #e2e8f0 !important;
-    border-radius: 8px !important;
-    font-size: 1rem !important;
-    transition: all 0.3s ease !important;
-    background: #fafbfc !important;
-    color: #333 !important;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 12px 15px;
+    font-size: 15px;
+    transition: all 0.3s ease;
   }
 
   .form-control:focus {
-    border-color: var(--primary-color) !important;
-    box-shadow: 0 0 0 4px rgba(91, 95, 199, 0.1) !important;
-    background: white !important;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(91, 95, 199, 0.1);
   }
 
   .form-control:disabled {
-    background: #f0f0f0 !important;
-    border-color: #ddd !important;
-    color: #666 !important;
+    background: #f8f9fa;
+    color: #6c757d;
   }
 
-  .form-check-input {
-    border: 2px solid #e2e8f0 !important;
-    width: 1.25em !important;
-    height: 1.25em !important;
-    transition: all 0.3s ease !important;
+  /* Gender Radio Buttons */
+  .gender-options {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
   }
 
-  .form-check-input:checked {
-    background-color: var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
+  .gender-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  .form-check-input:hover {
-    border-color: var(--primary-color) !important;
+  .gender-option:hover {
+    border-color: var(--primary-color);
+    background: #f8f9ff;
   }
 
-  .form-check-label {
-    color: #333 !important;
-    margin-left: 0.5rem !important;
+  .gender-option.selected {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
   }
 
-  .butn {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    width: 100% !important;
-    padding: 1rem 2rem !important;
-    font-weight: 600 !important;
-    font-size: 1rem !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 15px rgba(91, 95, 199, 0.3) !important;
-    cursor: pointer !important;
-    animation: slideUp 0.6s ease-out 1.2s both;
+  .gender-option input {
+    display: none;
   }
 
-  .butn:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 25px rgba(91, 95, 199, 0.4) !important;
-    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
+  .gender-option i {
+    font-size: 18px;
   }
 
-  .butn:active {
-    transform: translateY(-1px) !important;
+  /* Submit Button */
+  .submit-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(91, 95, 199, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin: 30px auto 0;
   }
 
-  .color-theme {
-    color: var(--primary-color) !important;
-    font-weight: 700 !important;
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(91, 95, 199, 0.4);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
   }
 
   .logo-container img {
     height: 0.9em;
     width: auto;
   }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .page-header {
+      margin: 15px 10px;
+      padding: 20px;
+    }
+
+    .profile-container {
+      padding: 0 10px 20px;
+    }
+
+    .profile-header-card {
+      padding: 30px 20px;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+    }
+
+    .form-card {
+      padding: 25px 20px;
+    }
+
+    .gender-options {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 </style>
 <main>
 	<%- include('../partials/customerSidebar') %>
 	
 	<div id="main-wrapper">
-		
-		<div class="bg-white shadow-sm p-3">
-			<br>
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Profile</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-user-cog"></i>
+			<h5>My Profile</h5>
 		</div>
-		
-		<form action="/customer/profile?_method=PUT" method="POST" class="w-75 border ms-3 my-3 p-4 bg-white rounded-2 shadow" style="min-width: 400px;">
-			
-			<div class="row">
-				<div class="col-sm-6 mb-4">
-					<label for="first-name" class="form-label fw-bold">First Name</label>
-					<input type="text" name="customer[firstName]" class="form-control" id="first-name" placeholder="Enter first name.." value="<%= currentUser.firstName %>" required>
+
+		<form action="/customer/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+			<div class="profile-container">
+				<!-- Profile Header Card -->
+				<div class="profile-header-card">
+					<div class="profile-avatar-wrapper">
+						<img id="profilePreview"
+							 src="<%= currentUser.profilePic || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%22100%22 fill=%22%23667eea%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2270%22 fill=%22%23fff%22%3E' + currentUser.firstName.charAt(0).toUpperCase() + '%3C/text%3E%3C/svg%3E' %>"
+							 alt="Profile Picture"
+							 class="profile-avatar">
+						<label for="profilePic" class="profile-avatar-edit">
+							<i class="fas fa-camera"></i>
+						</label>
+						<input type="file" name="profilePic" id="profilePic" accept="image/*" style="display: none;">
+					</div>
+					<h3 class="profile-name"><%= currentUser.firstName %> <%= currentUser.lastName %></h3>
+					<p class="profile-role"><i class="fas fa-user"></i>Customer</p>
 				</div>
-				
-				<div class="col-sm-6 mb-4">
-					<label for="last-name" class="form-label fw-bold">Last Name</label>
-					<input type="text" name="customer[lastName]" class="form-control" id="last-name" placeholder="Enter last name.." value="<%= currentUser.lastName %>" required>
+
+				<!-- Basic Information Card -->
+				<div class="form-card">
+					<div class="section-header">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+							<i class="fas fa-user"></i>
+						</div>
+						<h5>Basic Information</h5>
+					</div>
+
+					<div class="row g-4">
+						<div class="col-md-6">
+							<label for="first-name" class="form-label"><i class="fas fa-id-card"></i>First Name</label>
+							<input type="text" name="customer[firstName]" class="form-control" id="first-name" placeholder="Enter first name" value="<%= currentUser.firstName %>" required>
+						</div>
+						<div class="col-md-6">
+							<label for="last-name" class="form-label"><i class="fas fa-id-card"></i>Last Name</label>
+							<input type="text" name="customer[lastName]" class="form-control" id="last-name" placeholder="Enter last name" value="<%= currentUser.lastName %>" required>
+						</div>
+						<div class="col-12">
+							<label for="email" class="form-label"><i class="fas fa-envelope"></i>Email Address</label>
+							<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
+						</div>
+						<div class="col-12">
+							<label class="form-label"><i class="fas fa-venus-mars"></i>Gender</label>
+							<div class="gender-options">
+								<label class="gender-option <%= currentUser.gender === 'male' ? 'selected' : '' %>">
+									<input type="radio" name="customer[gender]" value="male" <%= currentUser.gender === 'male' ? 'checked' : '' %>>
+									<i class="fas fa-mars"></i>
+									<span>Male</span>
+								</label>
+								<label class="gender-option <%= currentUser.gender === 'female' ? 'selected' : '' %>">
+									<input type="radio" name="customer[gender]" value="female" <%= currentUser.gender === 'female' ? 'checked' : '' %>>
+									<i class="fas fa-venus"></i>
+									<span>Female</span>
+								</label>
+							</div>
+						</div>
+						<div class="col-12">
+							<label for="address" class="form-label"><i class="fas fa-map-marker-alt"></i>Address</label>
+							<input type="text" name="customer[address]" class="form-control" id="address" placeholder="Enter your full address" value="<%= currentUser.address %>">
+						</div>
+						<div class="col-12">
+							<label for="phone" class="form-label"><i class="fas fa-phone"></i>Phone Number</label>
+							<input type="tel" name="customer[phone]" class="form-control" id="phone" placeholder="Enter phone number" value="<%= currentUser.phone %>">
+						</div>
+					</div>
 				</div>
-			</div>
-			
-			
-			<div class="mb-4">
-				<label for="email" class="form-label fw-bold">Email</label>
-				<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
-			</div>
-			
-			<div class="mb-4">
-				<span class="d-inline-block me-2 fw-bold">Gender:</span>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="customer[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%> checked <%}%> >
-					<label class="form-check-label fw-bold" for="male">Male</label>
+
+				<!-- Vehicle Information Card -->
+				<div class="form-card">
+					<div class="section-header">
+						<div class="icon-wrapper" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+							<i class="fas fa-car"></i>
+						</div>
+						<h5>Vehicle Information</h5>
+					</div>
+
+					<div class="row g-4">
+						<div class="col-md-6">
+							<label for="vehicle-type" class="form-label"><i class="fas fa-car-side"></i>Vehicle Type</label>
+							<input type="text" name="customer[vehicleType]" class="form-control" id="vehicle-type" placeholder="e.g. Bike, Car, Truck" value="<%= currentUser.vehicleType || '' %>">
+						</div>
+						<div class="col-md-6">
+							<label for="vehicle-model" class="form-label"><i class="fas fa-motorcycle"></i>Vehicle Model</label>
+							<input type="text" name="customer[vehicleModel]" class="form-control" id="vehicle-model" placeholder="e.g. Honda City, Activa 6G" value="<%= currentUser.vehicleModel || '' %>">
+						</div>
+						<div class="col-12">
+							<label for="license-plate" class="form-label"><i class="fas fa-id-badge"></i>License Plate Number</label>
+							<input type="text" name="customer[licensePlate]" class="form-control" id="license-plate" placeholder="e.g. UP16 AB 1234" value="<%= currentUser.licensePlate || '' %>">
+						</div>
+					</div>
 				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="customer[gender]" id="female" value="female" <% if(currentUser.gender=='female'){%> checked <%}%> >
-					<label class="form-check-label fw-bold" for="female">Female</label>
-				</div>
+
+				<!-- Submit Button -->
+				<button type="submit" class="submit-btn">
+					<i class="fas fa-save"></i>
+					Update Profile
+				</button>
 			</div>
-			
-			<div class="mb-4">
-				<label for="address" class="form-label fw-bold">Address</label>
-				<input type="text" name="customer[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>">
-			</div>
-			
-			<div class="mb-4">
-				<label for="phone" class="form-label fw-bold">Phone</label>
-				<input type="number" name="customer[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>">
-			</div>
-			
-			<div class="mb-4">
-				<label for="vehicle-type" class="form-label fw-bold">Vehicle Type</label>
-				<input type="text" name="customer[vehicleType]" class="form-control" id="vehicle-type" placeholder="e.g. Bike, Car, Truck" value="<%= currentUser.vehicleType %>">
-			</div>
-			
-			<div class="mb-4">
-				<label for="vehicle-model" class="form-label fw-bold">Vehicle Model</label>
-				<input type="text" name="customer[vehicleModel]" class="form-control" id="vehicle-model" placeholder="e.g. Honda City, Activa 6G" value="<%= currentUser.vehicleModel %>">
-			</div>
-			
-			<div class="mb-4">
-				<label for="license-plate" class="form-label fw-bold">License Plate Number</label>
-				<input type="text" name="customer[licensePlate]" class="form-control" id="license-plate" placeholder="e.g. UP16 AB 1234" value="<%= currentUser.licensePlate %>">
-			</div>
-			
-			<button type="submit" class="btn butn w-75 d-block m-auto mt-4">Update</button>
 		</form>
-		
-		
-		
 	</div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
+<script>
+	// Profile Picture Preview and Sync
+	const fileInput = document.getElementById('profilePic');
+	const previewImg = document.getElementById('profilePreview');
+
+	fileInput.addEventListener('change', function () {
+		const file = this.files[0];
+		if (file && file.type.startsWith('image/')) {
+			const reader = new FileReader();
+			reader.onload = function (e) {
+				const imageData = e.target.result;
+				previewImg.src = imageData;
+				// Store in localStorage temporarily for header update
+				localStorage.setItem('profilePhotoPreview', imageData);
+			};
+			reader.readAsDataURL(file);
+		}
+	});
+
+	// Gender Selection
+	const genderOptions = document.querySelectorAll('.gender-option');
+	genderOptions.forEach(option => {
+		option.addEventListener('click', function() {
+			genderOptions.forEach(opt => opt.classList.remove('selected'));
+			this.classList.add('selected');
+		});
+	});
+
+	// Form submission handler to sync header
+	document.querySelector('form').addEventListener('submit', function() {
+		// Clear the localStorage preview when actually submitting
+		localStorage.removeItem('profilePhotoPreview');
+	});
+
+	// Check for any stored preview on page load
+	window.addEventListener('load', function() {
+		const storedPreview = localStorage.getItem('profilePhotoPreview');
+		if (storedPreview) {
+			previewImg.src = storedPreview;
+		}
+	});
+</script>
 </body>
 </html>

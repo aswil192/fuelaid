@@ -9,29 +9,65 @@
 <body>
 	<style>
 		#sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Adjust as needed for spacing between items */
-}
-body {
-  font-family: "Poppins", Arial, sans-serif;
-  /* background-color: #F1C999; */
-  overflow-y: scroll;             /* Enable scrolling */
-  /* scrollbar-width: none;          For Firefox */
-}
-body::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
+		    display: flex;
+		    flex-direction: column;
+		    gap: 10px;
+		}
+		body {
+		  font-family: "Poppins", Arial, sans-serif;
+		  overflow-y: scroll;
+		}
+		body::-webkit-scrollbar {
+		  display: none;
+		}
 
-#sidebar{
-	overflow-y: scroll; 
-	background-color: #F1C999; 
-}
+		#sidebar{
+			overflow-y: scroll; 
+			background: linear-gradient(180deg, #8e44ad 0%, #9b59b6 100%); 
+			box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+		}
 
-#sidebar::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
+		#sidebar::-webkit-scrollbar {
+		  display: none;
+		}
 
+		#sidebar ul li {
+			color: #ffffff !important;
+			font-weight: 500;
+			transition: all 0.3s ease;
+		}
+
+		#sidebar ul li:first-child {
+			color: #ffffff !important;
+			font-weight: 700;
+			font-size: 16px;
+			padding: 8px 15px;
+			margin: 10px 0;
+		}
+
+		#sidebar ul li a {
+			color: #ffffff !important;
+			text-decoration: none;
+			display: block;
+			padding: 12px 15px;
+			border-left: 4px solid transparent;
+			transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			margin: 5px 0;
+		}
+
+		#sidebar ul li a:hover {
+			background: rgba(255, 255, 255, 0.2);
+			border-left-color: #f39c12;
+			color: #f39c12 !important;
+			padding-left: 20px;
+			box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+		}
+
+		#sidebar ul li a:active {
+			background: rgba(255, 255, 255, 0.3);
+			border-left-color: #f39c12;
+			color: #ffffff !important;
+		}
 	</style>
 <div id="sidebar">
 	<br>
@@ -40,13 +76,14 @@ body::-webkit-scrollbar {
 		<li>Welcome <%= currentUser.firstName %></li>
 		<li><a href="/admin/dashboard">Dashboard</a></li>
 		<li><a href="/admin/verify-users">Verify Users</a></li>
-		<li><a href="/admin/donations/previous">Previous Deliveries</a></li>
-		<li><a href="/admin/donations/pending">Pending Deliveries</a></li>
+		<li><a href="/admin/mechanics">Mechanics</a></li>
 		<li><a href="/admin/fueldeliveryboys">Fuel Delivery Boys</a></li>
+		<li><a href="/admin/donations/pending">Pending Deliveries</a></li>
+		<li><a href="/admin/donations/previous">Previous Deliveries</a></li>
 		<li><a href="/admin/fuelrequests">Fuel Requests</a></li>
 		<li><a href="/admin/acceptedfuelrequests">Completed Fuel Requests</a></li>
-		<!-- <li><a href="/admin/livetracking">Live Tracking</a></li> -->
-		<li><a href="/admin/profile">My Profile</a></li>
+		<li><a href="/admin/payments">Payments</a></li>
+		<li><a href="/admin/salaries">Salary Management</a></li>
 		<li style="visibility: hidden;"><a href="/auth/logout" class="btn">Logout</a></li>
 	</ul>
 </div>

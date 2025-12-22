@@ -83,6 +83,24 @@ const userSchema = new mongoose.Schema({
 	joinedTime: {
 		type: Date,
 		default: Date.now
+	},
+
+	// Salary/Earnings for Mechanics and Fuel Delivery Boys
+	totalEarnings: {
+		type: Number,
+		default: 0
+	},
+	pendingEarnings: {
+		type: Number,
+		default: 0
+	},
+	commissionRate: {
+		type: Number,
+		default: 80 // Provider receives 80% of service fee
+	},
+	lastPaidAt: {
+		type: Date,
+		default: null
 	}
 });
 

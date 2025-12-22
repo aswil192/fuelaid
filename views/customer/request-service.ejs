@@ -407,19 +407,13 @@
         <div class="mb-4">
           <label class="form-label">Choose Service Category</label>
           <div class="row" id="categoryGrid">
-            <div class="col-md-4 mb-2">
+            <div class="col-md-6 mb-2">
               <div class="service-option" data-category="roadside">
                 <i class="fas fa-road me-2"></i>
                 <span>Roadside Assistance</span>
               </div>
             </div>
-            <div class="col-md-4 mb-2">
-              <div class="service-option" data-category="roadready">
-                <i class="fas fa-car me-2"></i>
-                <span>Road Ready Services</span>
-              </div>
-            </div>
-            <div class="col-md-4 mb-2">
+            <div class="col-md-6 mb-2">
               <div class="service-option" data-category="fuel">
                 <i class="fas fa-gas-pump me-2"></i>
                 <span>Fuel Services</span>
@@ -469,7 +463,11 @@
         <div class="row">
           <div class="col-md-6 mb-4">
             <label for="phone" class="form-label"><i class="fas fa-phone me-2"></i>Contact Number</label>
-            <input type="tel" name="request[phone]" class="form-control" placeholder="+91 00000 00000" required>
+            <div class="input-group">
+              <span class="input-group-text" style="background: #e2e8f0; border: 2px solid #e2e8f0; font-weight: 600; color: #333;">+91</span>
+              <input type="text" name="request[phone]" id="phone" class="form-control" placeholder="00000 00000" maxlength="10" required style="border: 2px solid #e2e8f0;">
+            </div>
+            <small class="text-muted mt-2" style="display: block;">Enter 10 digits (numbers only)</small>
           </div>
           
           <div class="col-md-6 mb-4">
@@ -698,17 +696,13 @@
       { name: "Towing Services", icon: "fa-truck", price: 4200 },
       { name: "Vehicle Custody", icon: "fa-shield-alt", price: 1700 }
     ],
-    roadready: [
-      { name: "Periodic Maintenance", icon: "fa-cogs", price: 600 },
-      { name: "Vehicle Repair", icon: "fa-wrench", price: 700 },
-      { name: "Accessory Fitment", icon: "fa-plus-circle", price: 500 },
-      { name: "Engine Repair", icon: "fa-hammer", price: 1000 }
-    ],
     fuel: [
-      { name: "Petrol Delivery", icon: "fa-gas-pump", price: 75 },
-      { name: "Diesel Delivery", icon: "fa-oil-can", price: 75 },
+      { name: "Fuel Delivery - 500ml", icon: "fa-gas-pump", price: 75 },
+      { name: "Fuel Delivery - 1L", icon: "fa-gas-pump", price: 120 },
       { name: "Fuel Tank Cleaning", icon: "fa-filter", price: 600 },
-      { name: "Fuel Quality Testing", icon: "fa-flask", price: 350 }
+      { name: "Fuel Quality Testing", icon: "fa-flask", price: 350 },
+      { name: "Premium Quality - 2.5L", icon: "fa-bolt", price: 270 },
+      { name: "Eco-Friendly Fuel - 1L", icon: "fa-leaf", price: 130 }
     ]
   };
 
@@ -856,6 +850,52 @@
       `;
     }
   });
+
+  // Phone number validation - numbers only, 10 digits max
+  const phoneInput = document.getElementById('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+      // Remove any non-digit characters
+      this.value = this.value.replace(/[^0-9]/g, '');
+      
+      // Enforce maximum 10 digits
+      if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+      }
+    });
+
+    // Prevent non-numeric input
+    phoneInput.addEventListener('keypress', function(e) {
+      const char = String.fromCharCode(e.which);
+      if (!/[0-9]/.test(char)) {
+        e.preventDefault();
+      }
+    });
+
+    // Validate on form submission
+    const form = phoneInput.closest('form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        if (phoneInput.value.length !== 10) {
+          e.preventDefault();
+          alert('Phone number must be exactly 10 digits');
+          phoneInput.focus();
+          phoneInput.style.borderColor = '#e74c3c';
+        } else {
+          phoneInput.style.borderColor = '#e2e8f0';
+        }
+      });
+    }
+
+    // Add visual feedback for invalid input
+    phoneInput.addEventListener('blur', function() {
+      if (this.value.length > 0 && this.value.length !== 10) {
+        this.style.borderColor = '#e74c3c';
+      } else {
+        this.style.borderColor = '#e2e8f0';
+      }
+    });
+  }
 </script>
 
 </body>

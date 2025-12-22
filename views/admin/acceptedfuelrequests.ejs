@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
+	<meta name="theme-color" content="#8e44ad">
 	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
 
@@ -26,112 +26,426 @@
 	<link rel="stylesheet" href="/assets/css/sidebar.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
 
-	<title><%= typeof title != 'undefined' ? title : "FuelAid - Completed Fuel Requests" %></title>
+	<title><%= typeof title != 'undefined' ? title : "FuelAid Admin - Completed Fuel Requests" %></title>
 </head>
 
 <body>
 	<%- include('../partials/header') %>
 	<%- include('../partials/alerts') %>
 
-	<style>
-	header{
-		background-color: #403d3d!important;
+<style>
+	/* Header Styling */
+	header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
 	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-		background-color: #403d3d!important;
-      	background-image: none !important;
-      	box-shadow: none !important;
-   }
-   #main-wrapper{
-		overflow-y: scroll;  
+	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		background-image: none !important;
+		box-shadow: none !important;
 	}
-
-	#main-wrapper::-webkit-scrollbar {
-  		display: none;                  /* For Chrome, Safari, Edge */
-	}
-	.butn{
-		background-color: #e69500 !important;
-		color: white;
-		border: none;
-		border-radius: 5px;
-		width:100%;
-	}
-	.butn:hover {
-		background: #f1c999;
-    }
 	.logo-container img {
 		height: 0.9em;
 		width: auto;
 	}
-	</style>
+
+	/* Global Animations */
+	@keyframes slideInDown {
+		from { opacity: 0; transform: translateY(-30px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@keyframes fadeInScale {
+		from { opacity: 0; transform: scale(0.9); }
+		to { opacity: 1; transform: scale(1); }
+	}
+
+	/* Main Wrapper */
+	#main-wrapper {
+		overflow-y: scroll;
+		background: linear-gradient(135deg, #f5f7fa 0%, #e8e8e8 100%);
+		min-height: 100vh;
+	}
+
+	#main-wrapper::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Page Header */
+	.page-header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		padding: 25px 30px;
+		border-radius: 15px;
+		margin: 20px;
+		box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.page-header h5 {
+		color: white;
+		margin: 0;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	.page-header i {
+		font-size: 24px;
+		color: white;
+	}
+
+	/* Stats Banner */
+	.stats-banner {
+		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+		border-radius: 15px;
+		padding: 20px 25px;
+		margin: 0 20px 25px;
+		box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.stats-banner .stat-icon {
+		width: 60px;
+		height: 60px;
+		background: rgba(255,255,255,0.2);
+		border-radius: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.stats-banner .stat-icon i {
+		font-size: 28px;
+		color: white;
+	}
+
+	.stats-banner .stat-content h3 {
+		margin: 0;
+		font-size: 32px;
+		font-weight: 700;
+		color: white;
+	}
+
+	.stats-banner .stat-content p {
+		margin: 0;
+		color: rgba(255,255,255,0.8);
+		font-size: 14px;
+	}
+
+	/* Cards Container */
+	.cards-container {
+		padding: 0 20px 30px;
+	}
+
+	/* Request Card */
+	.request-card {
+		background: white;
+		border-radius: 15px;
+		padding: 25px;
+		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		border: 1px solid #e9ecef;
+		margin-bottom: 20px;
+		animation: fadeInScale 0.6s ease-out;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.request-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+	}
+
+	.request-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 5px;
+		height: 100%;
+		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+	}
+
+	.card-header-section {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-bottom: 20px;
+	}
+
+	.request-info {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+	}
+
+	.request-icon {
+		width: 55px;
+		height: 55px;
+		border-radius: 12px;
+		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.request-icon i {
+		font-size: 24px;
+		color: white;
+	}
+
+	.request-title h6 {
+		margin: 0;
+		font-size: 18px;
+		font-weight: 700;
+		color: #2c3e50;
+	}
+
+	.request-title .service-badge {
+		display: inline-block;
+		padding: 4px 12px;
+		border-radius: 20px;
+		font-size: 11px;
+		font-weight: 600;
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		color: white;
+		margin-top: 5px;
+	}
+
+	.completed-badge {
+		padding: 8px 16px;
+		border-radius: 25px;
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+		color: white;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.card-details {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 15px;
+		margin-bottom: 20px;
+	}
+
+	.detail-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.detail-item i {
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		background: rgba(142, 68, 173, 0.1);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #8e44ad;
+		font-size: 13px;
+	}
+
+	.detail-item .detail-content {
+		flex: 1;
+	}
+
+	.detail-item .detail-label {
+		font-size: 11px;
+		color: #7f8c8d;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.detail-item .detail-value {
+		font-size: 14px;
+		color: #2c3e50;
+		font-weight: 600;
+	}
+
+	.vehicle-photo {
+		margin-top: 15px;
+		padding-top: 15px;
+		border-top: 1px solid #e9ecef;
+	}
+
+	.vehicle-photo label {
+		font-size: 12px;
+		font-weight: 600;
+		color: #7f8c8d;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-bottom: 10px;
+		display: block;
+	}
+
+	.vehicle-photo img {
+		max-width: 200px;
+		border-radius: 12px;
+		border: 3px solid #e9ecef;
+		transition: all 0.3s ease;
+	}
+
+	.vehicle-photo img:hover {
+		transform: scale(1.05);
+		border-color: #8e44ad;
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 60px 20px;
+		background: white;
+		border-radius: 15px;
+		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+	}
+
+	.empty-state i {
+		font-size: 60px;
+		color: #bdc3c7;
+		margin-bottom: 20px;
+	}
+
+	.empty-state h5 {
+		color: #7f8c8d;
+		font-weight: 600;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.page-header {
+			margin: 10px;
+			padding: 20px;
+		}
+		.stats-banner {
+			margin: 0 10px 15px;
+		}
+		.cards-container {
+			padding: 0 10px 20px;
+		}
+		.card-details {
+			grid-template-columns: 1fr;
+		}
+		.card-header-section {
+			flex-direction: column;
+			gap: 15px;
+		}
+	}
+</style>
 
 <main>
 	<%- include('../partials/adminSidebar') %>
 
 	<div id="main-wrapper">
-		<div class="bg-white shadow-sm p-3">
-			<br>
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Completed Fuel Deliveries</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-check-double"></i>
+			<h5>Completed Fuel Requests</h5>
 		</div>
 
-		<div class="border m-4 my-3 p-4 bg-white rounded-2 shadow-sm">
+		<!-- Stats Banner -->
+		<div class="stats-banner">
+			<div class="stat-icon">
+				<i class="fas fa-flag-checkered"></i>
+			</div>
+			<div class="stat-content">
+				<h3><%= acceptedfuel.length %></h3>
+				<p>Successfully Completed Fuel Deliveries</p>
+			</div>
+		</div>
 
+		<div class="cards-container">
 			<% if (acceptedfuel.length === 0) { %>
-                <p class="text-center text-muted">No accepted service requests available.</p>
-              <% } else { %>
-                <% acceptedfuel.forEach((service, index) => { %>
-                  <div class="request-item py-3 px-4 border rounded-2 bg-white mb-3">
-                    <h6 class="fw-semibold mb-3">Completed Request <%= index + 1 %></h6>
-                    
-                    <p class="mb-1"><strong>Service Category:</strong> <%= service.serviceCategory || 'N/A' %></p>
-              
-                    <p class="mb-1"><strong>Sub-services:</strong> 
-                      <% if (service.subServices && service.subServices.length > 0) { %>
-                        <%= service.subServices.join(", ") %>
-                      <% } else { %>
-                        None
-                      <% } %>
-                    </p>
-              
-                    <% if (service.vehiclePhotoPath) { %>
-                      <div class="mb-2">
-                        <strong>Vehicle Photo:</strong><br>
-                        <img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle" style="max-width: 200px; border: 1px solid #ddd; border-radius: 6px;">
-                      </div>
-                    <% } %>
-					<% if (service.quantity) { %>
-						<div class="mb-2">
-						  <strong>Quantity:</strong>
-						  <%= service.quantity %>
+				<div class="empty-state">
+					<i class="fas fa-inbox"></i>
+					<h5>No completed fuel requests</h5>
+					<p class="text-muted">Completed deliveries will appear here.</p>
+				</div>
+			<% } else { %>
+				<% acceptedfuel.forEach((service, index) => { %>
+					<div class="request-card" style="animation-delay: <%= index * 0.1 %>s;">
+						<div class="card-header-section">
+							<div class="request-info">
+								<div class="request-icon">
+									<i class="fas fa-check"></i>
+								</div>
+								<div class="request-title">
+									<h6><%= service.customer.firstName %> <%= service.customer.lastName %></h6>
+									<span class="service-badge"><%= service.serviceCategory || 'Fuel Delivery' %></span>
+								</div>
+							</div>
+							<span class="completed-badge"><i class="fas fa-check-circle"></i> Completed</span>
 						</div>
-					  <% } %>
-					  
-					<!-- <p class="mb-1"><strong>Quantity:</strong> <%= service.customer.phone %></p> -->
-                    <p class="mb-1"><strong>Customer:</strong> <%= service.customer.firstName %> <%= service.customer.lastName %></p>
-                    <p class="mb-1"><strong>Contact:</strong> <%= service.customer.phone %></p>
-                    <p class="mb-1"><strong>Location:</strong> <%= service.address %></p>
-					<p class="mb-1"><strong>Assigned Delivery Boy:</strong> <%= service.fueldeliveryboy.firstName %> <%= service.fueldeliveryboy.lastName %></p>
-              
-                    <!-- <div class="actions mt-3 d-flex gap-3">
-                      In-Progress Button
-                      <form action="/admin/service/inprogress/<%= service._id %>" method="POST">
-                        <button type="submit" class="btn btn-warning">In-Progress</button>
-                      </form>
-              
-                      Completed Button
-                      <form action="/admin/service/complete/<%= service._id %>" method="POST">
-                        <button type="submit" class="btn btn-success">Completed</button>
-                      </form>
-                    </div> -->
-                  </div>
-                <% }); %>
-              <% } %>
-              
+
+						<div class="card-details">
+							<div class="detail-item">
+								<i class="fas fa-layer-group"></i>
+								<div class="detail-content">
+									<div class="detail-label">Sub-services</div>
+									<div class="detail-value">
+										<% if (service.subServices && service.subServices.length > 0) { %>
+											<%= service.subServices.join(", ") %>
+										<% } else { %>
+											None
+										<% } %>
+									</div>
+								</div>
+							</div>
+							<% if (service.quantity) { %>
+							<div class="detail-item">
+								<i class="fas fa-tint"></i>
+								<div class="detail-content">
+									<div class="detail-label">Fuel Quantity</div>
+									<div class="detail-value"><%= service.quantity %> litres</div>
+								</div>
+							</div>
+							<% } %>
+							<div class="detail-item">
+								<i class="fas fa-phone"></i>
+								<div class="detail-content">
+									<div class="detail-label">Contact</div>
+									<div class="detail-value"><%= service.customer.phone %></div>
+								</div>
+							</div>
+							<div class="detail-item">
+								<i class="fas fa-map-marker-alt"></i>
+								<div class="detail-content">
+									<div class="detail-label">Location</div>
+									<div class="detail-value"><%= service.address %></div>
+								</div>
+							</div>
+							<div class="detail-item">
+								<i class="fas fa-user-tie"></i>
+								<div class="detail-content">
+									<div class="detail-label">Assigned Delivery Boy</div>
+									<div class="detail-value"><%= service.fueldeliveryboy.firstName %> <%= service.fueldeliveryboy.lastName %></div>
+								</div>
+							</div>
+						</div>
+
+						<% if (service.vehiclePhotoPath) { %>
+						<div class="vehicle-photo">
+							<label><i class="fas fa-car me-2"></i>Vehicle Photo</label>
+							<img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle">
+						</div>
+						<% } %>
+					</div>
+				<% }); %>
+			<% } %>
 		</div>
 	</div>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/script.js"></script>
+
 </body>
 </html>

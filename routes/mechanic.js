@@ -3,6 +3,7 @@ const router = express.Router();
 const middleware = require("../middleware/index.js");
 const User = require("../models/user.js");
 const ServiceRequest = require("../models/serviceRequest.js");
+const Payment = require("../models/payment.js");
 const PDFDocument = require('pdfkit'); // For PDF generation
 const fs = require('fs');
 const nodemailer = require('nodemailer');
@@ -42,32 +43,40 @@ async function geocodeAddress(address) {
 
 router.get("/mechanic/dashboard", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-		const mechanicId = req.user._id; // Assuming logged-in mechanic's ID is stored here
-	
+		const mechanicId = req.user._id;
 	
 		const mechanic = await User.findById(mechanicId);
 		if (!mechanic || mechanic.role !== 'mechanic') {
 		  return res.status(403).send('Unauthorized');
 		}
 	
-	
-		const completedRequests = await ServiceRequest.find({
-		  mechanicId,
+		// Get completed jobs count
+		const completedJobs = await ServiceRequest.countDocuments({
+		  mechanic: mechanicId,
 		  status: 'completed'
 		});
 	
-		const pendingRequests = await ServiceRequest.find({
-		  mechanicId,
-		  status: 'requested'
+		// Get pending jobs count (requests waiting to be accepted)
+		const pendingJobs = await ServiceRequest.countDocuments({
+		  status: 'requested',
+		  serviceCategory: { $ne: 'fuel' }
 		});
 	
+		// Get accepted/active jobs count
+		const acceptedJobs = await ServiceRequest.countDocuments({
+		  mechanic: mechanicId,
+		  status: { $in: ['accepted', 'in-progress'] }
+		});
 	
+		// Calculate average rating (default to 5.0 if no ratings yet)
+		const rating = mechanic.rating || 5.0;
 	
 		res.render("mechanic/dashboard", {
 		  mechanic,
-		  numCompRequests: completedRequests.length,
-		  numPendingRequests: pendingRequests.length
-		//   distanceTravelled: distanceTravelled.toFixed(2)
+		  completedJobs,
+		  pendingJobs,
+		  acceptedJobs,
+		  rating
 		});
 	
 	  } catch (error) {
@@ -148,6 +157,7 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 			return res.render('mechanic/viewRequests', { 
 				title: "View Requests",
 				requestedServices: [],
+				assignedServices: [],
 				error: "Please enable location services." 
 			});
 		}
@@ -185,9 +195,17 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 				return new Date(b.createdAt) - new Date(a.createdAt);
 			});
 
+		// Fetch services assigned by admin to this mechanic
+		const assignedServices = await ServiceRequest.find({
+			status: "assigned",
+			mechanic: req.user._id,
+			serviceCategory: { $ne: 'fuel' }
+		}).populate('customer', 'firstName lastName phone address');
+
 		res.render("mechanic/viewRequests", {
 			title: "View Requests",
-			requestedServices: filteredServices
+			requestedServices: filteredServices,
+			assignedServices: assignedServices
 		});
 
 	} catch (err) {
@@ -471,6 +489,38 @@ router.get("/mechanic/accepted", middleware.ensuremechanicLoggedIn, async (req, 
 	} catch (err) {
 	  console.error("Error fetching mechanic tracking info:", err);
 	  res.status(500).send("Server error");
+	}
+  });
+
+  // Mechanic Earnings Page
+  router.get("/mechanic/earnings", middleware.ensuremechanicLoggedIn, async (req, res) => {
+	try {
+	  const mechanicId = req.user._id;
+
+	  // Get completed jobs count
+	  const completedJobs = await ServiceRequest.countDocuments({
+		mechanic: mechanicId,
+		status: 'completed'
+	  });
+
+	  // Get recent payments
+	  const recentPayments = await Payment.find({
+		provider: mechanicId,
+		status: 'completed'
+	  })
+	  .populate('serviceRequest', 'serviceCategory')
+	  .sort({ paidAt: -1 })
+	  .limit(10);
+
+	  res.render("mechanic/earnings", {
+		title: "My Earnings",
+		completedJobs,
+		recentPayments
+	  });
+	} catch (err) {
+	  console.error("Error fetching earnings:", err);
+	  req.flash("error", "Error loading earnings page.");
+	  res.redirect("/mechanic/dashboard");
 	}
   });
   

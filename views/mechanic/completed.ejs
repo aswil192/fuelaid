@@ -34,15 +34,290 @@
 	<%- include('../partials/alerts') %>
 
 	<style>
+		/* Header Styling */
+		header {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
+		}
 		header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-			background-color: #3f3f3f !important;
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
+			background-image: none !important;
 			box-shadow: none !important;
 		}
+		.logo-container img {
+			height: 0.9em;
+			width: auto;
+		}
+
 		#main-wrapper {
 			overflow-y: scroll;
+			background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+			min-height: 100vh;
 		}
+
 		#main-wrapper::-webkit-scrollbar {
 			display: none;
+		}
+
+		/* Animations */
+		@keyframes slideInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes slideInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes fadeInScale {
+			from {
+				opacity: 0;
+				transform: scale(0.95);
+			}
+			to {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+
+		/* Page Header */
+		.page-header {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+			padding: 25px 30px;
+			border-radius: 15px;
+			margin: 20px;
+			box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			animation: slideInDown 0.6s ease-out;
+		}
+
+		.page-header h5 {
+			color: white;
+			margin: 0;
+			font-size: 26px;
+			font-weight: 700;
+		}
+
+		.page-header i {
+			font-size: 24px;
+			color: white;
+		}
+
+		/* Content Container */
+		.content-container {
+			padding: 0 20px 30px;
+			animation: slideInUp 0.6s ease-out;
+		}
+
+		/* Empty State */
+		.empty-state {
+			text-align: center;
+			padding: 60px 40px;
+			color: #7f8c8d;
+			font-size: 18px;
+		}
+
+		.empty-state i {
+			font-size: 48px;
+			color: #bdc3c7;
+			margin-bottom: 20px;
+			display: block;
+		}
+
+		/* Request Card */
+		.request-card {
+			background: white;
+			border-radius: 15px;
+			padding: 25px;
+			margin-bottom: 20px;
+			box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+			border-left: 5px solid #27ae60;
+			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			animation: fadeInScale 0.6s ease-out;
+		}
+
+		.request-card:nth-child(1) { animation-delay: 0.1s; }
+		.request-card:nth-child(2) { animation-delay: 0.2s; }
+		.request-card:nth-child(3) { animation-delay: 0.3s; }
+		.request-card:nth-child(n+4) { animation-delay: 0.4s; }
+
+		.request-card:hover {
+			transform: translateY(-8px);
+			box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+			border-left-color: #2ecc71;
+		}
+
+		.request-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			padding-bottom: 15px;
+			border-bottom: 2px solid #e9ecef;
+		}
+
+		.request-title {
+			font-size: 18px;
+			font-weight: 700;
+			color: #2c3e50;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.request-title i {
+			color: #27ae60;
+		}
+
+		.request-badge {
+			display: inline-block;
+			padding: 5px 12px;
+			background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+			color: white;
+			border-radius: 20px;
+			font-size: 12px;
+			font-weight: 600;
+		}
+
+		.request-info {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 15px;
+			margin-bottom: 20px;
+		}
+
+		.info-item {
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+		}
+
+		.info-icon {
+			width: 40px;
+			height: 40px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 16px;
+			color: white;
+			flex-shrink: 0;
+		}
+
+		.info-content {
+			flex: 1;
+		}
+
+		.info-label {
+			font-size: 12px;
+			color: #7f8c8d;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			font-weight: 600;
+			margin-bottom: 4px;
+		}
+
+		.info-value {
+			font-size: 15px;
+			color: #2c3e50;
+			font-weight: 600;
+		}
+
+		/* Note Section */
+		.note-section {
+			background: #f8f9ff;
+			border-radius: 12px;
+			padding: 20px;
+			margin-top: 20px;
+			border: 2px dashed #e9ecef;
+			transition: all 0.3s ease;
+		}
+
+		.note-section:focus-within {
+			border-color: #3498db;
+			background: #f0f5ff;
+		}
+
+		.note-form {
+			width: 100%;
+		}
+
+		.note-label {
+			font-weight: 700;
+			color: #2c3e50;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.note-label i {
+			color: #3498db;
+		}
+
+		.form-control {
+			border: 2px solid #e9ecef;
+			border-radius: 10px;
+			padding: 12px 15px;
+			font-size: 14px;
+			transition: all 0.3s ease;
+		}
+
+		.form-control:focus {
+			border-color: #3498db;
+			box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+		}
+
+		.btn-save-note {
+			background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+			color: white;
+			border: none;
+			padding: 10px 25px;
+			border-radius: 8px;
+			font-weight: 600;
+			margin-top: 10px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		.btn-save-note:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.page-header {
+				margin: 15px 10px;
+				padding: 20px;
+			}
+
+			.content-container {
+				padding: 0 10px 20px;
+			}
+
+			.request-card {
+				padding: 20px;
+			}
+
+			.request-info {
+				grid-template-columns: 1fr;
+			}
 		}
 	</style>
 
@@ -50,85 +325,148 @@
 	<%- include('../partials/mechanicSidebar') %>
 
 	<div id="main-wrapper">
-        <div class="bg-white shadow-sm p-3">
-			<br>
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Completed Services</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-check-double"></i>
+			<h5>Completed Services</h5>
 		</div>
-        <div class="border m-4 my-3 p-4 bg-white rounded-2 shadow-sm">
 
+		<!-- Content Container -->
+		<div class="content-container">
 			<% if (completedServices.length === 0) { %>
-                <p class="text-center text-muted">No completed service requests available.</p>
-              <% } else { %>
-                <% completedServices.forEach((service, index) => { %>
-                  <div class="request-item py-3 px-4 border rounded-2 bg-white mb-3">
-                    <h6 class="fw-semibold mb-3">Completed Request <%= index + 1 %></h6>
-                    
-                    <p class="mb-1"><strong>Service Category:</strong> <%= service.serviceCategory || 'N/A' %></p>
-              
-                    <p class="mb-1"><strong>Sub-services:</strong> 
-                      <% if (service.subServices && service.subServices.length > 0) { %>
-                        <%= service.subServices.join(", ") %>
-                      <% } else { %>
-                        None
-                      <% } %>
-                    </p>
-              
-              
-                    <p class="mb-1"><strong>Customer:</strong> <%= service.customer.firstName %> <%= service.customer.lastName %></p>
-                    <p class="mb-1"><strong>Contact:</strong> <%= service.customer.phone %></p>
-                    <p class="mb-1"><strong>Location:</strong> <%= service.address %></p>
-                    <div class="mb-2">
-                        <strong>Status:</strong>
-                        <span class="text-orange fw-bold">Completed</span>
-                      </div>
-                      <form class="note-form" data-id="<%= service._id %>">
-                        <div class="mb-2">
-                          <label for="note-<%= service._id %>" class="form-label"><strong>Service Note:</strong></label>
-                          <textarea name="mechanicNote" id="note-<%= service._id %>" class="form-control" rows="3" placeholder="Leave a note about the service..."><%= service.mechanicNote || '' %></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Save Note</button>
-                      </form>                      
-                      
-                  </div>
-                <% }); %>
-              <% } %>
-              
+				<div class="empty-state">
+					<i class="fas fa-inbox"></i>
+					<p>No completed service requests yet.</p>
+					<small>Your completed jobs will appear here.</small>
+				</div>
+			<% } else { %>
+				<% completedServices.forEach((service, index) => { %>
+					<div class="request-card">
+						<!-- Card Header -->
+						<div class="request-header">
+							<h6 class="request-title">
+								<i class="fas fa-star"></i>
+								Completed Request <%= index + 1 %>
+							</h6>
+							<span class="request-badge">
+								<i class="fas fa-check me-1"></i>Completed
+							</span>
+						</div>
+
+						<!-- Request Info Grid -->
+						<div class="request-info">
+							<!-- Service Category -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+									<i class="fas fa-cog"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Service Type</div>
+									<div class="info-value"><%= service.serviceCategory || 'N/A' %></div>
+								</div>
+							</div>
+
+							<!-- Sub-services -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+									<i class="fas fa-list"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Sub-services</div>
+									<div class="info-value">
+										<% if (service.subServices && service.subServices.length > 0) { %>
+											<%= service.subServices.slice(0, 2).join(", ") %>
+										<% } else { %>
+											None
+										<% } %>
+									</div>
+								</div>
+							</div>
+
+							<!-- Customer Name -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+									<i class="fas fa-user"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Customer</div>
+									<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
+								</div>
+							</div>
+
+							<!-- Phone -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+									<i class="fas fa-phone"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Contact</div>
+									<div class="info-value"><%= service.customer.phone %></div>
+								</div>
+							</div>
+
+							<!-- Location -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+									<i class="fas fa-map-marker-alt"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Location</div>
+									<div class="info-value"><%= service.address %></div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Service Note Section -->
+						<div class="note-section">
+							<label class="note-label">
+								<i class="fas fa-clipboard"></i>
+								Service Notes
+							</label>
+							<form class="note-form" data-id="<%= service._id %>">
+								<textarea name="mechanicNote" class="form-control" rows="4" placeholder="Add your service notes here (e.g., repairs completed, parts replaced, customer feedback)..."><%= service.mechanicNote || '' %></textarea>
+								<button type="submit" class="btn-save-note">
+									<i class="fas fa-save me-2"></i>Save Note
+								</button>
+							</form>
+						</div>
+					</div>
+				<% }); %>
+			<% } %>
 		</div>
-    </div>
+	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/script.js"></script>
 <script>
-    document.querySelectorAll('.note-form').forEach(form => {
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-  
-        const serviceId = form.dataset.id;
-        const note = form.querySelector('textarea').value;
-  
-        try {
-          const res = await fetch(`/mechanic/note/${serviceId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ mechanicNote: note })
-          });
-  
-          if (res.ok) {
-            alert('Saved note successfully!');
-          } else {
-            alert('Failed to save note');
-          }
-        } catch (err) {
-          console.error(err);
-          alert('Error occurred while saving note');
-        }
-      });
-    });
-  </script>
+	document.querySelectorAll('.note-form').forEach(form => {
+		form.addEventListener('submit', async function (e) {
+			e.preventDefault();
+	
+			const serviceId = form.dataset.id;
+			const note = form.querySelector('textarea').value;
+	
+			try {
+				const res = await fetch(`/mechanic/note/${serviceId}`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ mechanicNote: note })
+				});
+	
+				if (res.ok) {
+					alert('Note saved successfully!');
+				} else {
+					alert('Failed to save note');
+				}
+			} catch (err) {
+				console.error(err);
+				alert('Error occurred while saving note');
+			}
+		});
+	});
+</script>
   
 </body>
 </html>
-    

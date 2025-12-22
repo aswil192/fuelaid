@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
+	<meta name="theme-color" content="#8e44ad">
 	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
 
@@ -32,8 +32,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/assets/css/sidebar.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+	<title> <%= typeof title != 'undefined' ? title : "FuelAid Admin" %> </title>
 </head>
 
 <body>
@@ -41,97 +40,372 @@
 	<%- include('../partials/alerts') %>
 
 <style>
-  header{
-		background-color: #403d3d!important;
+	/* Header Styling */
+	header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
 	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-	background-color: #403d3d!important;
-      background-image: none !important;
-      box-shadow: none !important;
-   }
-   #main-wrapper{
-	overflow-y: scroll; 
-	overflow-x: scroll; 
-}
-
-#main-wrapper::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
-.butn{
-  background-color: #e69500 !important;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      width:100%;
-}
-.butn:hover {
-      background: #f1c999;
-    }
+	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
+		background-image: none !important;
+		box-shadow: none !important;
+	}
 	.logo-container img {
-    height: 0.9em;
-    width: auto;
-}
-   </style>
+		height: 0.9em;
+		width: auto;
+	}
+
+	/* Global Animations */
+	@keyframes slideInDown {
+		from { opacity: 0; transform: translateY(-30px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@keyframes fadeInScale {
+		from { opacity: 0; transform: scale(0.9); }
+		to { opacity: 1; transform: scale(1); }
+	}
+
+	/* Main Wrapper */
+	#main-wrapper {
+		overflow-y: scroll;
+		background: linear-gradient(135deg, #f5f7fa 0%, #e8e8e8 100%);
+		min-height: 100vh;
+	}
+
+	#main-wrapper::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Page Header */
+	.page-header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		padding: 25px 30px;
+		border-radius: 15px;
+		margin: 20px;
+		box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		animation: slideInDown 0.6s ease-out;
+	}
+
+	.page-header h5 {
+		color: white;
+		margin: 0;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	.page-header i {
+		font-size: 24px;
+		color: white;
+	}
+
+	/* Profile Container */
+	.profile-container {
+		padding: 0 20px 30px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.profile-card {
+		background: white;
+		border-radius: 20px;
+		box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+		overflow: hidden;
+		animation: fadeInScale 0.6s ease-out;
+		max-width: 700px;
+		width: 100%;
+	}
+
+	.profile-header {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		padding: 40px 30px;
+		text-align: center;
+		position: relative;
+	}
+
+	.profile-header::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		right: -20%;
+		width: 300px;
+		height: 300px;
+		background: rgba(255,255,255,0.1);
+		border-radius: 50%;
+	}
+
+	.profile-avatar {
+		width: 100px;
+		height: 100px;
+		border-radius: 20px;
+		background: rgba(255,255,255,0.2);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 20px;
+		border: 4px solid rgba(255,255,255,0.3);
+	}
+
+	.profile-avatar i {
+		font-size: 48px;
+		color: white;
+	}
+
+	.profile-header h4 {
+		color: white;
+		font-weight: 700;
+		margin: 0 0 8px;
+		font-size: 24px;
+	}
+
+	.profile-header .role-badge {
+		display: inline-block;
+		padding: 6px 20px;
+		border-radius: 25px;
+		background: rgba(255,255,255,0.2);
+		color: white;
+		font-weight: 600;
+		font-size: 14px;
+	}
+
+	.profile-body {
+		padding: 30px;
+	}
+
+	.form-section-title {
+		font-size: 14px;
+		font-weight: 700;
+		color: #8e44ad;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		border-bottom: 2px solid #f0f0f0;
+	}
+
+	.form-group {
+		margin-bottom: 25px;
+	}
+
+	.form-label {
+		font-size: 13px;
+		font-weight: 600;
+		color: #7f8c8d;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-bottom: 8px;
+	}
+
+	.form-control {
+		border: 2px solid #e9ecef;
+		border-radius: 12px;
+		padding: 14px 18px;
+		font-size: 15px;
+		transition: all 0.3s ease;
+	}
+
+	.form-control:focus {
+		border-color: #8e44ad;
+		box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.1);
+	}
+
+	.form-control:disabled {
+		background: #f8f9fa;
+		color: #7f8c8d;
+	}
+
+	.gender-options {
+		display: flex;
+		gap: 20px;
+		margin-top: 10px;
+	}
+
+	.gender-option {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 20px;
+		border: 2px solid #e9ecef;
+		border-radius: 12px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.gender-option:hover {
+		border-color: #8e44ad;
+	}
+
+	.gender-option input[type="radio"] {
+		display: none;
+	}
+
+	.gender-option input[type="radio"]:checked + .gender-label {
+		color: #8e44ad;
+		font-weight: 700;
+	}
+
+	.gender-option:has(input[type="radio"]:checked) {
+		border-color: #8e44ad;
+		background: rgba(142, 68, 173, 0.05);
+	}
+
+	.gender-label {
+		font-weight: 600;
+		color: #2c3e50;
+		margin: 0;
+	}
+
+	.gender-icon {
+		width: 35px;
+		height: 35px;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.gender-icon.male {
+		background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+	}
+
+	.gender-icon.female {
+		background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+	}
+
+	.gender-icon i {
+		color: white;
+		font-size: 16px;
+	}
+
+	.submit-btn {
+		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+		color: white;
+		border: none;
+		padding: 16px 40px;
+		border-radius: 12px;
+		font-weight: 700;
+		font-size: 16px;
+		transition: all 0.3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		width: 100%;
+		margin-top: 20px;
+	}
+
+	.submit-btn:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 25px rgba(142, 68, 173, 0.3);
+		color: white;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.page-header {
+			margin: 10px;
+			padding: 20px;
+		}
+		.profile-container {
+			padding: 0 10px 20px;
+		}
+		.gender-options {
+			flex-direction: column;
+		}
+	}
+</style>
+
 <main>
 	<%- include('../partials/adminSidebar') %>
 	
 	<div id="main-wrapper">
-		<br>
-		<div class="bg-white shadow-sm p-3">
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Profile</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-user-cog"></i>
+			<h5>My Profile</h5>
 		</div>
-		
-		<form action="/admin/profile?_method=PUT" method="POST" class="w-75 border ms-3 my-3 p-4 bg-white rounded-2 shadow" style="min-width: 400px;">
-			
-			<div class="row">
-				<div class="col-sm-6 mb-4">
-					<label for="first-name" class="form-label fw-bold">First Name</label>
-					<input type="text" name="admin[firstName]" class="form-control" id="first-name" placeholder="Enter first name.." value="<%= currentUser.firstName %>" required>
+
+		<div class="profile-container">
+			<div class="profile-card">
+				<div class="profile-header">
+					<div class="profile-avatar">
+						<i class="fas fa-user-shield"></i>
+					</div>
+					<h4><%= currentUser.firstName %> <%= currentUser.lastName %></h4>
+					<span class="role-badge"><i class="fas fa-crown me-2"></i>Administrator</span>
 				</div>
-				
-				<div class="col-sm-6 mb-4">
-					<label for="last-name" class="form-label fw-bold">Last Name</label>
-					<input type="text" name="admin[lastName]" class="form-control" id="last-name" placeholder="Enter last name.." value="<%= currentUser.lastName %>" required>
+
+				<div class="profile-body">
+					<form action="/admin/profile?_method=PUT" method="POST">
+						<div class="form-section-title"><i class="fas fa-user me-2"></i>Personal Information</div>
+						
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="first-name" class="form-label">First Name</label>
+									<input type="text" name="admin[firstName]" class="form-control" id="first-name" placeholder="Enter first name.." value="<%= currentUser.firstName %>" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="last-name" class="form-label">Last Name</label>
+									<input type="text" name="admin[lastName]" class="form-control" id="last-name" placeholder="Enter last name.." value="<%= currentUser.lastName %>" required>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="email" class="form-label">Email Address</label>
+							<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
+						</div>
+						
+						<div class="form-group">
+							<label class="form-label">Gender</label>
+							<div class="gender-options">
+								<label class="gender-option">
+									<div class="gender-icon male">
+										<i class="fas fa-mars"></i>
+									</div>
+									<input type="radio" name="admin[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%> checked <%}%>>
+									<span class="gender-label">Male</span>
+								</label>
+								<label class="gender-option">
+									<div class="gender-icon female">
+										<i class="fas fa-venus"></i>
+									</div>
+									<input type="radio" name="admin[gender]" id="female" value="female" <% if(currentUser.gender=='female'){%> checked <%}%>>
+									<span class="gender-label">Female</span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-section-title"><i class="fas fa-map-marker-alt me-2"></i>Contact Information</div>
+						
+						<div class="form-group">
+							<label for="address" class="form-label">Address</label>
+							<input type="text" name="admin[address]" class="form-control" id="address" placeholder="Enter your address.." value="<%= currentUser.address %>">
+						</div>
+						
+						<div class="form-group">
+							<label for="phone" class="form-label">Phone Number</label>
+							<input type="number" name="admin[phone]" class="form-control" id="phone" placeholder="Enter phone number.." value="<%= currentUser.phone %>">
+						</div>
+						
+						<button type="submit" class="submit-btn">
+							<i class="fas fa-save"></i> Update Profile
+						</button>
+					</form>
 				</div>
 			</div>
-			
-			
-			<div class="mb-4">
-				<label for="email" class="form-label fw-bold">Email</label>
-				<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
-			</div>
-			
-			<div class="mb-4">
-				<span class="d-inline-block me-2 fw-bold">Gender:</span>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="admin[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%> checked <%}%> >
-					<label class="form-check-label fw-bold" for="male">Male</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="admin[gender]" id="female" value="female" <% if(currentUser.gender=='female'){%> checked <%}%> >
-					<label class="form-check-label fw-bold" for="female">Female</label>
-				</div>
-			</div>
-			
-			<div class="mb-4">
-				<label for="address" class="form-label fw-bold">Address</label>
-				<input type="text" name="admin[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>">
-			</div>
-			
-			<div class="mb-4">
-				<label for="phone" class="form-label fw-bold">Phone</label>
-				<input type="number" name="admin[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>">
-			</div>
-			
-			<button type="submit" class="btn butn w-75 d-block m-auto mt-4">Update</button>
-		</form>
-		
-		
-		
+		</div>
 	</div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
+
 </body>
 </html>

@@ -376,9 +376,7 @@
 
                 <% if (!request.isPaid) { %>
                   <p>Please pay ₹<%= request.baseAmount || 100 %> and provide your feedback.</p>
-                  <form action="/customer/pay/<%= request._id %>" method="POST" style="display:inline;">
-                    <button type="submit" class="btn btn-primary me-2">Pay Now</button>
-                  </form>
+                  <a href="/customer/payment/<%= request._id %>" class="btn btn-primary me-2">Pay Now</a>
                 <% } %>
   
                 <% if (!request.feedback) { %>

@@ -34,91 +34,572 @@
 	<%- include('../partials/alerts') %>
 
 	<style>
+		/* Header Styling */
+		header {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
+		}
 		header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-			background-color: #3f3f3f !important;
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
+			background-image: none !important;
 			box-shadow: none !important;
 		}
-		#main-wrapper{
-	overflow-y: scroll;  
-}
+		.logo-container img {
+			height: 0.9em;
+			width: auto;
+		}
 
-#main-wrapper::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
+		#main-wrapper {
+			overflow-y: scroll;
+			background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+			min-height: 100vh;
+		}
+
+		#main-wrapper::-webkit-scrollbar {
+			display: none;
+		}
+
+		/* Animations */
+		@keyframes slideInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes slideInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes fadeInScale {
+			from {
+				opacity: 0;
+				transform: scale(0.95);
+			}
+			to {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+
+		/* Page Header */
+		.page-header {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+			padding: 25px 30px;
+			border-radius: 15px;
+			margin: 20px;
+			box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			animation: slideInDown 0.6s ease-out;
+		}
+
+		.page-header h5 {
+			color: white;
+			margin: 0;
+			font-size: 26px;
+			font-weight: 700;
+		}
+
+		.page-header i {
+			font-size: 24px;
+			color: white;
+		}
+
+		/* Content Container */
+		.content-container {
+			padding: 0 20px 30px;
+			animation: slideInUp 0.6s ease-out;
+		}
+
+		/* Empty State */
+		.empty-state {
+			text-align: center;
+			padding: 60px 40px;
+			color: #7f8c8d;
+			font-size: 18px;
+		}
+
+		.empty-state i {
+			font-size: 48px;
+			color: #bdc3c7;
+			margin-bottom: 20px;
+			display: block;
+		}
+
+		/* Request Card */
+		.request-card {
+			background: white;
+			border-radius: 15px;
+			padding: 25px;
+			margin-bottom: 20px;
+			box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+			border-left: 5px solid #1e3c72;
+			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			animation: fadeInScale 0.6s ease-out;
+		}
+
+		.request-card:nth-child(1) { animation-delay: 0.1s; }
+		.request-card:nth-child(2) { animation-delay: 0.2s; }
+		.request-card:nth-child(3) { animation-delay: 0.3s; }
+		.request-card:nth-child(n+4) { animation-delay: 0.4s; }
+
+		.request-card:hover {
+			transform: translateY(-8px);
+			box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+			border-left-color: #3498db;
+		}
+
+		.request-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			padding-bottom: 15px;
+			border-bottom: 2px solid #e9ecef;
+		}
+
+		.request-title {
+			font-size: 18px;
+			font-weight: 700;
+			color: #2c3e50;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.request-title i {
+			color: #1e3c72;
+		}
+
+		.request-badge {
+			display: inline-block;
+			padding: 5px 12px;
+			background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+			color: white;
+			border-radius: 20px;
+			font-size: 12px;
+			font-weight: 600;
+		}
+
+		.request-info {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 15px;
+			margin-bottom: 20px;
+		}
+
+		.info-item {
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+		}
+
+		.info-icon {
+			width: 40px;
+			height: 40px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 16px;
+			color: white;
+			flex-shrink: 0;
+		}
+
+		.info-content {
+			flex: 1;
+		}
+
+		.info-label {
+			font-size: 12px;
+			color: #7f8c8d;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			font-weight: 600;
+			margin-bottom: 4px;
+		}
+
+		.info-value {
+			font-size: 15px;
+			color: #2c3e50;
+			font-weight: 600;
+		}
+
+		.vehicle-photo {
+			margin: 20px 0;
+			text-align: center;
+		}
+
+		.vehicle-photo img {
+			max-width: 250px;
+			border-radius: 12px;
+			box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+			transition: all 0.3s ease;
+		}
+
+		.vehicle-photo img:hover {
+			transform: scale(1.05);
+			box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+		}
+
+		/* Action Buttons */
+		.action-buttons {
+			display: flex;
+			gap: 12px;
+			margin-top: 20px;
+		}
+
+		.btn-custom {
+			flex: 1;
+			padding: 12px 20px;
+			border-radius: 10px;
+			font-weight: 600;
+			text-transform: uppercase;
+			font-size: 13px;
+			letter-spacing: 0.5px;
+			transition: all 0.3s ease;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+		}
+
+		.btn-approve {
+			background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+			color: white;
+			box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+		}
+
+		.btn-approve:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 12px 30px rgba(39, 174, 96, 0.4);
+			color: white;
+		}
+
+		.btn-reject {
+			background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+			color: white;
+			box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+		}
+
+		.btn-reject:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 12px 30px rgba(231, 76, 60, 0.4);
+			color: white;
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.page-header {
+				margin: 15px 10px;
+				padding: 20px;
+			}
+
+			.content-container {
+				padding: 0 10px 20px;
+			}
+
+			.request-card {
+				padding: 20px;
+			}
+
+			.request-info {
+				grid-template-columns: 1fr;
+			}
+
+			.action-buttons {
+				flex-direction: column;
+			}
+		}
 	</style>
 
 <main>
 	<%- include('../partials/mechanicSidebar') %>
 
 	<div id="main-wrapper">
-		<div class="bg-white shadow-sm p-3">
-			<br>
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Requested Services</h5>
+		<!-- Page Header -->
+		<div class="page-header">
+			<i class="fas fa-list-check"></i>
+			<h5>Service Requests</h5>
 		</div>
-	
-		<div class="border m-4 my-3 p-4 bg-white rounded-2 shadow-sm">
+
+		<!-- Content Container -->
+		<div class="content-container">
 			<% 
 			const filteredServices = requestedServices.filter(service => 
 				service.serviceCategory?.toLowerCase() !== 'fuel'
 			); 
 			%>
-	
-			<% if (filteredServices.length === 0) { %>
-				<p class="text-center text-muted">No service requests available.</p>
-			<% } else { %>
-				<% filteredServices.forEach((service, index) => { %>
-					<div class="request-item py-3 px-4 border rounded-2 bg-white mb-3">
-						<h6 class="fw-semibold mb-3">Request <%= index + 1 %></h6>
-						
-						<p class="mb-1"><strong>Service Category:</strong> <%= service.serviceCategory || 'N/A' %></p>
-	
-						<p class="mb-1"><strong>Sub-services:</strong> 
-							<% if (service.subServices && service.subServices.length > 0) { %>
-								<%= service.subServices.join(", ") %>
-							<% } else { %>
-								None
-							<% } %>
-						</p>
-						<% if (service.vehiclePhotoPath) { %>
-							<div class="mb-2">
-							  <strong>Vehicle Photo:</strong><br>
-							  <img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle" style="max-width: 200px; border: 1px solid #ddd; border-radius: 6px;">
+
+			<!-- Assigned Services Section -->
+			<% if (assignedServices && assignedServices.length > 0) { %>
+				<div style="margin-bottom: 30px;">
+					<h6 style="color: #1e3c72; font-weight: 700; margin-bottom: 20px; font-size: 18px;">
+						<i class="fas fa-briefcase me-2" style="color: #27ae60;"></i>Assigned Services
+					</h6>
+					<% assignedServices.forEach((service, index) => { %>
+						<div class="request-card">
+							<!-- Card Header -->
+							<div class="request-header">
+								<h6 class="request-title">
+									<i class="fas fa-wrench"></i>
+									Assigned <%= index + 1 %>
+								</h6>
+								<span class="request-badge" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);"><%= service.serviceCategory || 'Service' %></span>
 							</div>
-							<!-- <p><strong>Debug Path:</strong> <%= service.vehiclePhotoPath %></p> -->
-			  
+
+							<!-- Request Info Grid -->
+							<div class="request-info">
+								<!-- Service Category -->
+								<div class="info-item">
+									<div class="info-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+										<i class="fas fa-cog"></i>
+									</div>
+									<div class="info-content">
+										<div class="info-label">Service Type</div>
+										<div class="info-value"><%= service.serviceCategory || 'N/A' %></div>
+									</div>
+								</div>
+
+								<!-- Sub-services -->
+								<div class="info-item">
+									<div class="info-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+										<i class="fas fa-list"></i>
+									</div>
+									<div class="info-content">
+										<div class="info-label">Sub-services</div>
+										<div class="info-value">
+											<% if (service.subServices && service.subServices.length > 0) { %>
+												<%= service.subServices.slice(0, 2).join(", ") %>
+											<% } else { %>
+												None
+											<% } %>
+										</div>
+									</div>
+								</div>
+
+								<!-- Customer Name -->
+								<div class="info-item">
+									<div class="info-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+										<i class="fas fa-user"></i>
+									</div>
+									<div class="info-content">
+										<div class="info-label">Customer</div>
+										<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
+									</div>
+								</div>
+
+								<!-- Phone -->
+								<div class="info-item">
+									<div class="info-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+										<i class="fas fa-phone"></i>
+									</div>
+									<div class="info-content">
+										<div class="info-label">Contact</div>
+										<div class="info-value"><%= service.customer.phone %></div>
+									</div>
+								</div>
+
+								<!-- Location -->
+								<div class="info-item">
+									<div class="info-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+										<i class="fas fa-map-marker-alt"></i>
+									</div>
+									<div class="info-content">
+										<div class="info-label">Location</div>
+										<div class="info-value"><%= service.address %></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Vehicle Photo -->
+							<% if (service.vehiclePhotoPath) { %>
+								<div class="vehicle-photo">
+									<img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle Photo">
+								</div>
 							<% } %>
-	
-						<p class="mb-1"><strong>Customer:</strong> <%= service.customer.firstName %> <%= service.customer.lastName %></p>
-						<p class="mb-1"><strong>Contact:</strong> <%= service.customer.phone %></p>
-						<p class="mb-1"><strong>Location:</strong> <%= service.address %></p>
-						<% if (service.distance) { %>
-							<p class="mb-1"><strong>Distance:</strong> <%= (service.distance / 1000).toFixed(2) %> km</p>
+
+							<!-- Request Time -->
+							<% if (service.createdAt) { %>
+								<p style="font-size: 13px; color: #7f8c8d; margin-bottom: 15px;">
+									<i class="fas fa-clock me-2"></i>
+									Assigned on <%= new Date(service.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+									at <%= new Date(service.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %>
+								</p>
+							<% } %>
+
+							<!-- Action Buttons -->
+							<div class="action-buttons">
+								<form action="/mechanic/service/accept/<%= service._id %>" method="POST" style="flex: 1;">
+									<button type="submit" class="btn-custom btn-approve w-100">
+										<i class="fas fa-check-circle"></i>
+										Accept
+									</button>
+								</form>
+								<form action="/mechanic/service/reject/<%= service._id %>" method="POST" style="flex: 1;">
+									<button type="submit" class="btn-custom btn-reject w-100">
+										<i class="fas fa-times-circle"></i>
+										Reject
+									</button>
+								</form>
+							</div>
+						</div>
+					<% }); %>
+				</div>
+			<% } %>
+
+			<!-- Available Service Requests Section -->
+			<% if (filteredServices.length > 0) { %>
+				<div>
+					<h6 style="color: #1e3c72; font-weight: 700; margin-bottom: 20px; font-size: 18px;">
+						<i class="fas fa-list-check me-2" style="color: #3498db;"></i>Available Requests
+					</h6>
+					<% filteredServices.forEach((service, index) => { %>
+					<div class="request-card">
+						<!-- Card Header -->
+						<div class="request-header">
+							<h6 class="request-title">
+								<i class="fas fa-wrench"></i>
+								Request <%= index + 1 %>
+							</h6>
+							<span class="request-badge"><%= service.serviceCategory || 'Service' %></span>
+						</div>
+
+						<!-- Request Info Grid -->
+						<div class="request-info">
+							<!-- Service Category -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+									<i class="fas fa-cog"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Service Type</div>
+									<div class="info-value"><%= service.serviceCategory || 'N/A' %></div>
+								</div>
+							</div>
+
+							<!-- Sub-services -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+									<i class="fas fa-list"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Sub-services</div>
+									<div class="info-value">
+										<% if (service.subServices && service.subServices.length > 0) { %>
+											<%= service.subServices.slice(0, 2).join(", ") %>
+										<% } else { %>
+											None
+										<% } %>
+									</div>
+								</div>
+							</div>
+
+							<!-- Customer Name -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+									<i class="fas fa-user"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Customer</div>
+									<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
+								</div>
+							</div>
+
+							<!-- Phone -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+									<i class="fas fa-phone"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Contact</div>
+									<div class="info-value"><%= service.customer.phone %></div>
+								</div>
+							</div>
+
+							<!-- Location -->
+							<div class="info-item">
+								<div class="info-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+									<i class="fas fa-map-marker-alt"></i>
+								</div>
+								<div class="info-content">
+									<div class="info-label">Location</div>
+									<div class="info-value"><%= service.address %></div>
+								</div>
+							</div>
+
+							<!-- Distance -->
+							<% if (service.distance) { %>
+								<div class="info-item">
+									<div class="info-icon" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
+										<i class="fas fa-road"></i>
+									</div>
+									<div class="info-content">
+										<div class="info-label">Distance</div>
+										<div class="info-value"><%= (service.distance / 1000).toFixed(2) %> km</div>
+									</div>
+								</div>
+							<% } %>
+						</div>
+
+						<!-- Vehicle Photo -->
+						<% if (service.vehiclePhotoPath) { %>
+							<div class="vehicle-photo">
+								<img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle Photo">
+							</div>
 						<% } %>
 
+						<!-- Request Time -->
 						<% if (service.createdAt) { %>
-							<p class="mb-1"><strong>Requested On:</strong> 
-							  <%= new Date(service.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %> 
-							  at 
-							  <%= new Date(service.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %>
+							<p style="font-size: 13px; color: #7f8c8d; margin-bottom: 15px;">
+								<i class="fas fa-clock me-2"></i>
+								Requested on <%= new Date(service.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+								at <%= new Date(service.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %>
 							</p>
-						  <% } %>
-						  
-	
-						<div class="actions mt-3 d-flex justify-content-start">
-							<form action="/mechanic/service/accept/<%= service._id %>" method="POST" class="me-2">
-								<button type="submit" class="btn btn-success">Approve</button>
+						<% } %>
+
+						<!-- Action Buttons -->
+						<div class="action-buttons">
+							<form action="/mechanic/service/accept/<%= service._id %>" method="POST" style="flex: 1;">
+								<button type="submit" class="btn-custom btn-approve w-100">
+									<i class="fas fa-check-circle"></i>
+									Approve
+								</button>
 							</form>
-							<form action="/mechanic/service/reject/<%= service._id %>" method="POST">
-								<button type="submit" class="btn btn-outline-danger">Reject</button>
+							<form action="/mechanic/service/reject/<%= service._id %>" method="POST" style="flex: 1;">
+								<button type="submit" class="btn-custom btn-reject w-100">
+									<i class="fas fa-times-circle"></i>
+									Reject
+								</button>
 							</form>
 						</div>
 					</div>
 				<% }); %>
+			</div>
+			<% } else if (assignedServices.length === 0) { %>
+				<div class="empty-state">
+					<i class="fas fa-inbox"></i>
+					<p>No service requests available at the moment.</p>
+					<small>Check back later for new requests in your area.</small>
+				</div>
 			<% } %>
 		</div>
 	</div>
-	
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/script.js"></script>
@@ -130,11 +611,8 @@
 		  const lat = position.coords.latitude;
 		  const lon = position.coords.longitude;
 		  
-		  // Send the location data to the server (via AJAX or form submission)
-		  // You can send this data through an AJAX request to your backend or store it for future requests
 		  console.log(`Location: ${lat}, ${lon}`);
 		  
-		  // Optionally, send the location to your backend via a POST request or update the session
 		  fetch('/mechanic/updateLocation', {
 			method: 'POST',
 			headers: {
@@ -145,13 +623,10 @@
 		},
 		(error) => {
 		  console.error('Geolocation error:', error);
-		  alert('Please enable location services.');
 		}
 	  );
-	} else {
-	  alert('Geolocation is not supported by this browser.');
 	}
-  </script>
+</script>
   
 </body>
 </html>
