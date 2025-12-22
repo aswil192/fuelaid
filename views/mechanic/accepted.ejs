@@ -355,7 +355,11 @@
 								<i class="fas fa-clipboard-check"></i>
 								Accepted Request <%= index + 1 %>
 							</h6>
-							<span class="request-badge">In Progress</span>
+							<% if (service.status === 'in-progress') { %>
+								<span class="request-badge" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">In Progress</span>
+							<% } else { %>
+								<span class="request-badge">Accepted</span>
+							<% } %>
 						</div>
 
 						<!-- Request Info Grid -->
@@ -431,16 +435,18 @@
 
 						<!-- Action Buttons -->
 						<div class="action-buttons">
+							<% if (service.status === 'accepted') { %>
 							<form action="/mechanic/service/inprogress/<%= service._id %>" method="POST" style="flex: 1;">
 								<button type="submit" class="btn-custom btn-progress w-100">
 									<i class="fas fa-hourglass-half"></i>
-									In Progress
+									Start Service
 								</button>
 							</form>
+							<% } %>
 							<form action="/mechanic/service/complete/<%= service._id %>" method="POST" style="flex: 1;">
 								<button type="submit" class="btn-custom btn-complete w-100">
 									<i class="fas fa-check-circle"></i>
-									Completed
+									Mark Completed
 								</button>
 							</form>
 						</div>

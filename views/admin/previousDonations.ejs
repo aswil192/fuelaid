@@ -385,7 +385,7 @@
 									<i class="fas fa-user"></i>
 								</div>
 								<div class="customer-name">
-									<h6><%= previousDonations[i].customer.firstName + " " + previousDonations[i].customer.lastName %></h6>
+									<h6><%= (previousDonations[i].customer?.firstName || 'Unknown') + " " + (previousDonations[i].customer?.lastName || 'User') %></h6>
 									<span class="service-type"><%= previousDonations[i].serviceCategory %></span>
 								</div>
 							</div>

@@ -298,10 +298,10 @@ router.post("/fueldeliveryboy/updateLocation", middleware.ensurefueldeliveryboyL
 
 router.get("/fueldeliveryboy/accepted", middleware.ensurefueldeliveryboyLoggedIn, async (req, res) => {
 	try {
-		// Fetch all services that are accepted and assigned to the current fueldeliveryboy
+		// Fetch all services that are accepted or in-progress and assigned to the current fueldeliveryboy
 		const acceptedServices = await ServiceRequest.find({
-			status: "accepted",
-			fueldeliveryboy: req.user._id, // Assuming only the logged-in fueldeliveryboy's accepted requests should be shown
+			status: { $in: ["accepted", "in-progress"] },
+			fueldeliveryboy: req.user._id,
 			serviceCategory: "fuel"
 		}).populate('customer', 'firstName lastName phone address');
 
@@ -354,8 +354,37 @@ router.post("/fueldeliveryboy/service/complete/:id", middleware.ensurefueldelive
 		// Update status to 'completed'
 		service.status = "completed";
 		await service.save();
-
-		req.flash("success", "Service marked as completed.");
+		
+		// Auto-create payment if not already paid
+		if (!service.isPaid) {
+			const amount = service.totalCharges || service.fee || service.baseAmount || 100;
+			const payment = new Payment({
+			  serviceRequest: service._id,
+			  customer: service.customer,
+			  provider: req.user._id,
+			  providerType: 'fueldeliveryboy',
+			  amount,
+			  paymentMethod: 'cash',
+			  status: 'completed',
+			  paidAt: new Date()
+			});
+		
+			await payment.save();
+		
+			// Update service as paid
+			await ServiceRequest.findByIdAndUpdate(req.params.id, { isPaid: true });
+		
+			// Update provider's earnings (40% commission rate)
+			const providerEarnings = amount * (req.user.commissionRate || 40) / 100;
+			await User.findByIdAndUpdate(req.user._id, {
+			  $inc: {
+				totalEarnings: providerEarnings,
+				pendingEarnings: providerEarnings
+			  }
+			});
+		}
+		
+		req.flash("success", "Service marked as completed. Revenue credited to your account.");
 		res.redirect("/fueldeliveryboy/accepted");
 	} catch (err) {
 		console.error(err);

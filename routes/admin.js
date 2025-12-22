@@ -461,6 +461,16 @@ router.get("/admin/payments", middleware.ensureAdminLoggedIn, async (req, res) =
 			role: { $in: ['mechanic', 'fueldeliveryboy'] },
 			verification_status: 'Verified'
 		});
+		
+		// Calculate total paid to providers (their earnings)
+		const providerEarningsResult = await User.aggregate([
+			{ $match: { role: { $in: ['mechanic', 'fueldeliveryboy'] } } },
+			{ $group: { _id: null, total: { $sum: '$totalEarnings' } } }
+		]);
+		const totalPaidToProviders = providerEarningsResult.length > 0 ? providerEarningsResult[0].total : 0;
+		
+		// Calculate remaining revenue (profit)
+		const remainingRevenue = totalRevenue - totalPaidToProviders;
 
 		res.render("admin/payments", {
 			title: "Payment Management",
@@ -468,7 +478,9 @@ router.get("/admin/payments", middleware.ensureAdminLoggedIn, async (req, res) =
 			completedPayments,
 			pendingPayments,
 			totalRevenue,
-			totalProviders
+			totalProviders,
+			totalPaidToProviders,
+			remainingRevenue
 		});
 	} catch (err) {
 		console.error("Error fetching payments:", err);

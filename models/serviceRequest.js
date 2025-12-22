@@ -115,6 +115,17 @@ totalCharges: {
 distance: {
   type: Number,
   default: 0 // Save distance in km at assignment time
+},
+
+// Payment fields
+paymentMethod: {
+  type: String,
+  enum: ["cash", "upi", "card", "online"],
+  default: "cash"
+},
+upiId: {
+  type: String,
+  default: null
 }
 
 

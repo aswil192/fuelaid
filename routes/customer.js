@@ -97,17 +97,22 @@ router.post("/customer/request-service", upload.single("vehiclePhotoPath"), asyn
 			quantity,
 			address,
 			phone,
-			customerToMechanicMsg
+			customerToMechanicMsg,
+			paymentMethod,
+			upiId,
+			acceptTerms,
+			travelCharges,
+			totalAmount
 		} = req.body.request;
 
 		// Define base charges
 const baseCharges = {
-	"Battery Jump Start": 300,
-	"Flat Tyre Repair": 250,
-	"Lockout Assistance": 200,
-	"Minor Repairs": 400,
-	"Towing Services": 700,
-	"Vehicle Custody": 150,
+	"Battery Jump Start": 1000,
+	"Flat Tyre Repair": 2700,
+	"Lockout Assistance": 1250,
+	"Minor Repairs": 800,
+	"Towing Services": 4200,
+	"Vehicle Custody": 1700,
 	"Periodic Maintenance": 600,
 	"Vehicle Repair": 700,
 	"Accessory Fitment": 500,
@@ -152,7 +157,11 @@ const baseCharges = {
 			customerToMechanicMsg,
 			status: "requested",
 			isFuelRequest: serviceCategory === "fuel",
-			baseAmount: baseAmount
+			baseAmount: baseAmount,
+			deliveryCharge: parseInt(travelCharges) || 0,
+			totalCharges: parseInt(totalAmount) || baseAmount,
+			paymentMethod: paymentMethod || "cash",
+			upiId: upiId || undefined
 		});
 
 		await newRequest.save();
@@ -346,8 +355,8 @@ router.put("/customer/profile", middleware.ensurecustomerLoggedIn, upload.single
 	  // Update service request
 	  await ServiceRequest.findByIdAndUpdate(requestId, { isPaid: true });
 
-	  // Update provider's earnings (80% commission rate)
-	  const providerEarnings = amount * (provider.commissionRate || 80) / 100;
+	  // Update provider's earnings (40% commission rate)
+	  const providerEarnings = amount * (provider.commissionRate || 40) / 100;
 	  await User.findByIdAndUpdate(provider._id, {
 		$inc: {
 		  totalEarnings: providerEarnings,

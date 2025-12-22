@@ -370,10 +370,10 @@ router.post("/mechanic/service/reject/:id", middleware.ensuremechanicLoggedIn, a
 
 router.get("/mechanic/accepted", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-	  // Fetch all services that are accepted and assigned to the current mechanic
+	  // Fetch all services that are accepted or in-progress and assigned to the current mechanic
 	  const acceptedServices = await ServiceRequest.find({
-		status: "accepted",
-		mechanic: req.user._id // Assuming only the logged-in mechanic's accepted requests should be shown
+		status: { $in: ["accepted", "in-progress"] },
+		mechanic: req.user._id
 	  }).populate('customer', 'firstName lastName phone address');
   
 	  res.render("mechanic/accepted", {
@@ -414,7 +414,7 @@ router.get("/mechanic/accepted", middleware.ensuremechanicLoggedIn, async (req, 
 	  const service = await ServiceRequest.findOne({
 		_id: serviceId,
 		mechanic: req.user._id,
-		status: "accepted"
+		status: { $in: ["accepted", "in-progress"] }
 	  });
   
 	  if (!service) {
@@ -427,8 +427,37 @@ router.get("/mechanic/accepted", middleware.ensuremechanicLoggedIn, async (req, 
 	  // Update status to 'completed'
 	  service.status = "completed";
 	  await service.save();
+
+	  // Auto-create payment if not already paid
+	  if (!service.isPaid) {
+		const amount = service.totalCharges || service.fee || service.baseAmount || 100;
+		const payment = new Payment({
+		  serviceRequest: service._id,
+		  customer: service.customer,
+		  provider: req.user._id,
+		  providerType: 'mechanic',
+		  amount,
+		  paymentMethod: 'cash',
+		  status: 'completed',
+		  paidAt: new Date()
+		});
+
+		await payment.save();
+
+		// Update service as paid
+		await ServiceRequest.findByIdAndUpdate(serviceId, { isPaid: true });
+
+		// Update provider's earnings (40% commission rate)
+		const providerEarnings = amount * (req.user.commissionRate || 40) / 100;
+		await User.findByIdAndUpdate(req.user._id, {
+		  $inc: {
+			totalEarnings: providerEarnings,
+			pendingEarnings: providerEarnings
+		  }
+		});
+	  }
   
-	  req.flash("success", "Service marked as completed.");
+	  req.flash("success", "Service marked as completed. Revenue credited to your account.");
 	  res.redirect("/mechanic/accepted");
 	} catch (err) {
 	  console.error(err);

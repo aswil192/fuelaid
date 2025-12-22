@@ -420,7 +420,7 @@
 					<div class="icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
 						<i class="fas fa-percentage"></i>
 					</div>
-					<div class="value"><%= currentUser.commissionRate || 80 %>%</div>
+					<div class="value"><%= currentUser.commissionRate || 40 %>%</div>
 					<div class="label">Commission Rate</div>
 				</div>
 			</div>
@@ -448,7 +448,7 @@
 								<p><%= payment.paidAt ? new Date(payment.paidAt).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : 'N/A' %></p>
 							</div>
 						</div>
-						<div class="payment-amount">+₹<%= Math.round(payment.amount * (currentUser.commissionRate || 80) / 100) %></div>
+						<div class="payment-amount">+₹<%= Math.round(payment.amount * (currentUser.commissionRate || 40) / 100) %></div>
 					</li>
 					<% }) %>
 				</ul>
@@ -459,7 +459,7 @@
 			<div class="info-card">
 				<h6><i class="fas fa-info-circle"></i> How Earnings Work</h6>
 				<ul>
-					<li>You receive <strong><%= currentUser.commissionRate || 80 %>%</strong> of each completed service payment.</li>
+					<li>You receive <strong><%= currentUser.commissionRate || 40 %>%</strong> of each completed service payment.</li>
 					<li>Earnings are credited to your account after customers complete payment.</li>
 					<li>Pending earnings will be processed and paid out by the admin.</li>
 					<li>Contact admin for any payment-related queries.</li>

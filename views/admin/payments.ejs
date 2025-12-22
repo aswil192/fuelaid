@@ -398,11 +398,11 @@
 				<div class="label">Pending Payments</div>
 			</div>
 			<div class="stat-card">
-				<div class="icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-					<i class="fas fa-users"></i>
+				<div class="icon" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
+					<i class="fas fa-wallet"></i>
 				</div>
-				<div class="value"><%= totalProviders %></div>
-				<div class="label">Active Providers</div>
+				<div class="value">₹<%= remainingRevenue.toLocaleString('en-IN') %></div>
+				<div class="label">Remaining Profit</div>
 			</div>
 		</div>
 
@@ -428,7 +428,6 @@
 								<th>Provider</th>
 								<th>Service</th>
 								<th>Amount</th>
-								<th>Method</th>
 								<th>Status</th>
 								<th>Date</th>
 							</tr>
@@ -463,12 +462,6 @@
 								</td>
 								<td>
 									<span class="amount-badge">₹<%= payment.amount %></span>
-								</td>
-								<td>
-									<span class="method-badge">
-										<i class="fas fa-<%= payment.paymentMethod === 'cash' ? 'money-bill-wave' : payment.paymentMethod === 'upi' ? 'mobile-alt' : payment.paymentMethod === 'card' ? 'credit-card' : 'globe' %> me-1"></i>
-										<%= payment.paymentMethod?.toUpperCase() %>
-									</span>
 								</td>
 								<td>
 									<span class="status-badge <%= payment.status %>"><%= payment.status %></span>

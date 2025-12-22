@@ -403,9 +403,15 @@
 								<span class="request-number"><%= index + 1 %></span>
 								Fuel Delivery Request
 							</h6>
-							<span class="status-badge in-progress">
-								<i class="fas fa-clock"></i> In Progress
-							</span>
+							<% if (service.status === 'in-progress') { %>
+								<span class="status-badge in-progress">
+									<i class="fas fa-clock"></i> In Progress
+								</span>
+							<% } else { %>
+								<span class="status-badge">
+									<i class="fas fa-hourglass-half"></i> Accepted
+								</span>
+							<% } %>
 						</div>
 
 						<div class="request-card-body">
@@ -475,12 +481,14 @@
 							<% } %>
 
 							<div class="action-buttons">
+								<% if (service.status === 'accepted') { %>
 								<form action="/fueldeliveryboy/service/inprogress/<%= service._id %>" method="POST" style="display: inline;">
 									<button type="submit" class="btn-action btn-progress">
-										<i class="fas fa-spinner"></i> Mark In-Progress
+										<i class="fas fa-spinner"></i> Start Delivery
 									</button>
 								</form>
-
+								<% } %>
+							
 								<form action="/fueldeliveryboy/service/complete/<%= service._id %>" method="POST" style="display: inline;">
 									<button type="submit" class="btn-action btn-complete">
 										<i class="fas fa-check-circle"></i> Mark Completed
