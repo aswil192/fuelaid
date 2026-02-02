@@ -482,24 +482,42 @@ document.addEventListener("DOMContentLoaded", function () {
 // FAQ accordion functionality
 document.addEventListener("DOMContentLoaded", function () {
 	const faqQuestions = document.querySelectorAll(".faq-question");
-	
+
 	faqQuestions.forEach(question => {
 		question.addEventListener("click", function () {
 			const answer = this.nextElementSibling;
-			const isVisible = answer.style.display === "block";
-			
+			const isExpanded = this.getAttribute("aria-expanded") === "true";
+
 			// Close all other answers
-			document.querySelectorAll(".faq-answer").forEach(ans => {
-				ans.style.display = "none";
+			document.querySelectorAll(".faq-question").forEach(q => {
+				if (q !== this) {
+					q.setAttribute("aria-expanded", "false");
+					q.querySelector("span").textContent = "+";
+					const otherAnswer = q.nextElementSibling;
+					otherAnswer.style.maxHeight = "0";
+					otherAnswer.style.opacity = "0";
+					otherAnswer.style.visibility = "hidden";
+					otherAnswer.classList.remove("expanded");
+				}
 			});
-			document.querySelectorAll(".faq-question span").forEach(span => {
-				span.textContent = "+";
-			});
-			
-			// Toggle current answer
-			if (!isVisible) {
-				answer.style.display = "block";
+
+			// Toggle current answer with animation
+			if (!isExpanded) {
+				// Expand current answer
+				this.setAttribute("aria-expanded", "true");
 				this.querySelector("span").textContent = "-";
+				answer.classList.add("expanded");
+				answer.style.maxHeight = (answer.scrollHeight + 40) + "px";
+				answer.style.opacity = "1";
+				answer.style.visibility = "visible";
+			} else {
+				// Collapse current answer
+				this.setAttribute("aria-expanded", "false");
+				this.querySelector("span").textContent = "+";
+				answer.style.maxHeight = "0";
+				answer.style.opacity = "0";
+				answer.style.visibility = "hidden";
+				answer.classList.remove("expanded");
 			}
 		});
 	});

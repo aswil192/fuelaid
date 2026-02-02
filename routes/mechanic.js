@@ -15,114 +15,114 @@ const multer = require('multer');
 const path = require('path');
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'public/uploads/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // e.g., 1711111.png
-    }
+	destination: function (req, file, cb) {
+		cb(null, 'public/uploads/');
+	},
+	filename: function (req, file, cb) {
+		cb(null, Date.now() + path.extname(file.originalname)); // e.g., 1711111.png
+	}
 });
 
 const upload = multer({ storage: storage });
 
 async function geocodeAddress(address) {
-  try {
-	const data = await opencage.geocode({ q: address, key: process.env.OPENCAGE_API_KEY });
+	try {
+		const data = await opencage.geocode({ q: address, key: process.env.OPENCAGE_API_KEY });
 
-	if (data && data.results && data.results.length > 0) {
-	  const { lat, lng } = data.results[0].geometry;
-	  return { latitude: lat, longitude: lng };
-	} else {
-	  throw new Error("No geocode results found.");
+		if (data && data.results && data.results.length > 0) {
+			const { lat, lng } = data.results[0].geometry;
+			return { latitude: lat, longitude: lng };
+		} else {
+			throw new Error("No geocode results found.");
+		}
+	} catch (error) {
+		console.error("Geocoding error:", error.message);
+		return null;
 	}
-  } catch (error) {
-	console.error("Geocoding error:", error.message);
-	return null;
-  }
 }
 
 router.get("/mechanic/dashboard", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
 		const mechanicId = req.user._id;
-	
+
 		const mechanic = await User.findById(mechanicId);
 		if (!mechanic || mechanic.role !== 'mechanic') {
-		  return res.status(403).send('Unauthorized');
+			return res.status(403).send('Unauthorized');
 		}
-	
+
 		// Get completed jobs count
 		const completedJobs = await ServiceRequest.countDocuments({
-		  mechanic: mechanicId,
-		  status: 'completed'
+			mechanic: mechanicId,
+			status: 'completed'
 		});
-	
+
 		// Get pending jobs count (requests waiting to be accepted)
 		const pendingJobs = await ServiceRequest.countDocuments({
-		  status: 'requested',
-		  serviceCategory: { $ne: 'fuel' }
+			status: 'requested',
+			serviceCategory: { $ne: 'fuel' }
 		});
-	
+
 		// Get accepted/active jobs count
 		const acceptedJobs = await ServiceRequest.countDocuments({
-		  mechanic: mechanicId,
-		  status: { $in: ['accepted', 'in-progress'] }
+			mechanic: mechanicId,
+			status: { $in: ['accepted', 'in-progress'] }
 		});
-	
+
 		// Calculate average rating (default to 5.0 if no ratings yet)
 		const rating = mechanic.rating || 5.0;
-	
+
 		res.render("mechanic/dashboard", {
-		  mechanic,
-		  completedJobs,
-		  pendingJobs,
-		  acceptedJobs,
-		  rating
+			mechanic,
+			completedJobs,
+			pendingJobs,
+			acceptedJobs,
+			rating
 		});
-	
-	  } catch (error) {
+
+	} catch (error) {
 		console.error('Dashboard error:', error);
 		res.status(500).send('Server error');
-	  }
-  });
-  
-  
+	}
+});
 
-router.get("/mechanic/profile", middleware.ensuremechanicLoggedIn, (req,res) => {
+
+
+router.get("/mechanic/profile", middleware.ensuremechanicLoggedIn, (req, res) => {
 	res.render("mechanic/profile", { title: "My Profile" });
 });
 
 router.put("/mechanic/profile", upload.single('profilePic'), middleware.ensuremechanicLoggedIn, async (req, res) => {
-    try {
-        const id = req.user._id;
-        const updateObj = req.body.mechanic;  // updateObj: {firstName, lastName, gender, address, phone}
+	try {
+		const id = req.user._id;
+		const updateObj = req.body.mechanic;  // updateObj: {firstName, lastName, gender, address, phone}
 		if (req.file) {
-            updateObj.profilePic = `/uploads/${req.file.filename}`;
-        }
+			updateObj.profilePic = `/uploads/${req.file.filename}`;
+		}
 
-        
-        // Geocode the updated address
-        const geo = await geocodeAddress(updateObj.address);
-        
-        if (geo) {
-            // If geocoding is successful, add latitude and longitude to the update object
-            updateObj.latitude = geo.latitude;
-            updateObj.longitude = geo.longitude;
-        } else {
-            // If geocoding fails, set latitude and longitude to null (optional, based on your requirements)
-            updateObj.latitude = null;
-            updateObj.longitude = null;
-        }
 
-        // Update the mechanic's profile
-        await User.findByIdAndUpdate(id, updateObj);
+		// Geocode the updated address
+		const geo = await geocodeAddress(updateObj.address);
 
-        req.flash("success", "Profile updated successfully");
-        res.redirect("/mechanic/profile");
-    } catch (err) {
-        console.log(err);
-        req.flash("error", "Some error occurred on the server.");
-        res.redirect("back");
-    }
+		if (geo) {
+			// If geocoding is successful, add latitude and longitude to the update object
+			updateObj.latitude = geo.latitude;
+			updateObj.longitude = geo.longitude;
+		} else {
+			// If geocoding fails, set latitude and longitude to null (optional, based on your requirements)
+			updateObj.latitude = null;
+			updateObj.longitude = null;
+		}
+
+		// Update the mechanic's profile
+		await User.findByIdAndUpdate(id, updateObj);
+
+		req.flash("success", "Profile updated successfully");
+		res.redirect("/mechanic/profile");
+	} catch (err) {
+		console.log(err);
+		req.flash("error", "Some error occurred on the server.");
+		res.redirect("back");
+	}
 });
 
 function convertTo24Hour(timeStr) {
@@ -136,9 +136,15 @@ function convertTo24Hour(timeStr) {
 }
 
 function isTimeWithinRange(requestDate, rangeStr) {
-	const [start, end] = rangeStr.split('-').map(t => convertTo24Hour(t));
-	const reqTime = requestDate.toTimeString().slice(0, 5); // 'HH:MM'
-	return reqTime >= start && reqTime <= end;
+	if (!rangeStr || !rangeStr.includes('-')) return true; // Default to available if invalid/missing
+	try {
+		const [start, end] = rangeStr.split('-').map(t => convertTo24Hour(t.trim()));
+		const reqTime = requestDate.toTimeString().slice(0, 5); // 'HH:MM'
+		return reqTime >= start && reqTime <= end;
+	} catch (e) {
+		console.error("Error parsing availability:", rangeStr, e);
+		return true; // Fallback to available
+	}
 }
 
 function isWithinLastNMinutes(date, minutes) {
@@ -154,15 +160,15 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 		};
 
 		if (!mechanicLocation.lat || !mechanicLocation.lon) {
-			return res.render('mechanic/viewRequests', { 
+			return res.render('mechanic/viewRequests', {
 				title: "View Requests",
 				requestedServices: [],
 				assignedServices: [],
-				error: "Please enable location services." 
+				error: "Please enable location services."
 			});
 		}
 
-		const mechanicAvailability = req.user.availability; // e.g., "10am-6pm"
+		const mechanicAvailability = req.user.availability || "12am-11:59pm"; // Default if missing
 
 		const requestedServices = await ServiceRequest.find({ status: "requested" })
 			.populate('customer', 'firstName lastName phone address');
@@ -224,14 +230,14 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 // 	if (meridian === 'am' && hours === 12) hours = 0;
 // 	return `${String(hours).padStart(2, '0')}:${minutes}`;
 //   }
-  
+
 //   function isTimeWithinRange(requestDate, rangeStr) {
 // 	const [start, end] = rangeStr.split('-').map(t => convertTo24Hour(t));
 // 	const reqTime = requestDate.toTimeString().slice(0, 5); // 'HH:MM'
 // 	return reqTime >= start && reqTime <= end;
 //   }
 
-  
+
 //   router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, async (req, res) => {
 // 	try {
 // 	  // Update mechanic's location before fetching requests (if needed)
@@ -248,13 +254,13 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 // 		});
 // 		return; // Exit early to avoid reloading the same page
 // 	  }
-  
+
 // 	  // Get mechanic's availability (e.g., "10am-8pm")
 // 	  const mechanicAvailability = req.user.availability; 
-  
+
 // 	  // Fetch requested service requests
 // 	  const requestedServices = await ServiceRequest.find({ status: "requested" }).populate('customer', 'firstName lastName phone address');
-  
+
 // 	  // Filter services based on the mechanic's availability and category
 // 	  const filteredServices = requestedServices
 // 		.filter(service => {
@@ -268,10 +274,10 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 // 			lat: service.latitude,
 // 			lon: service.longitude
 // 		  };
-  
+
 // 		  // Calculate the distance between mechanic and customer
 // 		  const distance = haversine(mechanicLocation, customerLocation);
-  
+
 // 		  // Return the service with the distance included
 // 		  return {
 // 			...service.toObject(),
@@ -283,13 +289,13 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 // 		  if (a.distance !== b.distance) return a.distance - b.distance;
 // 		  return new Date(b.createdAt) - new Date(a.createdAt);
 // 		});
-  
+
 // 	  // Render the view with filtered services
 // 	  res.render("mechanic/viewRequests", {
 // 		title: "View Requests",
 // 		requestedServices: filteredServices
 // 	  });
-	  
+
 // 	} catch (err) {
 // 	  console.error(err);
 // 	  req.flash("error", "Error retrieving service requests.");
@@ -297,30 +303,30 @@ router.get("/mechanic/viewRequests", middleware.ensuremechanicLoggedIn, middlewa
 // 	}
 //   });
 
-  router.post("/mechanic/updateLocation", middleware.ensuremechanicLoggedIn, async (req, res) => {
+router.post("/mechanic/updateLocation", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-	  // Get the location from the request body
-	  const { latitude, longitude } = req.body;
-  
-	  // Update mechanic's location in the User schema
-	  const mechanic = await User.findByIdAndUpdate(req.user._id, { latitude, longitude }, { new: true });
-  
-	  // Optionally, log them in again to refresh the session with updated data
-	  req.login(mechanic, (err) => {
-		if (err) {
-		  console.error("Error during login after location update:", err);
-		  res.status(500).send("Location update failed.");
-		  return;
-		}
-		res.send("Location updated successfully.");
-	  });
+		// Get the location from the request body
+		const { latitude, longitude } = req.body;
+
+		// Update mechanic's location in the User schema
+		const mechanic = await User.findByIdAndUpdate(req.user._id, { latitude, longitude }, { new: true });
+
+		// Optionally, log them in again to refresh the session with updated data
+		req.login(mechanic, (err) => {
+			if (err) {
+				console.error("Error during login after location update:", err);
+				res.status(500).send("Location update failed.");
+				return;
+			}
+			res.send("Location updated successfully.");
+		});
 	} catch (err) {
-	  console.error("Error updating mechanic location:", err);
-	  res.status(500).send("Failed to update location.");
+		console.error("Error updating mechanic location:", err);
+		res.status(500).send("Failed to update location.");
 	}
-  });
-  
-  
+});
+
+
 // Mechanic accepts a service request
 router.post("/mechanic/service/accept/:id", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
@@ -370,187 +376,187 @@ router.post("/mechanic/service/reject/:id", middleware.ensuremechanicLoggedIn, a
 
 router.get("/mechanic/accepted", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-	  // Fetch all services that are accepted or in-progress and assigned to the current mechanic
-	  const acceptedServices = await ServiceRequest.find({
-		status: { $in: ["accepted", "in-progress"] },
-		mechanic: req.user._id
-	  }).populate('customer', 'firstName lastName phone address');
-  
-	  res.render("mechanic/accepted", {
-		title: "Accepted Requests",
-		acceptedServices
-	  });
+		// Fetch all services that are accepted or in-progress and assigned to the current mechanic
+		const acceptedServices = await ServiceRequest.find({
+			status: { $in: ["accepted", "in-progress"] },
+			mechanic: req.user._id
+		}).populate('customer', 'firstName lastName phone address');
+
+		res.render("mechanic/accepted", {
+			title: "Accepted Requests",
+			acceptedServices
+		});
 	} catch (err) {
-	  console.error(err);
-	  req.flash("error", "Error retrieving accepted service requests.");
-	  res.redirect("back");
+		console.error(err);
+		req.flash("error", "Error retrieving accepted service requests.");
+		res.redirect("back");
 	}
-  });
+});
 
-  router.get("/mechanic/completed", middleware.ensuremechanicLoggedIn, async (req, res) => {
+router.get("/mechanic/completed", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-	  // Fetch all services that are accepted and assigned to the current mechanic
-	  const completedServices = await ServiceRequest.find({
-		status: "completed",
-		mechanic: req.user._id // Assuming only the logged-in mechanic's accepted requests should be shown
-	  }).populate('customer', 'firstName lastName phone address');
-  
-	  res.render("mechanic/completed", {
-		title: "Completed Requests",
-		completedServices
-	  });
+		// Fetch all services that are accepted and assigned to the current mechanic
+		const completedServices = await ServiceRequest.find({
+			status: "completed",
+			mechanic: req.user._id // Assuming only the logged-in mechanic's accepted requests should be shown
+		}).populate('customer', 'firstName lastName phone address');
+
+		res.render("mechanic/completed", {
+			title: "Completed Requests",
+			completedServices
+		});
 	} catch (err) {
-	  console.error(err);
-	  req.flash("error", "Error retrieving completed service requests.");
-	  res.redirect("back");
+		console.error(err);
+		req.flash("error", "Error retrieving completed service requests.");
+		res.redirect("back");
 	}
-  });
+});
 
-  router.post("/mechanic/service/complete/:id", middleware.ensuremechanicLoggedIn, async (req, res) => {
+router.post("/mechanic/service/complete/:id", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-	  const serviceId = req.params.id;
-  
-	  // Find the service by ID and check if it's assigned to the current mechanic
-	  const service = await ServiceRequest.findOne({
-		_id: serviceId,
-		mechanic: req.user._id,
-		status: { $in: ["accepted", "in-progress"] }
-	  });
-  
-	  if (!service) {
-		req.flash("error", "Service not found or not authorized.");
-		return res.redirect("back");
-	  }
-  
-	  service.completedAt = new Date();  // Set this when the mechanic completes the service
+		const serviceId = req.params.id;
 
-	  // Update status to 'completed'
-	  service.status = "completed";
-	  await service.save();
-
-	  // Auto-create payment if not already paid
-	  if (!service.isPaid) {
-		const amount = service.totalCharges || service.fee || service.baseAmount || 100;
-		const payment = new Payment({
-		  serviceRequest: service._id,
-		  customer: service.customer,
-		  provider: req.user._id,
-		  providerType: 'mechanic',
-		  amount,
-		  paymentMethod: 'cash',
-		  status: 'completed',
-		  paidAt: new Date()
+		// Find the service by ID and check if it's assigned to the current mechanic
+		const service = await ServiceRequest.findOne({
+			_id: serviceId,
+			mechanic: req.user._id,
+			status: { $in: ["accepted", "in-progress"] }
 		});
 
-		await payment.save();
+		if (!service) {
+			req.flash("error", "Service not found or not authorized.");
+			return res.redirect("back");
+		}
 
-		// Update service as paid
-		await ServiceRequest.findByIdAndUpdate(serviceId, { isPaid: true });
+		service.completedAt = new Date();  // Set this when the mechanic completes the service
 
-		// Update provider's earnings (40% commission rate)
-		const providerEarnings = amount * (req.user.commissionRate || 40) / 100;
-		await User.findByIdAndUpdate(req.user._id, {
-		  $inc: {
-			totalEarnings: providerEarnings,
-			pendingEarnings: providerEarnings
-		  }
+		// Update status to 'completed'
+		service.status = "completed";
+		await service.save();
+
+		// Auto-create payment if not already paid
+		if (!service.isPaid) {
+			const amount = service.totalCharges || service.fee || service.baseAmount || 100;
+			const payment = new Payment({
+				serviceRequest: service._id,
+				customer: service.customer,
+				provider: req.user._id,
+				providerType: 'mechanic',
+				amount,
+				paymentMethod: 'cash',
+				status: 'completed',
+				paidAt: new Date()
+			});
+
+			await payment.save();
+
+			// Update service as paid
+			await ServiceRequest.findByIdAndUpdate(serviceId, { isPaid: true });
+
+			// Update provider's earnings (40% commission rate)
+			const providerEarnings = amount * (req.user.commissionRate || 40) / 100;
+			await User.findByIdAndUpdate(req.user._id, {
+				$inc: {
+					totalEarnings: providerEarnings,
+					pendingEarnings: providerEarnings
+				}
+			});
+		}
+
+		req.flash("success", "Service marked as completed. Revenue credited to your account.");
+		res.redirect("/mechanic/accepted");
+	} catch (err) {
+		console.error(err);
+		req.flash("error", "Error marking service as completed.");
+		res.redirect("back");
+	}
+});
+
+router.post("/mechanic/service/inprogress/:id", middleware.ensuremechanicLoggedIn, async (req, res) => {
+	try {
+		const service = await ServiceRequest.findById(req.params.id);
+		if (!service) {
+			req.flash("error", "Service request not found.");
+			return res.redirect("back");
+		}
+
+		service.status = "in-progress";
+		await service.save();
+
+		req.flash("success", "Service marked as In-Progress.");
+		res.redirect("/mechanic/accepted");
+	} catch (err) {
+		console.error(err);
+		req.flash("error", "Something went wrong.");
+		res.redirect("back");
+	}
+});
+
+router.post('/mechanic/note/:id', middleware.ensuremechanicLoggedIn, async (req, res) => {
+	try {
+		const serviceId = req.params.id;
+		const { mechanicNote } = req.body;
+
+		await ServiceRequest.findByIdAndUpdate(serviceId, { mechanicNote });
+
+		res.status(200).json({ message: 'Note saved' });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ error: 'Failed to save note' });
+	}
+});
+
+
+router.get("/mechanic/liveTrack", middleware.ensuremechanicLoggedIn, async (req, res) => {
+	try {
+		const mechanicId = req.user._id;
+
+		// Fetch all service requests assigned to this mechanic
+		const requests = await ServiceRequest.find({ mechanic: mechanicId, status: { $in: ["accepted", "in-progress"] } })
+			.populate("customer") // so you can show customer info if needed
+			.populate("mechanic")
+			.sort({ createdAt: -1 });
+
+		res.render("mechanic/liveTrack", {
+			currentUser: req.user,
+			requests,
 		});
-	  }
-  
-	  req.flash("success", "Service marked as completed. Revenue credited to your account.");
-	  res.redirect("/mechanic/accepted");
 	} catch (err) {
-	  console.error(err);
-	  req.flash("error", "Error marking service as completed.");
-	  res.redirect("back");
+		console.error("Error fetching mechanic tracking info:", err);
+		res.status(500).send("Server error");
 	}
-  });
+});
 
-  router.post("/mechanic/service/inprogress/:id", middleware.ensuremechanicLoggedIn, async (req, res) => {
+// Mechanic Earnings Page
+router.get("/mechanic/earnings", middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
-	  const service = await ServiceRequest.findById(req.params.id);
-	  if (!service) {
-		req.flash("error", "Service request not found.");
-		return res.redirect("back");
-	  }
-  
-	  service.status = "in-progress";
-	  await service.save();
-  
-	  req.flash("success", "Service marked as In-Progress.");
-	  res.redirect("/mechanic/accepted");
-	} catch (err) {
-	  console.error(err);
-	  req.flash("error", "Something went wrong.");
-	  res.redirect("back");
-	}
-  });
-  
-  router.post('/mechanic/note/:id', middleware.ensuremechanicLoggedIn, async (req, res) => {
-	try {
-	  const serviceId = req.params.id;
-	  const { mechanicNote } = req.body;
-  
-	  await ServiceRequest.findByIdAndUpdate(serviceId, { mechanicNote });
-  
-	  res.status(200).json({ message: 'Note saved' });
-	} catch (err) {
-	  console.error(err);
-	  res.status(500).json({ error: 'Failed to save note' });
-	}
-  });
-  
-  
-  router.get("/mechanic/liveTrack", middleware.ensuremechanicLoggedIn, async (req, res) => {
-	try {
-	  const mechanicId = req.user._id;
-  
-	  // Fetch all service requests assigned to this mechanic
-	  const requests = await ServiceRequest.find({ mechanic: mechanicId, status: { $in: ["accepted", "in-progress"]} })
-		.populate("customer") // so you can show customer info if needed
-		.populate("mechanic")
-		.sort({ createdAt: -1 });
-  
-	  res.render("mechanic/liveTrack", {
-		currentUser: req.user,
-		requests,
-	  });
-	} catch (err) {
-	  console.error("Error fetching mechanic tracking info:", err);
-	  res.status(500).send("Server error");
-	}
-  });
+		const mechanicId = req.user._id;
 
-  // Mechanic Earnings Page
-  router.get("/mechanic/earnings", middleware.ensuremechanicLoggedIn, async (req, res) => {
-	try {
-	  const mechanicId = req.user._id;
+		// Get completed jobs count
+		const completedJobs = await ServiceRequest.countDocuments({
+			mechanic: mechanicId,
+			status: 'completed'
+		});
 
-	  // Get completed jobs count
-	  const completedJobs = await ServiceRequest.countDocuments({
-		mechanic: mechanicId,
-		status: 'completed'
-	  });
+		// Get recent payments
+		const recentPayments = await Payment.find({
+			provider: mechanicId,
+			status: 'completed'
+		})
+			.populate('serviceRequest', 'serviceCategory')
+			.sort({ paidAt: -1 })
+			.limit(10);
 
-	  // Get recent payments
-	  const recentPayments = await Payment.find({
-		provider: mechanicId,
-		status: 'completed'
-	  })
-	  .populate('serviceRequest', 'serviceCategory')
-	  .sort({ paidAt: -1 })
-	  .limit(10);
-
-	  res.render("mechanic/earnings", {
-		title: "My Earnings",
-		completedJobs,
-		recentPayments
-	  });
+		res.render("mechanic/earnings", {
+			title: "My Earnings",
+			completedJobs,
+			recentPayments
+		});
 	} catch (err) {
-	  console.error("Error fetching earnings:", err);
-	  req.flash("error", "Error loading earnings page.");
-	  res.redirect("/mechanic/dashboard");
+		console.error("Error fetching earnings:", err);
+		req.flash("error", "Error loading earnings page.");
+		res.redirect("/mechanic/dashboard");
 	}
-  });
-  
+});
+
 module.exports = router;
